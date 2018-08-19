@@ -16,12 +16,12 @@ if (!$mode && array_key_exists('mode', $_GET)) {
 
 if ($player) {
 	foreach (OSM::get_user_recent($player, $mode, $limit) as $play) {
-		$row = &$data[$play['beatmap_id']];
-		$row = array();
-
-		$row['score'] = OSM::calculate_exscore($play);
-		$row['info']  = OSM::get_beatmap($play['beatmap_id']);
-		$row['date']  = $play['date'];
+		$data[] = [
+			'beatmap_id' => $play['beatmap_id'],
+			'date'       => $play['date'],
+			'score'      => OSM::calculate_exscore($play),
+			'info'       => OSM::get_beatmap($play['beatmap_id']),
+		]
 	}
 }
 ?>
