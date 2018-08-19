@@ -1,0 +1,3 @@
+<?php
+
+$osu_token = '';
