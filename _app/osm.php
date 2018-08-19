@@ -5,6 +5,24 @@ class OSM
 
 	public static $key = null;
 
+	public static function mods_to_literal($bits) {
+		$mod_literals = ['NF', 'EZ', 'Touch', 'HD', 'HR',
+			'SD', 'DT', 'RX', 'HT', 'NC', 'FL', 'Auto',
+			'SpunOut', 'AP', 'PF', '4K', '5K', '6K', '7K',
+			'8K', 'Sudden', 'Random', 'Cinema', 'Target',
+			'9K', 'Key Coop', '1K', '3K', '2K', 'v2'];
+		$chosen_mods = array();
+		$i = 0;
+		$bits = (int)$bits;
+		foreach ($mod_literals as $mod_literal) {
+			if ($bits & pow(2, $i)) {
+				$chosen_mods[] = $mod_literal;
+			}
+			$i += 1;
+		}
+		return (implode(', ', $chosen_mods));
+	}
+
 	public static function calculate_exscore($play) {
 		$result = [
 			'pgreat' => (int)$play['count300'] + (int)$play['countgeki'],
@@ -47,7 +65,7 @@ class OSM
 
 		foreach ($data as $key => $value) {
 			if ($value !== null) {
-				$url .= sprintf('&%s=%s', $key, $value);
+				$url .= sprintf('&%s=%s', $key, urlencode($value));
 			}
 		}
 
