@@ -21,7 +21,7 @@ if ($player) {
 			'date'       => $play['date'],
 			'score'      => OSM::calculate_exscore($play),
 			'info'       => OSM::get_beatmap($play['beatmap_id']),
-		]
+		];
 	}
 }
 ?>
