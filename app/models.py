@@ -77,7 +77,7 @@ class Score(db.Model, SubmittableData):
     def display_accuracy(self):
         if self.accuracy == 1:
             return '100%'
-        return '%.3f%%' % self.accuracy
+        return '%.3f%%' % (self.accuracy * 100)
 
     def update_fields(self, data):
         if data.get('great'):

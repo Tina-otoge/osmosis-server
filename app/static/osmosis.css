@@ -28,6 +28,11 @@ a:hover, a:active {
     color: var(--primary);
 }
 
+a[disabled] {
+	color: gray;
+	cursor: not-allowed;
+}
+
 header {
     box-shadow: 0 5px 10px var(--primary);
     background-color: white;
@@ -56,7 +61,7 @@ main {
     background-color: white;
     margin: 1em auto;
     padding: 1em;
-} 
+}
 
 main .content-block > .title {
 	background-color: var(--contrast);
@@ -86,6 +91,7 @@ footer > div {
 	border-radius: var(--small-radius);
 	display: flex;
 	align-items: stretch;
+	margin: 1em 0;
 }
 
 #scores .content > div {
