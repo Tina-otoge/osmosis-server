@@ -1,0 +1,186 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Project osmosis - The unfucked osu! online ranking</title>
+    <meta charset="utf-8">
+    <meta name="description" content="osu! leaderboard, pp and beatmap ranking
+    done right.">
+    <link rel="stylesheet" href="osmosis.css">
+    <link href="https://fonts.googleapis.com/css?family=Oxygen|Questrial&display=swap" rel="stylesheet"> 
+  </head>
+
+  <body>
+    <div style="min-height:50px; background-color:red; color: white; display:flex; align-items: center; justify-content: center;">
+      This is a copy of the announcement I posted on July 19, 2019.
+    </div>
+    <header>
+      <h1>Project osmosis</h1>
+      <p class="subtitle">The unfucked osu! online ranking</p>
+      <nav>
+        <a href="/">Go back</a>
+      </nav>
+    </header>
+
+    <main>
+      <section id="introduction">
+        <h2>Introduction</h2>
+        <p>
+          Hello, I'm Tina. I've been playing rhythm games of all kinds for some
+          years. I actively play <em>beatmania IIDX</em>, but I also play a lot
+          of others, namely <em>SOUND VOLTEX</em>, <em>Dance Dance
+          Revolution</em>, <em>Pump It Up</em>, <em>NotITG</em>, <em>pop'n
+          music</em>, <em>Project Diva</em>, <em>Taiko no Tatsujin</em>, and the
+          list goes on...
+        </p>
+        <p>
+          <em>osu!</em> was the first rhythm game I played actively. I was
+          launching the game frequently, trying to improve myself, and trying to
+          climb in the leaderboard. At some point, it made me aware of other
+          existing rhythm games, and I started investing time and money in them
+          instead of <em>osu!</em>.
+        </p>
+        <p>
+          I still like <em>osu!</em> a lot, it certainly made something
+          interesting out of <em>Ouendan</em>'s gameplay. <em>mania</em> also
+          opened a lot of persons to traditional rhythm games.
+        </p>
+        <p>
+          However, there are a lot of things that feel wrong to me in
+          <em>osu!</em>, and I want to fix them. With <strong>osmosis</strong>,
+          I'm trying to fix all the things I don't like about <em>osu!</em> in
+          the form of an alternative ranking system.
+        </p>
+        <p>
+          You can get involved with <strong>Project osmosis</strong> right now
+          by joining the <a href="https://discord.gg/xWKFDBu">Discord server</a>
+          or by contributing to the public code repository
+          <a href="http://github.com/skielred/osmosis">on GitHub</a>.
+        </p>
+        <p>
+          I want to emphasize on the fact that I'm not trying to change the
+          face of <em>osu!</em>. It has its own online ranking and my goal
+          is absolutely not to replace it. What I want is to give an option for
+          players who want something different than what is currently in place.
+          <br>
+          <em>osu!</em> has its own way of doing things and it's enough for
+          most players. But part of its players are frustrated by the current
+          system and want something different. I'm working for those people.
+        </p>
+      </section>
+      <section>
+        <h2>What is wrong with <em>osu!</em>?</h2>
+        <p>
+          The scoring system in standard is super wrong. The combo weights all
+          of the score. Even though combo rewards consistency of players, rhythm
+          games are about playing a song correctly. This can mostly be judged by
+          the ability of the player to keep a given accuracy no matter the
+          difficulty of the patterns to execute.<br>
+          Different ways to reward consistency can be to give a bonus if the
+          players fullcombo some parts. This is can be seen in <em>Project
+          Diva</em> for example. In <em>osu!</em>, that would be fullcombo-ing
+          Kiai parts. Another way would be to give a bonus at the end depending
+          on the max combo obtained.
+        </p>
+        <p>
+          The ranked beatmaps is an hell of copyright infrigement. Rhythm games
+          elegantly ties together the art of making games and making music. Both
+          parties have to be respected for a rhythm game to grow peacefully in
+          the ecosystem. Balantly infringing copyright will only makes you lose
+          esteem from composers and makes music licensing companies able to sue
+          you. Respecting artists rights actually usually encourages more
+          artists to get interested in your game, opening more opportunities for
+          new legitimate original content.
+        </p>
+        <p>
+          The pp system sucks and Score V2 isn't going to fix it.
+        </p>
+      </section>
+      <section>
+        <h2>How could <strong>Project osmosis</strong> fix that?</h2>
+        <p>
+          Imagine a leaderboard where scores and pp are based on your accuracy
+          and only legitimate songs are considered for being added to the ranked
+          pool. Welcome to <strong>Project osmosis</strong>.
+        </p>
+        <p>
+          Score is purely based on accuracy. pp are given depending on your
+          accuracy on a set amount of highest scores. Beatmaps are carefully
+          reviewed before being added to the ranking pool and can only be added
+          if using them is authorized by their authors. Songs from <em>osu!</em>
+          featured artists take priority.
+        </p>
+      </section>
+      <section>
+        <h2>How does <strong>osmosis</strong> work?</h2>
+        <p>
+          Scores you do on the official client are sent to <em>osu!</em>
+          servers, <strong>osmosis</strong> keep a copy of these scores and if
+          they match its ranking criteria, it will use it for pp calculation /
+          leaderboards.
+        </p>
+      </section>
+      <section>
+        <h2>Why not making a seperate game?</h2>
+        <p>
+          Maintaining an online game is a very tedious task. Left aside the
+          considerable effort of creating an entire video game. I don't
+          consider having the game dev and managing skills to make a game
+          like <em>osu!</em>, including online features, and then maintaining
+          it.
+        </p>
+        <p>
+          If you want to help, you can mod the current <em>osu!</em> or the
+          <a href="https://github.com/ppy/osu">open-source</a> one to make
+          things easier for <strong>osmosis</strong>. Namely sending custom
+          score data to <strong>osmosis</strong> server on song completion in
+          addition or instead of sending to <em>osu!</em> servers would be a
+          tremendous help.
+        </p>
+      </section>
+      <section>
+        <h2>Features</h2>
+        <ul>
+          <li>
+            <strong>Per-map leaderboard per accuracy</strong>: Compete on
+            ranked maps using accuracy as the strong metric instead of score.
+          </li>
+          <li>
+            <strong>Global leaderboard with original pp system</strong>: Compete
+            with others for the first place with a pp system that rewards
+            accuracy.
+          </li>
+          <li>
+            <strong>Ethically correct ranking criterias</strong>: Why stealing
+            songs when thousands composed by recognized artists can be enjoyed
+            legally? We don't support <em>osu!</em>'s passive take on copyright
+            infrigement that waits for the companies to DMCA them. Lots of
+            artists don't make the effort and some get hurts by being
+            associated with <em>osu!</em>. The fact that some other artists are
+            ok with it doesn't excuse the fact that others were hurt.
+          </li>
+          <li>
+            <strong>Custom manually set Star Rating</strong>: Star Rating plays
+            an important role in the pp system, algorithmically determined SR
+            is inefficient and inacurate.
+          </li>
+        </ul>
+      </section>
+    </main>
+
+    <footer>
+      <p>
+        <em>osu!</em> is the property of <em>ppy Pty Ltd</em>. This website and
+        service isn't a modification of the <em>osu!</em> software or website.
+        It is merely a service that makes a big use of the public API of
+        <em>osu!</em>.
+      </p>
+      <p>
+        <strong>Project osmosis</strong> is an independent service, created and
+        managed by <a href="https://tina.moe">Tina</a>. It's code source is
+        publicly released under the MIT License. Anyone is free to reuse or sell
+        the integrity or parts of it, as long as a copy of the MIT License is
+        included.
+      </p>
+    </footer>
+  </body>
+</html>

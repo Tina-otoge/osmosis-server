@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="news" class="content-block">
+	<h3 class="title">Latest news:</h3>
+	<div class="content">
+		<h4>Server launch</h4>
+		<div class="meta">Dec 11, 2019</div>
+		<p>
+			After <a href="{{ url_for('static', filename='old.html') }}">announcing back in July</a>
+			my plans of writing an accuracy-based leaderboard for <em>osu!</em>,
+			I finally came up with a working v1.
+		</p>
+	</div>
+</div>
+
+<div id="scores" class="content-block">
+	<h3 class="title">Latest scores:</h3>
+	{% for score in scores %}
+	<div class="content">
+		<div class="player">
+			<img src="{{ score.player.avatar_url }}" class="avatar">
+			<div class="username">{{ score.player.username }}</div>
+		</div>
+		<div class="chart">
+			{{ score.chart.artist }} - {{ score.chart.name }}
+			[{{ score.chart.difficulty_name }}]
+		</div>
+		<div class="points">
+			<div class="result">
+				{{ score.display_accuracy() }}: {{ score.points() }}pts
+			</div>
+			<div class="judges">
+				{{ score.great }} / {{ score.good }} / {{ score.meh }}
+			</div>
+			<div class="rank">
+				{{ score.rank }}
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+</div>
+
+{% endblock %}

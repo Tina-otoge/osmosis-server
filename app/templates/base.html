@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	{% if title %}
+	<title>{{ title }} - osmosis</title>
+	{% else %}
+	<title>osmosis, the accuracy-based osu! leaderboard</title>
+	{% endif %}
+	<link rel="stylesheet" href="{{ url_for('static', filename='osmosis.css') }}" type="text/css">
+    <link href="https://fonts.googleapis.com/css?family=Oxygen|Questrial&display=swap" rel="stylesheet">
+</head>
+<body>
+
+	<header>
+		<h1>Project osmosis</h1>
+		<nav>
+			<a href="{{ url_for('index') }}">Home</a>
+			<a href="{{ url_for('scores') }}">Scores</a>
+			<a href="{{ url_for('players') }}">Players</a>
+			<a href="{{ url_for('charts') }}">Charts</a>
+		</nav>
+		{% if title %}
+		<h2 id="subtitle">{{ title }}</h2>
+		{% endif %}
+	</header>
+
+	{% with messages = get_flashed_messages() %}{% if messages %}
+	<ul id="system-messages">
+		{% for message in messages %}
+		<li>{{ message }}</li>
+		{% endfor %}
+	</ul>
+	{% endif %}{% endwith %}
+
+	<main>
+		{% block content %}{% endblock %}
+	</main>
+
+	<footer>
+		<div id="copy">
+			<p>
+				<em>osu!</em> is the property of <em>ppy Pty Ltd</em>.
+			</p>
+			<p>
+				<em>osmosis</em> is an independent project.
+			</p>
+		</div>
+		<div id="data">
+			<p>
+				We do not sell any of the data we store. We do not have more
+				data on you than what your osu! scores expose about you.
+			</p>
+			<p>
+				This site does not take registrations and is cookie-free.
+				However you shouldn't give a damn about cookies.
+			</p>
+		</div>
+		<div id="links">
+			<ul>
+				<li><a href="https://github.com/skielred/osu">osu! fork</a></li>
+				<li><a href="https://github.com/skielred/osmosis">server</a></li>
+				<li><a href="https://github.com/skielred/osmosis#uploader">score uploader</a></li>
+				<li><a href="https://discord.gg/xWKFDBu">discord</a></li>
+				<li><a href="https://tina.moe">developer</a></li>
+			</ul>
+		</div>
+	</footer>
+
+</body>

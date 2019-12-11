@@ -1,0 +1,119 @@
+:root {
+    --dominant: #d2f3e0;
+    --primary: #feb9c8;
+    --secondary: #f6a7ba;
+    --contrast: #f5fbf1;
+    --primary-font: 'Oxygen', sans-serif;
+    --accent-font: 'Questrial', sans-serif;
+    --small-radius: 3px;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    background-color: var(--dominant);
+    font-family: var(--primary-font);
+}
+
+a, a:visited {
+    text-decoration: none;
+    color: var(--secondary);
+}
+
+a:hover, a:active {
+    text-decoration: underline;
+    color: var(--primary);
+}
+
+header {
+    box-shadow: 0 5px 10px var(--primary);
+    background-color: white;
+    text-align: center;
+    padding: 1em 0;
+}
+
+header > h1 {
+    margin: 0;
+    font-family: var(--accent-font);
+}
+
+header > nav a::after {
+    content: ' / ';
+    width: 1em;
+    display: inline-block;
+    color: initial;
+}
+header > nav a:last-child::after {
+    content: '';
+}
+
+main {
+    max-width: 800px;
+    border: 2px solid var(--primary);
+    background-color: white;
+    margin: 1em auto;
+    padding: 1em;
+} 
+
+main .content-block > .title {
+	background-color: var(--contrast);
+	border: 1px solid var(--primary);
+	padding: 0.5em;
+}
+
+footer {
+    background-color: rgba(0, 0, 0, .75);
+    color: white;
+    width: 90%;
+    margin: 1em auto;
+    padding: 1em;
+    border: 2px solid white;
+    display: flex;
+    justify-content: center;
+}
+
+footer > div {
+	max-width: 400px;
+	padding: 1em;
+}
+
+#scores .content {
+	color: white;
+	background-color: var(--secondary);
+	border-radius: var(--small-radius);
+	display: flex;
+	align-items: stretch;
+}
+
+#scores .content > div {
+	border-right: 4px dashed var(--primary);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	padding: 1em 2em;
+}
+
+#scores .content > div:last-child {
+	border-right: unset;
+}
+
+#scores .avatar {
+	max-height: 64px;
+	max-width: 64px;
+	display: block;
+	margin: 0.5em;
+	border-radius: var(--small-radius);
+}
+
+#scores .points {
+	font-size: 1.3em;
+	flex-direction: column;
+}
+
+#scores .judges {
+	font-size: small;
+	color: #ddd;
+}
