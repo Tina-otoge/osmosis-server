@@ -94,6 +94,11 @@ footer > div {
 	margin: 1em 0;
 }
 
+#scores .content a, #scores .content a:visited {
+	color: white;
+	text-shadow: 0 0 1px white;
+}
+
 #scores .content > div {
 	border-right: 4px dashed var(--primary);
 	display: flex;

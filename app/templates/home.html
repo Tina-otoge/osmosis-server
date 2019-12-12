@@ -19,12 +19,16 @@
 	{% for score in scores %}
 	<div class="content">
 		<div class="player">
-			<img src="{{ score.player.avatar_url }}" class="avatar">
-			<div class="username">{{ score.player.username }}</div>
+			<a href="{{ score.player.osu_link() }}">
+				<img src="{{ score.player.avatar_url }}" class="avatar">
+				<span class="username">{{ score.player.username }}</span>
+			</a>
 		</div>
 		<div class="chart">
 			<div class="song">
-				{{ score.chart.artist }} - {{ score.chart.name }}
+				<a href="{{ score.chart.osu_link() }}">
+					{{ score.chart.display_full_name() }}
+				</a>
 			</div>
 			<div class="difficulty">
 				[{{ score.chart.difficulty_name }}]

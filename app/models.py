@@ -142,21 +142,21 @@ class Chart(db.Model):
         if data.get('set_creator_name'):
             self.creator_name = data['set_creator_name']
 
-        def display_name(self):
-            if self.name == self.name_romanized:
-                return self.name
-            return '{0.name} ({0.name_romanized})'.format(self)
+    def display_name(self):
+        if self.name == self.name_romanized:
+            return self.name
+        return '{0.name} ({0.name_romanized})'.format(self)
 
-        def display_artist(self):
-            if self.artist == self.artist_romanized:
-                return self.artist
-            return '{0.artist} ({0.artist_romanized})'.format(self)
+    def display_artist(self):
+        if self.artist == self.artist_romanized:
+            return self.artist
+        return '{0.artist} ({0.artist_romanized})'.format(self)
 
-        def display_full_name(self):
-            return '{} - {}'.format(self.display_name(), self.display_artist())
+    def display_full_name(self):
+        return '{} - {}'.format(self.display_name(), self.display_artist())
 
-        def osu_link(self):
-            return 'https://osu.ppy.sh/b/{}'.format(self.id)
+    def osu_link(self):
+        return 'https://osu.ppy.sh/b/{}'.format(self.id)
 
     def __init__(self, data):
         self.id = data['chart_id']
