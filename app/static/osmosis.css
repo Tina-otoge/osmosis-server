@@ -56,7 +56,7 @@ header > nav a:last-child::after {
 }
 
 main {
-    max-width: 800px;
+    max-width: 1200px;
     border: 2px solid var(--primary);
     background-color: white;
     margin: 1em auto;
@@ -105,6 +105,7 @@ footer > div {
 	align-items: center;
 	justify-content: center;
 	padding: 1em 2em;
+	min-width: 300px;
 }
 
 #scores .content > div:last-child {
@@ -129,6 +130,7 @@ footer > div {
 
 #scores .chart, #scores .points {
 	flex-direction: column;
+	text-align: center;
 }
 
 #scores .points {
@@ -138,4 +140,8 @@ footer > div {
 #scores .judges {
 	font-size: small;
 	color: #ddd;
+}
+
+#scores .rank {
+	font-size: xx-large;
 }

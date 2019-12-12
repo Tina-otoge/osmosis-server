@@ -80,7 +80,10 @@ class Score(db.Model, SubmittableData):
         return '%.2f%%' % (self.accuracy * 100)
 
     def display_mods(self):
-        return self.mods.split(':')[:-1]
+        mods = self.mods.split(':')[:-1]
+        if ''.join(mods):
+            return mods
+        return []
 
     def update_fields(self, data):
         if data.get('great'):

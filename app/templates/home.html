@@ -41,7 +41,12 @@
 		</div>
 		<div class="points">
 			<div class="result">
-				{{ score.display_accuracy() }}: {{ score.points() }}pts
+				<div class="accuracy">
+					{{ score.display_accuracy() }}
+				</div>
+				<div class="actual-score">
+					{{ score.points() }}pts
+				</div>
 			</div>
 			<div class="judges">
 				{{ score.great }} / {{ score.good }} / {{ score.meh }} / {{ score.miss }}
