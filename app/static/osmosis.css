@@ -108,9 +108,20 @@ footer > div {
 	border-radius: var(--small-radius);
 }
 
+#scores .mods > * {
+	background-color: var(--primary);
+	padding: 0.2em 0.5em;
+	margin: 4px 1em;
+	font-size: small;
+	border-radius: var(--small-radius);
+}
+
+#scores .chart, #scores .points {
+	flex-direction: column;
+}
+
 #scores .points {
 	font-size: 1.3em;
-	flex-direction: column;
 }
 
 #scores .judges {

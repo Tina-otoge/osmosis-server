@@ -23,8 +23,17 @@
 			<div class="username">{{ score.player.username }}</div>
 		</div>
 		<div class="chart">
-			{{ score.chart.artist }} - {{ score.chart.name }}
-			[{{ score.chart.difficulty_name }}]
+			<div class="song">
+				{{ score.chart.artist }} - {{ score.chart.name }}
+			</div>
+			<div class="difficulty">
+				[{{ score.chart.difficulty_name }}]
+			</div>
+			<div class="mods">
+				{% for mod in score.display_mods() %}
+				<span>{{ mod }}</span>
+				{% endfor %}
+			</div>
 		</div>
 		<div class="points">
 			<div class="result">
