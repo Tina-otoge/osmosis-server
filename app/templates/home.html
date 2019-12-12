@@ -48,14 +48,14 @@
 					{{ score.display_accuracy() }}
 				</div>
 				<div class="actual-score">
-					{{ score.points() }}pts
+					{{ score.points() }}pts <span class="max-chart-score">/ {{ score.display_max() }}</span>
 				</div>
 			</div>
 			<div class="judges">
-				{{ score.great }} / {{ score.good }} / {{ score.meh }} / {{ score.miss }}
+				{{ score.great }} | {{ score.good }} | {{ score.meh }} | {{ score.miss }}
 			</div>
 			<div class="rank">
-				{{ score.rank }}
+				{{ score.display_rank() }}
 			</div>
 		</div>
 	</div>

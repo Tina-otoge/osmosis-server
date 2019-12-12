@@ -85,6 +85,22 @@ class Score(db.Model, SubmittableData):
             return mods
         return []
 
+    def display_rank(self):
+        if self.accuracy == 1:
+            return 'SS'
+        if self.accuracy > 0.95:
+            return 'S'
+        if self.accuracy > 0.9:
+            return 'A'
+        if self.accuracy > 0.8:
+            return 'B'
+        if self.accuracy > 0.7:
+            return 'C'
+        return 'D'
+
+    def display_max(self):
+        return (self.great + self.good + self.meh + self.miss) * 2
+
     def update_fields(self, data):
         if data.get('great'):
             self.great = data['great']

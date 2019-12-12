@@ -168,7 +168,7 @@ footer #links ul {
 	font-size: 1.3em;
 }
 
-#scores .judges {
+#scores .judges, #scores .max-chart-score {
 	font-size: small;
 	color: #ddd;
 }
