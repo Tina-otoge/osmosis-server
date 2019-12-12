@@ -44,6 +44,10 @@ def score():
             print(e)
         return 'OK'
 
+@app.route('/tutorial')
+def tutorial():
+    return render_template('tutorial.html')
+
 @app.route('/scores')
 def scores():
     return 'TODO'

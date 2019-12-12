@@ -14,3 +14,11 @@ class Config:
     SQLALCHEMY_TRACK_MODIFICATIONS = False
     SECRET_KEY = _get('SECRET_KEY', 'set a fucking key')
     LOGS_PATH = _get('LOGS_DIR', 'logs')
+    LINKS = {
+        'FORK': 'https://github.com/skielred/osu',
+        'DOTNET': 'https://dotnet.microsoft.com/download/dotnet-core/3.0',
+        'PUSHER': 'https://github.com/skielred/osmosis/releases/latest',
+        'DISCORD': 'https://discord.gg/xWKFDBu',
+        'REPO': 'https://github.com/skielred/osmosis',
+        'DEV': 'https://tina.moe',
+    }

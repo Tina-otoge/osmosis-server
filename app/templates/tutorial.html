@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<div id="manual" class="content-block">
+	<h3 class="title">Manual installing</h3>
+	<div class="content">
+		<ol>
+			<li>Download <a href="{{ config.LINKS.FORK }}">Tina's osu! fork</a></li>
+			<li>
+				<a href="{{ config.LINKS.PUSHER }}">Download the <em>osumosis</em> score pusher</a> and
+				<a href="https://superuser.com/a/737554">put it somewhere in your PATH</a>.
+				<p class="note warning">
+					It has to be named exactly <span class="code">osmosis_pusher</span> or <span class="code">osmosis_pusher.exe</span>!
+				</p>
+			</li>
+			<li>Download and install <a href="{{ config.LINKS.DOTNET }}">Microsoft's .NET Core 3.0 SDK</a></li>
+			<li>
+				Compile Tina's osu! or run it from source:
+				<ul>
+					<li>
+						Open a command prompt in the repository folder, on Windows you can do
+						<em>Shift+Right Click</em> and select "Open a Terminal here" or
+						"Open PowerShell here".
+					</li>
+					<li>
+						<span class="code">dotnet run --project osu.Desktop -c Release</span>
+						to run it directly without making production-ready compiled binaries
+					</li>
+				</ul>
+			</li>
+			<li>
+				You are ready to go! When you'll complete songs while playing <em>osu!</em>,
+				your scores will automatically be pushed to the server.
+			</li>
+		</ol>
+	</div>
+</div>
+<div id="prebuilt" class="content-block">
+	<h3 class="title">Pre-compiled builds</h3>
+	<div class="content">
+		<p>
+			There are no public builds, however you can try asking me over on
+			<a href="{{ config.LINKS.DISCORD }}">osmosis' Discord server</a>.
+		</p>
+	</div>
+</div>
+
+{% endblock %}

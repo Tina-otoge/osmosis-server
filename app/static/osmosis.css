@@ -84,6 +84,32 @@ footer {
 footer > div {
 	max-width: 400px;
 	padding: 1em;
+	flex: 1 1 0;
+	justify-content: center;
+}
+
+footer #links ul {
+	list-style: none;
+	padding: 0;
+	text-align: center;
+}
+
+.note {
+	border: 2px solid var(--secondary);
+	border-radius: var(--small-radius);
+	color: white;
+}
+
+.note.warning {
+	background-color: orange;
+	padding: 4px 1em;
+}
+
+.code {
+	background-color: #DEDEDE;
+	color: black;
+	font-family: monospace;
+	padding: 2px 8px;
 }
 
 #scores .content {

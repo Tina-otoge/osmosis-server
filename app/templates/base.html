@@ -23,6 +23,7 @@
 			<a disabled>Scores</a>
 			<a disabled>Players</a>
 			<a disabled>Charts</a>
+			<a href="{{ url_for('tutorial') }}">How To</a>
 		</nav>
 		{% if title %}
 		<h2 id="subtitle">{{ title }}</h2>
@@ -62,11 +63,11 @@
 		</div>
 		<div id="links">
 			<ul>
-				<li><a href="https://github.com/skielred/osu">osu! fork</a></li>
-				<li><a href="https://github.com/skielred/osmosis">server</a></li>
-				<li><a href="https://github.com/skielred/osmosis#uploader">score uploader</a></li>
-				<li><a href="https://discord.gg/xWKFDBu">discord</a></li>
-				<li><a href="https://tina.moe">developer</a></li>
+				<li><a href="{{ config.LINKS.FORK }}">osu! fork</a></li>
+				<li><a href="{{ config.LINKS.REPO }}">server</a></li>
+				<li><a href="{{ config.LINKS.PUSHER }}">score uploader</a></li>
+				<li><a href="{{ config.LINKS.DISCORD }}">discord</a></li>
+				<li><a href="{{ config.LINKS.DEV }}">developer</a></li>
 			</ul>
 		</div>
 	</footer>
