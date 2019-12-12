@@ -106,6 +106,8 @@ footer > div {
 	align-items: center;
 	justify-content: center;
 	padding: 1em 2em;
+	flex-direction: column;
+	text-align: center;
 }
 
 #scores .content > div:last-child {
@@ -134,11 +136,6 @@ footer > div {
 	margin: 4px 1em;
 	font-size: small;
 	border-radius: var(--small-radius);
-}
-
-#scores .chart, #scores .points {
-	flex-direction: column;
-	text-align: center;
 }
 
 #scores .points {
