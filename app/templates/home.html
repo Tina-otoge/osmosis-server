@@ -26,8 +26,11 @@
 		</div>
 		<div class="chart">
 			<div class="song">
-				<a href="{{ score.chart.osu_link() }}">
-					{{ score.chart.display_full_name() }}
+				<a
+					href="{{ score.chart.osu_link() }}"
+					title="{{ score.chart.display_full_romanized() }}"
+				>
+					{{ score.chart.display_full_original() }}
 				</a>
 			</div>
 			<div class="difficulty">

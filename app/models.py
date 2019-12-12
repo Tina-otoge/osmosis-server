@@ -162,6 +162,18 @@ class Chart(db.Model):
     def display_full_name(self):
         return '{} - {}'.format(self.display_name(), self.display_artist())
 
+    def display_full_original(self):
+        return '{} - {}'.format(
+            self.artist or self.artist_romanized,
+            self.name or self.name_romanized
+        )
+
+    def display_full_romanized(self):
+        return '{} - {}'.format(
+            self.artist_romanized or self.artist,
+            self.name_romanized or self.name
+        )
+
     def osu_link(self):
         return 'https://osu.ppy.sh/b/{}'.format(self.id)
 

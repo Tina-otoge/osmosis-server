@@ -105,11 +105,18 @@ footer > div {
 	align-items: center;
 	justify-content: center;
 	padding: 1em 2em;
-	min-width: 300px;
 }
 
 #scores .content > div:last-child {
 	border-right: unset;
+}
+
+#scores .chart {
+	flex-grow: 100;
+}
+
+#scores .player, #scores .points {
+	width: 200px;
 }
 
 #scores .avatar {
