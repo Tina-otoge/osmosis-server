@@ -38,9 +38,10 @@ def score():
             db.session.add_all([player, chart, score])
             db.session.commit()
             print('pushed to db!')
-        except KeyError as e:
+        except Exception as e:
             print('malformed score payload')
-            raise e
+            print('data:', data, sep='\n')
+            print(e)
         return 'OK'
 
 @app.route('/scores')

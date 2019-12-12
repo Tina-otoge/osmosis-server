@@ -17,9 +17,12 @@
 		<h1>Project osmosis</h1>
 		<nav>
 			<a href="{{ url_for('index') }}">Home</a>
-			<a href="{{ url_for('scores') }}">Scores</a>
-			<a href="{{ url_for('players') }}">Players</a>
-			<a href="{{ url_for('charts') }}">Charts</a>
+			{# <a href="{{ url_for('scores') }}">Scores</a> #}
+			{# <a href="{{ url_for('players') }}">Players</a> #}
+			{# <a href="{{ url_for('charts') }}">Charts</a> #}
+			<a disabled>Scores</a>
+			<a disabled>Players</a>
+			<a disabled>Charts</a>
 		</nav>
 		{% if title %}
 		<h2 id="subtitle">{{ title }}</h2>
