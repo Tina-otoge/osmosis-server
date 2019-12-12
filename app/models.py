@@ -143,13 +143,17 @@ class Chart(db.Model):
             self.creator_name = data['set_creator_name']
 
     def display_name(self):
-        if self.name == self.name_romanized:
+        if self.name == self.name_romanized or self.name_romanized is None:
             return self.name
+        if self.name is None:
+            return self.name_romanized
         return '{0.name} ({0.name_romanized})'.format(self)
 
     def display_artist(self):
-        if self.artist == self.artist_romanized:
+        if self.artist == self.artist_romanized or self.artist_romanized is None:
             return self.artist
+        if self.artist is None:
+            return self.artist_romanized
         return '{0.artist} ({0.artist_romanized})'.format(self)
 
     def display_full_name(self):
