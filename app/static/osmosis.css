@@ -131,7 +131,7 @@ footer #links ul {
 	display: flex;
 	align-items: center;
 	justify-content: center;
-	padding: 1em 2em;
+	padding: 1em 0.5em;
 	flex-direction: column;
 	text-align: center;
 }
