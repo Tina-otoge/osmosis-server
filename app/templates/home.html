@@ -17,53 +17,7 @@
 <div id="scores" class="content-block">
 	<h3 class="title">Latest scores:</h3>
 	{% for score in scores %}
-	<div class="content">
-		<div class="player">
-			<a href="{{ score.player.osu_link() }}">
-				<img src="{{ score.player.avatar_url }}" class="avatar">
-				<span class="username">{{ score.player.username }}</span>
-			</a>
-		</div>
-		<div class="chart">
-			<div class="song">
-				<a
-					href="{{ score.chart.osu_link() }}"
-					title="{{ score.chart.display_full_romanized() }}"
-				>
-					{{ score.chart.display_full_original() }}
-				</a>
-			</div>
-			<div class="difficulty">
-				<span class="difficulty-name">
-					[{{ score.chart.difficulty_name }}]
-				</span>
-				<span class="mapper">
-					(set by {{ score.chart.creator_name }})
-				</span>
-			</div>
-			<div class="mods">
-				{% for mod in score.display_mods() %}
-				<span>{{ mod }}</span>
-				{% endfor %}
-			</div>
-		</div>
-		<div class="points">
-			<div class="result">
-				<div class="accuracy">
-					{{ score.display_accuracy() }}
-				</div>
-				<div class="actual-score">
-					{{ score.points() }}pts <span class="max-chart-score">/ {{ score.display_max() }}</span>
-				</div>
-			</div>
-			<div class="judges">
-				{{ score.great }} | {{ score.good }} | {{ score.meh }} | {{ score.miss }}
-			</div>
-			<div class="rank">
-				{{ score.display_rank() }}
-			</div>
-		</div>
-	</div>
+	{% include "_score.html" %}
 	{% endfor %}
 </div>
 

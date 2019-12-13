@@ -35,15 +35,18 @@ def score():
             score.player_id = player.id
             score.chart_id = chart.id
             score.version = 1
-            if not score.is_rankable():
+            if not score.is_supported(chart):
+                db.session.rollback()
+                print('score ignored because not supported')
                 return 'Not OK'
             db.session.add_all([player, chart, score])
             db.session.commit()
-            print('pushed to db!')
+            print('pushed to db! ({} played by {})'.format(
+                chart.name, player.name
+            ))
         except Exception as e:
-            print('malformed score payload')
-            print('data:', data, sep='\n')
-            print(e)
+            print('malformed score payload', 'data:', data, sep='\n')
+            raise e
         return 'OK'
 
 @app.route('/tutorial')
@@ -61,3 +64,9 @@ def players():
 @app.route('/charts')
 def charts():
     return 'TODO'
+
+@app.route('/charts/<id>')
+def chart(id):
+    chart = Chart.query.get_or_404(id)
+    scores = Score.query.filter_by(chart_id=chart.id).limit(app.config['BOARD_SIZE']).all()
+    return render_template('chart.html', chart=chart, scores=scores)

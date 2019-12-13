@@ -22,3 +22,4 @@ class Config:
         'REPO': 'https://github.com/skielred/osmosis',
         'DEV': 'https://tina.moe',
     }
+    BOARD_SIZE = 50

@@ -49,7 +49,7 @@ class Player(db.Model, SubmittableData):
         self.id = data['id']
         self.update_fields(data)
 
-    def osu_link(self):
+    def get_osu_link(self):
         return 'https://osu.ppy.sh/users/{}'.format(self.id)
 
 
@@ -66,18 +66,38 @@ class Score(db.Model, SubmittableData):
     achieved_at = db.Column(db.DateTime, default=datetime.utcnow)
     client = db.Column(db.String(128))
     chart_id = db.Column(db.Integer, db.ForeignKey('chart.id'))
+    mode = db.Column(db.String(128))
     player_id = db.Column(db.Integer, db.ForeignKey('player.id'))
     version = db.Column(db.Integer)
 
-    def points(self):
+    def get_max_notes(self):
+        return self.great + self.good + self.meh + self.miss
+
+    def get_points(self):
         return math.floor(
             ((self.great * 6 + self.good * 2 + self.meh * 1) / 3)
         )
 
+    def get_max_points(self):
+        return self.get_max_notes() * 2
+
+    def get_accuracy(self):
+         return self.get_points() / self.get_max_points()
+
+    def is_supported(self, chart=None):
+        return not self.is_convert(chart)
+
+    def is_convert(self, chart=None):
+        chart = chart or self.chart
+        print('score mode:', self.mode)
+        print('chart mode:', chart.mode)
+        return self.mode != chart.mode
+
     def display_accuracy(self):
-        if self.accuracy == 1:
+        accuracy = self.get_accuracy()
+        if accuracy == 1:
             return '100%'
-        return '%.2f%%' % (self.accuracy * 100)
+        return '%.2f%%' % (accuracy * 100)
 
     def display_mods(self):
         mods = self.mods.split(':')[:-1]
@@ -88,8 +108,12 @@ class Score(db.Model, SubmittableData):
     def display_rank(self):
         if self.accuracy == 1:
             return 'SS'
+        if self.accuracy > 0.975:
+            return 'S+'
         if self.accuracy > 0.95:
             return 'S'
+        if self.accuracy > 0.925:
+            return 'S-'
         if self.accuracy > 0.9:
             return 'A'
         if self.accuracy > 0.8:
@@ -97,12 +121,6 @@ class Score(db.Model, SubmittableData):
         if self.accuracy > 0.7:
             return 'C'
         return 'D'
-
-    def display_max(self):
-        return (self.great + self.good + self.meh + self.miss) * 2
-
-    def is_rankable(self):
-        return True
 
     def update_fields(self, data):
         if data.get('great'):
@@ -121,6 +139,8 @@ class Score(db.Model, SubmittableData):
             self.max_combo = data['max_combo']
         if data.get('mods'):
             self.mods = data['mods']
+        if data.get('mode'):
+            self.mode = data['mode']
         if data.get('achieved_at'):
             self.achieved_at = datetime.strptime(
                 data['achieved_at'].split(',')[0], DATETIME_BACK
@@ -133,6 +153,7 @@ class Score(db.Model, SubmittableData):
 
 class Chart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    set_id = db.Column(db.Integer)
     mode = db.Column(db.String(128))
     duration = db.Column(db.Integer)
     bpm = db.Column(db.String(128))
@@ -141,10 +162,17 @@ class Chart(db.Model):
     artist = db.Column(db.String(128))
     artist_romanized = db.Column(db.String(128))
     difficulty_name = db.Column(db.String(128))
+    hp = db.Column(db.Float)
+    cs = db.Column(db.Float)
+    od = db.Column(db.Float)
+    ar = db.Column(db.Float)
+    sr = db.Column(db.Float)
     creator_name = db.Column(db.String(128))
     scores = db.relationship('Score', backref='chart', lazy='dynamic')
 
     def update_fields(self, data):
+        if data.get('set_id'):
+            self.set_id = data['set_id']
         if data.get('mode'):
             self.mode = data['mode']
         if data.get('duration'):
@@ -161,6 +189,16 @@ class Chart(db.Model):
             self.artist_romanized = data['romanized_artist']
         if data.get('difficulty_name'):
             self.difficulty_name = data['difficulty_name']
+        if data.get('hp'):
+            self.hp = data['hp']
+        if data.get('cs'):
+            self.cs = data['cs']
+        if data.get('od'):
+            self.od = data['od']
+        if data.get('ar'):
+            self.ar = data['ar']
+        if data.get('sr'):
+            self.sr = data['sr']
         if data.get('set_creator_name'):
             self.creator_name = data['set_creator_name']
 
@@ -193,8 +231,25 @@ class Chart(db.Model):
             self.name_romanized or self.name
         )
 
-    def osu_link(self):
+    def display_details(self, name):
+        filter = lambda x: round(x, 2) if x else 0
+        if name:
+            return filter(getattr(self, name))
+        details = {
+            'sr': self.sr,
+            'cs': self.cs,
+            'hp': self.hp,
+            'ar': self.ar,
+        }
+        return {key: filter(value) for key, value in details}
+
+    def get_osu_link(self):
         return 'https://osu.ppy.sh/b/{}'.format(self.id)
+
+    def get_osu_card_url(self):
+        if not self.set_id:
+            return False
+        return 'https://assets.ppy.sh/beatmaps/{}/covers/card.jpg'.format(self.set_id)
 
     def __init__(self, data):
         self.id = data['chart_id']
