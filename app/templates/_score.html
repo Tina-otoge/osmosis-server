@@ -1,0 +1,55 @@
+<div class="content">
+	<div class="player">
+		<a href="{{ score.player.get_osu_link() }}">
+			<img src="{{ score.player.avatar_url }}" class="avatar">
+			<span class="username">{{ score.player.username }}</span>
+		</a>
+	</div>
+	{% if not small %}
+	<div class="chart">
+		<div class="song">
+			<a
+	   href="{{ url_for('chart', id=score.chart.id) }}"
+	title="{{ score.chart.display_full_romanized() }}"
+ >
+ {{ score.chart.display_full_original() }}
+			</a>
+		</div>
+		<div class="difficulty">
+			<span class="difficulty-name">
+				[{{ score.chart.difficulty_name }}]
+				{{ score.chart.display_details('sr') }}⭐
+			</span>
+			<span class="creator">
+				(set by {{ score.chart.creator_name }})
+			</span>
+		</div>
+	</div>
+	{% endif %}
+	<div class="result">
+		<div class="result">
+			<div class="accuracy">
+				{{ score.display_accuracy() }}
+			</div>
+			<div class="points-summary">
+				<span class="points">
+					{{ score.get_points() }}pts
+				</span>
+				<span class="max-chart-points">
+					/ {{ score.get_max_points() }}
+				</span>
+			</div>
+		</div>
+		<div class="judges">
+			{{ score.great }} | {{ score.good }} | {{ score.meh }} | {{ score.miss }}
+		</div>
+		<div class="rank">
+			{{ score.display_rank() }}
+		</div>
+		<div class="mods">
+			{% for mod in score.display_mods() %}
+			<span>{{ mod }}</span>
+			{% endfor %}
+		</div>
+	</div>
+</div>

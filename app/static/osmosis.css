@@ -112,6 +112,15 @@ footer #links ul {
 	padding: 2px 8px;
 }
 
+#scores.mini {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+#scores.mini .title {
+	flex: 0 1 100%;
+}
+
 #scores .content {
 	color: white;
 	background-color: var(--secondary);
@@ -119,6 +128,10 @@ footer #links ul {
 	display: flex;
 	align-items: stretch;
 	margin: 1em 0;
+}
+
+#scores.mini .content {
+	margin: 1em 0.5em;
 }
 
 #scores .content a, #scores .content a:visited {
@@ -144,7 +157,7 @@ footer #links ul {
 	flex-grow: 100;
 }
 
-#scores .player, #scores .points {
+#scores .player, #scores .result {
 	width: 200px;
 }
 
@@ -164,11 +177,11 @@ footer #links ul {
 	border-radius: var(--small-radius);
 }
 
-#scores .points {
+#scores .result {
 	font-size: 1.3em;
 }
 
-#scores .judges, #scores .max-chart-score, #scores .mapper {
+#scores .judges, #scores .max-chart-points, #scores .creator {
 	font-size: small;
 }
 
