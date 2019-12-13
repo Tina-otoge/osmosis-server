@@ -101,6 +101,9 @@ class Score(db.Model, SubmittableData):
     def display_max(self):
         return (self.great + self.good + self.meh + self.miss) * 2
 
+    def is_rankable(self):
+        return True
+
     def update_fields(self, data):
         if data.get('great'):
             self.great = data['great']

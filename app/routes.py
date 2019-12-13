@@ -35,6 +35,8 @@ def score():
             score.player_id = player.id
             score.chart_id = chart.id
             score.version = 1
+            if not score.is_rankable():
+                return 'Not OK'
             db.session.add_all([player, chart, score])
             db.session.commit()
             print('pushed to db!')

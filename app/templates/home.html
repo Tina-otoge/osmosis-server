@@ -34,7 +34,12 @@
 				</a>
 			</div>
 			<div class="difficulty">
-				[{{ score.chart.difficulty_name }}]
+				<span class="difficulty-name">
+					[{{ score.chart.difficulty_name }}]
+				</span>
+				<span class="mapper">
+					(set by {{ score.chart.creator_name }})
+				</span>
 			</div>
 			<div class="mods">
 				{% for mod in score.display_mods() %}
