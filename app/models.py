@@ -94,9 +94,7 @@ class Score(db.Model, SubmittableData):
 
     @hybrid_property
     def points(self):
-        return math.floor(
-            ((self.perfect * 7 + self.great * 6 + self.good * 2 + self.ok + self.meh) / 3)
-        )
+        return (self.perfect * 7 + self.great * 6 + self.good * 2 + self.ok + self.meh) / 3
 
     @points.expression
     def sortable_points(cls):
@@ -152,6 +150,7 @@ class Score(db.Model, SubmittableData):
         return '<span data-toggle="tooltip" data-html="true" title="{}">{}</span>'.format(
             '<br>'.join(infos), mod['acronym']
         )
+
     def get_mods(self):
         if self.version == 1:
             mods = self.mods.split(':')[:-1]

@@ -52,7 +52,7 @@
 			</div>
 			<div class="points-summary">
 				<span class="points">
-					{{ score.points }}pts
+					{{ score.points | round | int }}pts
 				</span>
 				<span class="max-chart-points">
 					/ {{ score.get_max_points() }}
