@@ -83,13 +83,13 @@ footer {
     padding: 1em;
     border: 2px solid white;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
 }
 
 footer > div {
 	max-width: 400px;
 	padding: 1em;
-	flex: 1 1 0;
 	justify-content: center;
 }
 
