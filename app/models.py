@@ -54,6 +54,7 @@ class Player(db.Model, SubmittableData):
 
     def get_ranks(self, rank, above=False):
         if above:
+            ranks = self.get_all_ranks(just_names=True)
             target = ranks[ranks.index(rank):]
         else:
             target = [rank]
