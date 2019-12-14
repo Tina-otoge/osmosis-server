@@ -1,6 +1,7 @@
 <div class="content">
+	{% if not no_profile %}
 	<div class="player">
-		<a href="{{ score.player.get_osu_link() }}">
+		<a href="{{ url_for('player', id=score.player.id) }}">
 			<img src="{{ score.player.avatar_url }}" class="avatar">
 			<span class="username">{{ score.player.username }}</span>
 		</a>
@@ -8,11 +9,12 @@
 			{{ moment(score.achieved_at).fromNow() }}
 		</div>
 	</div>
+	{% endif %}
 	{% if not small %}
 	<div class="chart">
 		{% if score.chart.get_osu_card_url() %}
 		<div
-			class="chart-background"
+			class="cover"
 			style="background-image: url({{ score.chart.get_osu_card_url() }})"
 		></div>
 		{% endif %}
@@ -36,6 +38,11 @@
 		<div class="mode">
 			{{ score.mode }}
 		</div>
+		{% if no_profile %}
+		<div class="time">
+			{{ moment(score.achieved_at).fromNow() }}
+		</div>
+		{% endif %}
 	</div>
 	{% endif %}
 	<div class="result">

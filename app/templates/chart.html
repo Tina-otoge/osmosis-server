@@ -1,12 +1,19 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="meta" class="content-block">
+<div id="chart" class="content-block">
 	<div class="title">
-		<h3>{{ chart.display_full_original() }}</h3>
-		{% if chart.display_full_original() != chart.display_full_romanized() %}
-		<div class="romanized-title">{{ chart.display_full_romanized() }}</div>
-		{% endif %}
+		{% with cover_url = chart.get_osu_card_url() %}
+		{% include "_cover.html" %}
+		{% endwith %}
+		<h3 class="titles">
+			{{ chart.display_full_original() }}
+			{% if chart.display_full_original() != chart.display_full_romanized() %}
+			<span class="romanized-title">
+				{{ chart.display_full_romanized() }}
+			</span>
+			{% endif %}
+		</h3>
 		<div class="difficulty">
 			{{ chart.difficulty_name }} ({{ chart.mode }})
 			{{ chart.display_details('sr') }}⭐
@@ -34,9 +41,6 @@
 				</tr>
 			</tbody>
 		</table>
-		{% if chart.get_osu_card_url() %}
-		<img class="chart-card" src="{{ chart.get_osu_card_url() }}">
-		{% endif %}
 		<p>
 			<a href="{{ chart.get_osu_link() }}">osu! leaderboard</a>
 		</p>

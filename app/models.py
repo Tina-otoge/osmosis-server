@@ -52,6 +52,14 @@ class Player(db.Model, SubmittableData):
         self.id = data['id']
         self.update_fields(data)
 
+    def get_ranks(self, rank, above=False):
+        ranks = ['D', 'C', 'B', 'A', 'S-', 'S', 'S+', 'SS']
+        if above:
+            target = ranks[ranks.index(rank):]
+        else:
+            target = [rank]
+        return self.scores.filter(Score.rank.in_(rank)).count()
+
     def get_osu_link(self):
         return 'https://osu.ppy.sh/users/{}'.format(self.id)
 

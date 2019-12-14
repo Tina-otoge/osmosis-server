@@ -18,10 +18,9 @@
 		<nav>
 			<a href="{{ url_for('index') }}">Home</a>
 			{# <a href="{{ url_for('scores') }}">Scores</a> #}
-			{# <a href="{{ url_for('players') }}">Players</a> #}
-			{# <a href="{{ url_for('charts') }}">Charts</a> #}
 			<a disabled>Scores</a>
-			<a disabled>Players</a>
+			<a href="{{ url_for('players') }}">Players</a>
+			{# <a href="{{ url_for('charts') }}">Charts</a> #}
 			<a disabled>Charts</a>
 			<a href="{{ url_for('tutorial') }}">How To</a>
 		</nav>

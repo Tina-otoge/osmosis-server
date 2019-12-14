@@ -59,7 +59,8 @@ def scores():
 
 @app.route('/players')
 def players():
-    return 'TODO'
+    players = Player.query.all()
+    return render_template('players.html', players=players)
 
 @app.route('/charts')
 def charts():
@@ -74,3 +75,9 @@ def chart(id):
         .all()
     )
     return render_template('chart.html', chart=chart, scores=scores)
+
+@app.route('/players/<id>')
+def player(id):
+    player = Player.query.get_or_404(id)
+    scores = Score.query.filter_by(player=player).order_by(Score.achieved_at.desc()).all()
+    return render_template('player.html', player=player, scores=scores)

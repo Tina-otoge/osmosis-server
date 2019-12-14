@@ -117,29 +117,78 @@ footer #links ul {
 	padding: 2px 8px;
 }
 
-#scores.mini {
-	display: flex;
-	flex-wrap: wrap;
+
+.avatar {
+	display: block;
+	max-height: 64px;
+	max-width: 64px;
+	margin: 0.5em;
+	object-fit: cover;
+	box-sizing: content-box;
+	border-radius: var(--small-radius);
 }
 
-#scores.mini .title {
+.cover {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	background-size: cover;
+	background-position: center;
+	filter: blur(4px) brightness(0.5);
+}
+
+.content-block {
+	display: flex;
+	flex-direction: column;
+}
+
+.content-block .title {
 	flex: 0 1 100%;
 }
 
-#scores .content {
+#scores.mini {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: wrap;
+	justify-content: space-between;
+}
+
+#scores .content, #players .content {
 	color: white;
 	background-color: var(--secondary);
 	border-radius: var(--small-radius);
 	display: flex;
-	align-items: stretch;
 	margin: 1em 0;
+}
+
+#scores .content {
+	align-items: stretch;
+}
+
+#players .content {
+	align-items: center;
+}
+
+#players .content > * {
+	padding: 0 0.5em;
 }
 
 #scores.mini .content {
 	margin: 1em 0.5em;
 }
 
-#scores .content a, #scores .content a:visited {
+#scores.mini.two .content {
+	flex-basis: calc(50% - 1em);
+}
+
+#players .username {
+	font-size: larger;
+}
+
+#scores .content a,
+#scores .content a:visited,
+#players .content a,
+#players .content a:visited {
 	color: white;
 	text-shadow: 0 0 1px white;
 }
@@ -160,37 +209,56 @@ footer #links ul {
 
 #scores .chart {
 	flex-grow: 100;
+}
+
+#scores .chart, #player .title, #chart .title {
 	overflow: hidden;
 	position: relative;
+	padding: 0;
 }
 
-#scores .chart > * {
+#scores .chart > *, #player .title > *, #chart .title > * {
 	z-index: 2;
+	position: relative;
+	padding: 0.5em 0;
 }
 
-#scores .chart > .chart-background {
+#scores .chart > .cover, #player .title > .cover, #chart .title > .cover {
 	z-index: 1;
-}
-
-#scores .chart-background {
-	height: 100%;
-	width: 100%;
 	position: absolute;
-	background-size: cover;
-	background-position: center;
-	filter: blur(4px) brightness(0.5);
 }
 
 #scores .player, #scores .result {
 	width: 200px;
 }
 
-#scores .avatar {
-	max-height: 64px;
-	max-width: 64px;
-	display: block;
-	margin: 0.5em;
-	border-radius: var(--small-radius);
+#player .avatar {
+	max-height: 100px;
+	max-width: 100px;
+}
+
+#player .title, #chart .title {
+	display: flex;
+	align-items: center;
+	color: white;
+}
+
+#chart .title {
+	flex-direction: column;
+}
+
+#chart .titles {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#chart .romanized-title {
+	font-size: smaller;
+}
+
+#player .title .username {
+	font-size: xx-large;
 }
 
 #scores .mods > * {

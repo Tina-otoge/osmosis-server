@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="player" class="content-block">
+	<div class="title">
+		<div
+			class="cover"
+			style="background-image:url({{ player.cover_url }})"
+		></div>
+		<img src="{{ player.avatar_url }}" class="avatar">
+		<h3 class="username">{{ player.username }}</h3>
+	</div>
+</div>
+<div id="scores" class="content-block mini two">
+	<h3 class="title">Scores:</h3>
+	{% with no_profile=True %}
+	{% for score in scores %}
+	{% include "_score.html" %}
+	{% endfor %}
+	{% endwith %}
+</div>
+{% endblock content %}
