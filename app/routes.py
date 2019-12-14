@@ -42,7 +42,7 @@ def score():
             db.session.add_all([player, chart, score])
             db.session.commit()
             print('pushed to db! ({} played by {})'.format(
-                chart.name, player.name
+                chart.name, player.username
             ))
         except Exception as e:
             print('malformed score payload', 'data:', data, sep='\n')
