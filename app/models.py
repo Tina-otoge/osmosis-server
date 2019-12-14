@@ -1,6 +1,7 @@
 from datetime import datetime
 import math
 
+from sqlalchemy import func
 from sqlalchemy.ext.hybrid import hybrid_property
 
 DATETIME_BACK = '%Y-%m-%d %H:%M:%S'
@@ -80,14 +81,12 @@ class Score(db.Model, SubmittableData):
     @hybrid_property
     def points(self):
         return math.floor(
-            ((self.perfect * 7 + self.great * 6 + self.good * 2 + self.meh) / 3)
+            ((self.perfect * 7 + self.great * 6 + self.good * 2 + self.ok + self.meh) / 3)
         )
 
     @points.expression
-    def points(cls):
-        return math.floor(
-            (cls.perfect * 7 + cls.great * 6 + cls.good * 2 + cls.meh) / 3
-        )
+    def sortable_points(cls):
+            return cls.perfect * 7 + cls.great * 6 + cls.good * 2 + cls.ok + cls.meh
 
     def get_max_points(self):
         if self.mode == 'mania':

@@ -8,7 +8,8 @@
 		<div class="romanized-title">{{ chart.display_full_romanized() }}</div>
 		{% endif %}
 		<div class="difficulty">
-			{{ chart.difficulty_name }} {{ chart.display_details('sr') }}⭐
+			{{ chart.difficulty_name }} ({{ chart.mode }}
+			{{ chart.display_details('sr') }}⭐
 			<span class="creator">({{ chart.creator_name }})</span>
 		</div>
 	</div>

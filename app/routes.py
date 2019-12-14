@@ -69,7 +69,7 @@ def charts():
 def chart(id):
     chart = Chart.query.get_or_404(id)
     scores = (Score.query.filter_by(chart_id=chart.id)
-        .order_by(Score.points.desc())
+        .order_by(Score.sortable_points.desc())
         .limit(app.config['BOARD_SIZE'])
         .all()
     )
