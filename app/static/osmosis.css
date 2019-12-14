@@ -6,6 +6,7 @@
     --dominant: #ddd;
     --primary: #000;
     --secondary: #999;
+    --link: #f6a7ba;;
     --contrast: #fff;
     --primary-font: 'Oxygen', sans-serif;
     --accent-font: 'Questrial', sans-serif;
@@ -25,7 +26,7 @@ body {
 
 a, a:visited {
     text-decoration: none;
-    color: var(--secondary);
+    color: var(--link);
 }
 
 a:hover, a:active {
