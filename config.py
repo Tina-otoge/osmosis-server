@@ -23,3 +23,4 @@ class Config:
         'DEV': 'https://tina.moe',
     }
     BOARD_SIZE = 50
+    MOMENT_DEFAULT_FORMAT='LLL'

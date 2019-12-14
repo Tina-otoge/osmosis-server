@@ -4,6 +4,9 @@
 			<img src="{{ score.player.avatar_url }}" class="avatar">
 			<span class="username">{{ score.player.username }}</span>
 		</a>
+		<div class="time">
+			{{ moment(score.achieved_at).fromNow() }}
+		</div>
 	</div>
 	{% if not small %}
 	<div class="chart">

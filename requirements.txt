@@ -1,4 +1,5 @@
 flask
 flask-migrate
+flask-moment
 flask-sqlalchemy
 pyjwt
