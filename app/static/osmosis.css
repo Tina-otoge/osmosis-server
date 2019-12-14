@@ -150,7 +150,7 @@ footer #links ul {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
-	justify-content: space-between;
+	justify-content: center;
 }
 
 #scores .content, #players .content {
