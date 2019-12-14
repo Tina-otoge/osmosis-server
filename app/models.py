@@ -57,6 +57,8 @@ class Player(db.Model, SubmittableData):
 
 class Score(db.Model, SubmittableData):
     id = db.Column(db.Integer, primary_key=True)
+    perfect = db.Column(db.Integer, default=0)
+    ok = db.Column(db.Integer, default=0)
     great = db.Column(db.Integer, default=0)
     good = db.Column(db.Integer, default=0)
     meh = db.Column(db.Integer, default=0)
@@ -68,24 +70,28 @@ class Score(db.Model, SubmittableData):
     achieved_at = db.Column(db.DateTime, default=datetime.utcnow)
     client = db.Column(db.String(128))
     chart_id = db.Column(db.Integer, db.ForeignKey('chart.id'))
-    mode = db.Column(db.String(128))
+    mode = db.Column(db.String(128), default='osu')
     player_id = db.Column(db.Integer, db.ForeignKey('player.id'))
     version = db.Column(db.Integer)
 
     def get_max_notes(self):
-        return self.great + self.good + self.meh + self.miss
+        return self.perfect + self.great + self.good + self.ok + self.meh + self.miss
 
     @hybrid_property
     def points(self):
         return math.floor(
-            ((self.great * 6 + self.good * 2 + self.meh) / 3)
+            ((self.perfect * 7 + self.great * 6 + self.good * 2 + self.meh) / 3)
         )
 
     @points.expression
     def points(cls):
-        return (cls.great * 6 + cls.good * 2 + cls.meh) / 3
+        return math.floor(
+            (cls.perfect * 7 + cls.great * 6 + cls.good * 2 + cls.meh) / 3
+        )
 
     def get_max_points(self):
+        if self.mode == 'mania':
+            return math.floor(self.get_max_notes() * 7 / 3)
         return self.get_max_notes() * 2
 
     def get_accuracy(self):
@@ -105,6 +111,15 @@ class Score(db.Model, SubmittableData):
         if accuracy == 1:
             return '100%'
         return '%.2f%%' % (accuracy * 100)
+
+    def display_judges(self):
+        modes_judges = {
+            'osu': [self.great, self.good, self.meh, self.miss],
+            'taiko': [self.great, self.good, self.miss],
+            'catch': [self.perfect, self.miss],
+            'mania': [self.perfect, self.great, self.good, self.ok, self.meh, self.miss]
+        }
+        return ' | '.join(map(str, modes_judges[self.mode]))
 
     def display_mods(self):
         mods = self.mods.split(':')[:-1]
