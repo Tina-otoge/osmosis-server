@@ -68,5 +68,9 @@ def charts():
 @app.route('/charts/<id>')
 def chart(id):
     chart = Chart.query.get_or_404(id)
-    scores = Score.query.filter_by(chart_id=chart.id).limit(app.config['BOARD_SIZE']).all()
+    scores = (Score.query.filter_by(chart_id=chart.id)
+        .order_by(Score.points.desc())
+        .limit(app.config['BOARD_SIZE'])
+        .all()
+    )
     return render_template('chart.html', chart=chart, scores=scores)
