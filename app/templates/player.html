@@ -10,6 +10,62 @@
 		<img src="{{ player.avatar_url }}" class="avatar">
 		<h3 class="username">{{ player.username }}</h3>
 	</div>
+	<div class="content">
+		{% if player.osu_join_date %}
+		<p>
+			Joined osu! {{ moment(player.osu_join_date).fromNow() }}
+			({{ moment(player.osu_join_date).format() }})
+		</p>
+		{% endif %}
+		{% if player.joined_at %}
+		<p>
+			Joined osmosis {{ moment(player.joined_at).fromNow() }}
+			({{ moment(player.joined_at).format() }})
+		</p>
+		{% endif %}
+		{% if player.country %}
+		<p>
+			From {{ player.country }}
+		</p>
+		{% endif %}
+		<div>
+			{% if player.twitter %}
+			<p>
+				Twitter: <a href="https://twitter.com/{{ player.twitter }}">
+					@{{ player.twitter }}
+			</a>
+			</p>
+			{% endif %}
+			{% if player.discord %}
+			<p>
+				Discord: {{ player.discord }}
+			</p>
+			{% endif %}
+			{% if player.website %}
+			<p>
+				Website: <a href="{{ player.website }}">{{ player.website }}</a>
+			</p>
+			{% endif %}
+		</div>
+		<div>
+			<table>
+				<thead>
+					<tr>
+						{% for rank in player.get_all_ranks(just_names=True) %}
+						<th>{{ rank }}</th>
+						{% endfor %}
+					</tr>
+				</thead>
+				<tbody>
+					<tr>
+						{% for rank in player.get_all_ranks().values() %}
+						<td>{{ rank }}</td>
+						{% endfor %}
+					</tr>
+				</tbody>
+			</table>
+		</div>
+	</div>
 </div>
 <div id="scores" class="content-block mini two">
 	<h3 class="title">Scores:</h3>
