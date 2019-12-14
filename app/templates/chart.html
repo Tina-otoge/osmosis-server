@@ -44,6 +44,11 @@
 		<p>
 			<a href="{{ chart.get_osu_link() }}">osu! leaderboard</a>
 		</p>
+		{% if chart.get_osu_preview() %}
+		<p>
+			<audio src="{{ chart.get_osu_preview() }}" controls loop></audio>
+		</p>
+		{% endif %}
 	</div>
 </div>
 <div id="scores" class="content-block mini">
