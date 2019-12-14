@@ -19,7 +19,7 @@
 
 body {
     margin: 0;
-    min-width: 500px;
+    min-width: 480px;
     background-color: var(--dominant);
     font-family: var(--primary-font);
 }
@@ -83,13 +83,13 @@ footer {
     padding: 1em;
     border: 2px solid white;
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
 }
 
 footer > div {
 	max-width: 400px;
 	padding: 1em;
-	flex: 1 1 0;
 	justify-content: center;
 }
 
@@ -203,8 +203,13 @@ footer #links ul {
 	text-align: center;
 }
 
+#scores .content > div:nth-last-child(2) {
+	border-right: unset;
+}
+
 #scores .content > div:last-child {
 	border-right: unset;
+	border-left: 4px dashed var(--primary);
 }
 
 #scores .chart {
@@ -215,6 +220,8 @@ footer #links ul {
 	overflow: hidden;
 	position: relative;
 	padding: 0;
+	background-color: black;
+	color: white;
 }
 
 #scores .chart > *, #player .title > *, #chart .title > * {
@@ -240,7 +247,6 @@ footer #links ul {
 #player .title, #chart .title {
 	display: flex;
 	align-items: center;
-	color: white;
 }
 
 #chart .title {

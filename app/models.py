@@ -296,6 +296,11 @@ class Chart(db.Model):
             return False
         return 'https://assets.ppy.sh/beatmaps/{}/covers/card.jpg'.format(self.set_id)
 
+    def get_osu_preview(self):
+        if not self.set_id:
+            return False
+        return 'https:////b.ppy.sh/preview/{}.mp3'.format(self.set_id)
+
     def __init__(self, data):
         self.id = data['chart_id']
         self.update_fields(data)
