@@ -160,6 +160,25 @@ footer #links ul {
 
 #scores .chart {
 	flex-grow: 100;
+	overflow: hidden;
+	position: relative;
+}
+
+#scores .chart > * {
+	z-index: 2;
+}
+
+#scores .chart > .chart-background {
+	z-index: 1;
+}
+
+#scores .chart-background {
+	height: 100%;
+	width: 100%;
+	position: absolute;
+	background-size: cover;
+	background-position: center;
+	filter: blur(4px) brightness(0.5);
 }
 
 #scores .player, #scores .result {

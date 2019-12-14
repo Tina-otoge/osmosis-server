@@ -7,6 +7,12 @@
 	</div>
 	{% if not small %}
 	<div class="chart">
+		{% if score.chart.get_osu_card_url() %}
+		<div
+			class="chart-background"
+			style="background-image: url({{ score.chart.get_osu_card_url() }})"
+		></div>
+		{% endif %}
 		<div class="song">
 			<a
 	   href="{{ url_for('chart', id=score.chart.id) }}"
