@@ -261,15 +261,27 @@ footer #links ul {
 	font-size: xx-large;
 }
 
-#scores .mods > * {
-	background-color: var(--primary);
-	padding: 0.2em 0.5em;
-	margin: 4px 1em;
-	font-size: small;
-	border-radius: var(--small-radius);
+#scores .result > * {
+	margin: 4px 0;
 }
 
-#scores .result {
+#scores .mods > *, #scores .flairs > * {
+	border-radius: var(--small-radius);
+	padding: 0.2em 0.5em;
+	margin: 4px 1em;
+}
+
+#scores .mods > * {
+	background-color: var(--primary);
+	font-size: small;
+}
+
+#scores .flairs > * {
+	background: linear-gradient(45deg, var(--primary), transparent);
+	color: var(--contrast);
+}
+
+#scores .scoring {
 	font-size: 1.3em;
 }
 

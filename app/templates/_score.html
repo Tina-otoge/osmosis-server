@@ -46,7 +46,7 @@
 	</div>
 	{% endif %}
 	<div class="result">
-		<div class="result">
+		<div class="scoring">
 			<div class="accuracy">
 				{{ score.display_accuracy() }}
 			</div>
@@ -68,6 +68,11 @@
 		<div class="mods">
 			{% for mod in score.display_mods() %}
 			<span>{{ mod }}</span>
+			{% endfor %}
+		</div>
+		<div class="flairs">
+			{% for flair in score.flairs %}
+			<span>{{ flair }}</span>
 			{% endfor %}
 		</div>
 	</div>

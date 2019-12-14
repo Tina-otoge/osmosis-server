@@ -102,6 +102,16 @@ class Score(db.Model, SubmittableData):
     def sortable_points(cls):
             return cls.perfect * 7 + cls.great * 6 + cls.good * 2 + cls.ok + cls.meh
 
+    @hybrid_property
+    def flairs(self):
+        result = []
+        if self.get_accuracy() == 1:
+            result.append('perfect')
+        elif self.miss == 0:
+            result.append('full combo')
+        return result
+
+
     def get_max_points(self):
         if self.mode == 'mania':
             return math.floor(self.get_max_notes() * 7 / 3)
