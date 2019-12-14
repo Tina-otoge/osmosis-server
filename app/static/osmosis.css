@@ -1,8 +1,12 @@
 :root {
-    --dominant: #d2f3e0;
-    --primary: #feb9c8;
-    --secondary: #f6a7ba;
-    --contrast: #f5fbf1;
+    /* --dominant: #d2f3e0; */
+    /* --primary: #feb9c8; */
+    /* --secondary: #f6a7ba; */
+    /* --contrast: #f5fbf1; */
+    --dominant: #ddd;
+    --primary: #000;
+    --secondary: #999;
+    --contrast: #fff;
     --primary-font: 'Oxygen', sans-serif;
     --accent-font: 'Questrial', sans-serif;
     --small-radius: 3px;
