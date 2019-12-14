@@ -48,22 +48,25 @@
 			{% endif %}
 		</div>
 		<div>
-			<table>
-				<thead>
-					<tr>
-						{% for rank in player.get_all_ranks(just_names=True) %}
-						<th>{{ rank }}</th>
-						{% endfor %}
-					</tr>
-				</thead>
-				<tbody>
-					<tr>
-						{% for rank in player.get_all_ranks().values() %}
-						<td>{{ rank }}</td>
-						{% endfor %}
-					</tr>
-				</tbody>
-			</table>
+			{# <table> #}
+			{# 	<thead> #}
+			{# 		<tr> #}
+			{# 			{% for rank in player.get_all_ranks(just_names=True) %} #}
+			{# 			<th>{{ rank }}</th> #}
+			{# 			{% endfor %} #}
+			{# 		</tr> #}
+			{# 	</thead> #}
+			{# 	<tbody> #}
+			{# 		<tr> #}
+			{# 			{% for rank in player.get_all_ranks().values() %} #}
+			{# 			<td>{{ rank }}</td> #}
+			{# 			{% endfor %} #}
+			{# 		</tr> #}
+			{# 	</tbody> #}
+			{# </table> #}
+			<p>
+				Plays: {{ player.scores.count() }}
+			</p>
 		</div>
 		<p>
 			<a href="{{ player.get_osu_link() }}">osu! profile</a>
