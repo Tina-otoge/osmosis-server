@@ -12,7 +12,7 @@ except:
 @app.route('/')
 @app.route('/index')
 def index():
-    latest_scores = Score.query.filter_by(player_id=9118680).order_by(Score.achieved_at.desc()).limit(10)
+    latest_scores = Score.query.filter_by.order_by(Score.achieved_at.desc()).limit(10)
     return render_template('home.html', scores=latest_scores)
 
 @app.route('/score', methods=['POST'])
