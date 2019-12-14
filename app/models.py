@@ -144,10 +144,30 @@ class Score(db.Model, SubmittableData):
         }
         return ' | '.join(map(str, modes_judges[self.mode]))
 
-    def display_mods(self):
-        mods = self.mods.split(':')[:-1]
+    def display_mod(self, mod):
+        infos = []
+        for key, value in mod.items():
+            if key != 'acronym':
+                infos.append('{}: {}'.format(key, value))
+        return '<span data-toggle="tooltip" data-html="true" title="{}">{}</span>'.format(
+            '<br>'.join(infos), mod['acronym']
+        )
+    def get_mods(self):
+        if self.version == 1:
+            mods = self.mods.split(':')[:-1]
+            if not ''.join(mods):
+                return []
+            return [{'acronym': mod} for mod in mods]
+        if not self.mods:
+            return []
+        mods = self.mods.split('\n')
         if ''.join(mods):
-            return mods
+            return [{
+                pair.split('=')[0]: pair.split('=')[1]
+                    for pair in mod.split(' ')
+                }
+                for mod in mods
+            ]
         return []
 
     def display_rank(self):
@@ -183,7 +203,14 @@ class Score(db.Model, SubmittableData):
         if data.get('max_combo'):
             self.max_combo = data['max_combo']
         if data.get('mods'):
-            self.mods = data['mods']
+            if isinstance(data['mods'], str) and ':' in data['mods']:
+                self.mods = '\n'.join([
+                    'acronym={}'.format(x) for x in data['mods'][:-1].split(':')
+                ])
+            else:
+                self.mods = '\n'.join([' '.join(['{}={}'.format(key, value)
+                    for key, value in mod.items()])
+                          for mod in data['mods']])
         if data.get('mode'):
             self.mode = data['mode']
         if data.get('achieved_at'):

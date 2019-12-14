@@ -66,8 +66,8 @@
 			{{ score.display_rank() }}
 		</div>
 		<div class="mods">
-			{% for mod in score.display_mods() %}
-			<span>{{ mod }}</span>
+			{% for mod in score.get_mods() %}
+			{{ score.display_mod(mod) | safe }}
 			{% endfor %}
 		</div>
 		<div class="flairs">

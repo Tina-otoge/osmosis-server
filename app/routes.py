@@ -37,7 +37,7 @@ def score():
             score.achieved_at = datetime.utcnow()
             score.player_id = player.id
             score.chart_id = chart.id
-            score.version = 1
+            score.version = 2
             if not score.is_supported(chart):
                 db.session.rollback()
                 print('score ignored because not supported')
