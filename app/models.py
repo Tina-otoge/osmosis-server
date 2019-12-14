@@ -61,7 +61,7 @@ class Player(db.Model, SubmittableData):
         return self.scores.filter(Score.rank.in_(rank)).count()
 
     def get_all_ranks(self, just_names=False):
-        ranks = ['D', 'C', 'B', 'A', 'S-', 'S', 'S+', 'SS']
+        ranks = ['D', 'C', 'B', 'A', 'A+', 'S', 'S+', 'S++', 'SS']
         if just_names:
             return ranks
         return {x: self.get_ranks(x) for x in ranks}
@@ -172,12 +172,14 @@ class Score(db.Model, SubmittableData):
     def display_rank(self):
         if self.accuracy == 1:
             return 'SS'
-        if self.accuracy > 0.975:
+        if self.accuracy > 0.985:
+            return 'S++'
+        if self.accuracy > 0.9725:
             return 'S+'
         if self.accuracy > 0.95:
             return 'S'
         if self.accuracy > 0.925:
-            return 'S-'
+            return 'A+'
         if self.accuracy > 0.9:
             return 'A'
         if self.accuracy > 0.8:
