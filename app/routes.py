@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from flask import request, render_template
 
 from app import app, db
@@ -32,6 +34,7 @@ def score():
             else:
                 chart.update_fields(data['chart'])
             score = Score(data['score'])
+            score.achieved_at = datetime.utcnow()
             score.player_id = player.id
             score.chart_id = chart.id
             score.version = 1
