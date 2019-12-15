@@ -235,7 +235,11 @@ footer #links ul {
 	position: absolute;
 }
 
-#scores .player, #scores .result {
+#scores .player {
+	width: 170px;
+}
+
+#scores .result {
 	width: 200px;
 }
 
