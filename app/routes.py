@@ -1,6 +1,6 @@
 from datetime import datetime
 
-from flask import request, render_template
+from flask import jsonify, request, render_template
 
 from app import app, db
 from app.models import Chart, Player, Score
@@ -85,3 +85,10 @@ def player(id):
     player = Player.query.get_or_404(id)
     scores = Score.query.filter_by(player=player).order_by(Score.achieved_at.desc()).all()
     return render_template('player.html', player=player, scores=scores)
+
+@app.route('/versions')
+def versions():
+    return jsonify({
+        'osu': 1,
+        'pusher': 1,
+    })
