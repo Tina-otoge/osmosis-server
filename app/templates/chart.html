@@ -42,11 +42,16 @@
 			</tbody>
 		</table>
 		<p>
-			<a href="{{ chart.get_osu_link() }}">osu! leaderboard</a>
+			<a href="{{ chart.get_osu_link() }}">osu! beatmap set page</a>
 		</p>
 		{% if chart.get_osu_preview() %}
 		<p>
 			<audio src="{{ chart.get_osu_preview() }}" controls loop></audio>
+		</p>
+		{% endif %}
+		{% if chart.get_osu_download() %}
+		<p>
+			<a href="{{ chart.get_osu_download() }}">direct download</a>
 		</p>
 		{% endif %}
 	</div>
