@@ -119,12 +119,14 @@ class Score(db.Model, SubmittableData):
          return self.points / self.get_max_points()
 
     def is_supported(self, chart=None):
-        return not self.is_convert(chart)
+        if not self.chart_id:
+            return False
+        if self.is_convert(chart):
+            return False
+        return True
 
     def is_convert(self, chart=None):
         chart = chart or self.chart
-        print('score mode:', self.mode)
-        print('chart mode:', chart.mode)
         return self.mode != chart.mode
 
     def display_accuracy(self):

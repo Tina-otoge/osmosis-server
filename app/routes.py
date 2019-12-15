@@ -48,6 +48,7 @@ def score():
                 chart.name, player.username
             ))
         except Exception as e:
+            db.session.rollback()
             print('malformed score payload', 'data:', data, sep='\n')
             raise e
         return 'OK'
