@@ -90,5 +90,5 @@ def player(id):
 def versions():
     return jsonify({
         'osu': 1,
-        'pusher': 1,
+        'pusher': 2,
     })
