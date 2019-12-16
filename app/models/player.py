@@ -7,7 +7,6 @@ class Player(db.Model):
     username = db.Column(db.String(32))
     osu_join_date = db.Column(db.DateTime)
     joined_at = db.Column(db.DateTime, default=datetime.utcnow)
-    scores = db.relationship('Score', backref='player', lazy='dynamic')
     avatar_url = db.Column(db.String(512))
     cover_url = db.Column(db.String(512))
     country = db.Column(db.String(128))
@@ -15,6 +14,8 @@ class Player(db.Model):
     twitter = db.Column(db.String(32))
     discord = db.Column(db.String(32))
     website = db.Column(db.String(512))
+
+    scores = db.relationship('Score', backref='player', lazy='dynamic')
 
     def update_fields(self, data):
         if data.get('name'):

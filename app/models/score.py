@@ -20,8 +20,9 @@ class Score(db.Model):
     mods = db.Column(db.String(128))
     achieved_at = db.Column(db.DateTime, default=datetime.utcnow)
     client = db.Column(db.String(128))
-    chart_id = db.Column(db.Integer, db.ForeignKey('chart.id'))
     mode = db.Column(db.String(128), default='osu')
+
+    chart_id = db.Column(db.Integer, db.ForeignKey('chart.id'))
     player_id = db.Column(db.Integer, db.ForeignKey('player.id'))
     version = db.Column(db.Integer)
 

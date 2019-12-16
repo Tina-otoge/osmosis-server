@@ -2,7 +2,7 @@ from app import db
 
 class Chart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    set_id = db.Column(db.Integer)
+    osu_set_id = db.Column(db.Integer)
     mode = db.Column(db.String(128))
     duration = db.Column(db.Integer)
     bpm = db.Column(db.String(128))
@@ -17,11 +17,12 @@ class Chart(db.Model):
     ar = db.Column(db.Float)
     sr = db.Column(db.Float)
     creator_name = db.Column(db.String(128))
+
     scores = db.relationship('Score', backref='chart', lazy='dynamic')
 
     def update_fields(self, data):
         if data.get('set_id'):
-            self.set_id = data['set_id']
+            self.osu_set_id = data['set_id']
         if data.get('mode'):
             self.mode = data['mode']
         if data.get('duration'):
@@ -96,21 +97,20 @@ class Chart(db.Model):
         return 'https://osu.ppy.sh/b/{}'.format(self.id)
 
     def get_osu_card_url(self):
-        if not self.set_id:
+        if not self.osu_set_id:
             return False
-        return 'https://assets.ppy.sh/beatmaps/{}/covers/card.jpg'.format(self.set_id)
+        return 'https://assets.ppy.sh/beatmaps/{}/covers/card.jpg'.format(self.osu_set_id)
 
     def get_osu_preview(self):
-        if not self.set_id:
+        if not self.osu_set_id:
             return False
-        return 'https:////b.ppy.sh/preview/{}.mp3'.format(self.set_id)
+        return 'https:////b.ppy.sh/preview/{}.mp3'.format(self.osu_set_id)
 
     def get_osu_download(self):
-        if not self.set_id:
+        if not self.osu_set_id:
             return False
-        return 'https://osu.ppy.sh/beatmapsets/{}/download'.format(self.set_id)
+        return 'https://osu.ppy.sh/beatmapsets/{}/download'.format(self.osu_set_id)
 
     def __init__(self, data):
         self.id = data['chart_id']
         self.update_fields(data)
-
