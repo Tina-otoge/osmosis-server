@@ -55,11 +55,11 @@ class Score(db.Model):
     @points.expression
     def sortable_points(cls):
             return (
-                self.perfect * Judge.PERFECT +
-                self.great * Judge.GREAT +
-                self.good * Judge.GOOD +
-                self.ok * Judge.OK +
-                self.meh * Judge.MEH
+                cls.perfect * Judge.PERFECT +
+                cls.great * Judge.GREAT +
+                cls.good * Judge.GOOD +
+                cls.ok * Judge.OK +
+                cls.meh * Judge.MEH
             )
 
     @hybrid_property
