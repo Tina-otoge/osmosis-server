@@ -39,25 +39,40 @@
 <div id="script" class="content-block">
 	<h3 class="title">Script (Windows only)</h3>
 	<div class="content">
-		<p>
-			<a href="https://github.com/skielred/osmosis/releases/latest/download/osmosis_play.ps1">Download the latest version of the script</a>,
-			put it somewhere you like, <span class="code">D:\Games\osmosis</span>
-			might be a good place to start. Then execute the script. It should
-			take care of everything.
+		<ol>
+			<li>
+				Download and install <a href="{{ config.LINKS.DOTNET }}">Microsoft's .NET Core 3.0 SDK</a>
+			</li>
+			<li>
+				<a href="https://github.com/skielred/osmosis/releases/latest/download/osmosis_play.ps1">Download the latest version of the script</a>,
+			</li>
+			<li>
+				Put it somewhere you like, <span class="code">D:\Games\osmosis</span>
+			might be a good place to start.
+			</li>
+			<li>
+				Then execute the script. You might need to do *Shift+Right Click* to get the option "Run with Powershell" on Windows.	
+				<div class="note warning">The first time you run it, or on every new update, it might take some time!</div>
+				<div class="note warning">If the game does not open and the Powershell window closes itself, you encountered an error!</div>
+			</li>
 		</p>
 		<p class="note warning">
 			Your antivirus might be blocking the game, please look out for that!
 		</p>
 		<p>
-			To troubleshot any problem with the script, go to the script folder and open a Powershell window.
+			Troubleshooting problems with the script
 		</p>
-		<p>
-			If this is the first time you run a Powershell script by hand, you might need to run
+		<ol>
+			<li>
+				Go to the script folder and open a Powershell window. (*Shift+Right Click* in the folder)
+			</li>
+			<li>
+				If this is the first time you run a Powershell script by hand, you might need to run
 			<span class="code">Set-ExecutionPolicy -ExecutionPolicy Unrestricted</span> first.
-		</p>
-		<p>
-			Type <span class="code">.\osmosis_play.ps1</span>, and read the output.
-		</p>
+			</li>
+			<li>
+				Type <span class="code">.\osmosis_play.ps1</span>, and read the output.
+			</li>
 	</div>
 </div>
 <div id="prebuilt" class="content-block">
