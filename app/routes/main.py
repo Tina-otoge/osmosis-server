@@ -5,8 +5,8 @@ from app.models import Score, Chart, Player
 
 from . import dumb_decryption
 
-@app.route('/')
 @app.route('/index')
+@app.route('/')
 def index():
     latest_scores = Score.query.order_by(Score.achieved_at.desc()).limit(10)
     return render_template('home.html', scores=latest_scores)
