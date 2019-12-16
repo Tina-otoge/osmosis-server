@@ -1,7 +1,5 @@
 from app import db
 
-from . import SubmittableData
-
 class Chart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     set_id = db.Column(db.Integer)

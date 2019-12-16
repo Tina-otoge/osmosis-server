@@ -2,9 +2,7 @@ from datetime import datetime
 
 from app import db
 
-from . import SubmittableData
-
-class Player(db.Model, SubmittableData):
+class Player(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(32))
     osu_join_date = db.Column(db.DateTime)

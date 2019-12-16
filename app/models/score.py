@@ -4,9 +4,9 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 from app import db
 
-from . import DATETIME_BACK, SubmittableData
+from . import DATETIME_BACK
 
-class Score(db.Model, SubmittableData):
+class Score(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     perfect = db.Column(db.Integer, default=0)
     ok = db.Column(db.Integer, default=0)
