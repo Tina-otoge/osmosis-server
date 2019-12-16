@@ -1,10 +1,18 @@
 from datetime import datetime
+import math
 
 from sqlalchemy.ext.hybrid import hybrid_property
 
 from app import db
 
 from . import DATETIME_BACK
+
+class Judge:
+    PERFECT = 350
+    GREAT = 300
+    GOOD = 200
+    OK = 50
+    MEH = 50
 
 class Score(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -30,13 +38,30 @@ class Score(db.Model):
     def get_max_notes(self):
         return self.perfect + self.great + self.good + self.ok + self.meh + self.miss
 
+    def get_ratio(self):
+        if self.mode == 'mania':
+            return 0.5 * Judge.PERFECT
+        return 0.5 * Judge.GREAT
+
     @hybrid_property
     def points(self):
-        return (self.perfect * 7 + self.great * 6 + self.good * 2 + self.ok + self.meh) / 3
+        return (
+            self.perfect * Judge.PERFECT +
+            self.great * Judge.GREAT +
+            self.good * Judge.GOOD +
+            self.ok * Judge.OK +
+            self.meh * Judge.MEH
+        ) / self.get_ratio()
 
     @points.expression
     def sortable_points(cls):
-            return cls.perfect * 7 + cls.great * 6 + cls.good * 2 + cls.ok + cls.meh
+            return (
+                cls.perfect * Judge.PERFECT +
+                cls.great * Judge.GREAT +
+                cls.good * Judge.GOOD +
+                cls.ok * Judge.OK +
+                cls.meh * Judge.MEH
+            )
 
     @hybrid_property
     def flairs(self):
@@ -49,8 +74,6 @@ class Score(db.Model):
 
 
     def get_max_points(self):
-        if self.mode == 'mania':
-            return math.floor(self.get_max_notes() * 7 / 3)
         return self.get_max_notes() * 2
 
     def get_accuracy(self):
@@ -110,21 +133,22 @@ class Score(db.Model):
         return []
 
     def display_rank(self):
-        if self.accuracy == 1:
+        accuracy = self.get_accuracy()
+        if accuracy == 1:
             return 'SS'
-        if self.accuracy > 0.985:
+        if accuracy > 0.985:
             return 'S++'
-        if self.accuracy > 0.9725:
+        if accuracy > 0.9725:
             return 'S+'
-        if self.accuracy > 0.95:
+        if accuracy > 0.95:
             return 'S'
-        if self.accuracy > 0.925:
+        if accuracy > 0.925:
             return 'A+'
-        if self.accuracy > 0.9:
+        if accuracy > 0.9:
             return 'A'
-        if self.accuracy > 0.8:
+        if accuracy > 0.8:
             return 'B'
-        if self.accuracy > 0.7:
+        if accuracy > 0.7:
             return 'C'
         return 'D'
 
@@ -137,6 +161,10 @@ class Score(db.Model):
             self.meh = data['meh']
         if data.get('miss'):
             self.miss = data['miss']
+        if data.get('perfect'):
+            self.perfect = data['perfect']
+        if data.get('ok'):
+            self.ok = data['ok']
         if data.get('accuracy'):
             self.accuracy = data['accuracy']
         if data.get('rank'):
