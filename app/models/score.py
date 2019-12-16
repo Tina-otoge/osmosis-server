@@ -21,6 +21,7 @@ class Score(db.Model):
     achieved_at = db.Column(db.DateTime, default=datetime.utcnow)
     client = db.Column(db.String(128))
     mode = db.Column(db.String(128), default='osu')
+    hash = db.Column(db.String(64))
 
     chart_id = db.Column(db.Integer, db.ForeignKey('chart.id'))
     player_id = db.Column(db.Integer, db.ForeignKey('player.id'))
@@ -159,6 +160,8 @@ class Score(db.Model):
             )
         if data.get('client'):
             self.client = data['client']
+        if data.get('hash'):
+            self.hash = data['hash']
 
     def __init__(self, data):
         self.update_fields(data)

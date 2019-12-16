@@ -18,6 +18,11 @@ class Chart(db.Model):
     sr = db.Column(db.Float)
     creator_name = db.Column(db.String(128))
 
+    hash = db.Column(db.String(64))
+    ranked = db.Column(db.Boolean, default=False)
+    max_combo = db.Column(db.Integer)
+    set_id = db.Column(db.Integer, db.ForeignKey('set.id'))
+
     scores = db.relationship('Score', backref='chart', lazy='dynamic')
 
     def update_fields(self, data):
