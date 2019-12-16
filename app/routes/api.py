@@ -6,5 +6,5 @@ from app import app
 def versions():
     return jsonify({
         'osu': 1,
-        'pusher': 2,
+        'pusher': 3,
     })
