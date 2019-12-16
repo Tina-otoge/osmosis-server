@@ -32,7 +32,7 @@ class Score(db.Model):
 
     @hybrid_property
     def points(self):
-        return (self.perfect * 7 + self.great * 6 + self.good * 2 + self.ok + self.meh) / 3
+        return (self.perfect * 6.5 + self.great * 6 + self.good * 2 + self.ok + self.meh) / 3
 
     @points.expression
     def sortable_points(cls):
