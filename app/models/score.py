@@ -137,6 +137,10 @@ class Score(db.Model):
             self.meh = data['meh']
         if data.get('miss'):
             self.miss = data['miss']
+        if data.get('perfect'):
+            self.perfect = data['perfect']
+        if data.get('ok'):
+            self.ok = data['ok']
         if data.get('accuracy'):
             self.accuracy = data['accuracy']
         if data.get('rank'):
