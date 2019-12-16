@@ -110,21 +110,22 @@ class Score(db.Model):
         return []
 
     def display_rank(self):
-        if self.accuracy == 1:
+        accuracy = self.get_accuracy()
+        if accuracy == 1:
             return 'SS'
-        if self.accuracy > 0.985:
+        if accuracy > 0.985:
             return 'S++'
-        if self.accuracy > 0.9725:
+        if accuracy > 0.9725:
             return 'S+'
-        if self.accuracy > 0.95:
+        if accuracy > 0.95:
             return 'S'
-        if self.accuracy > 0.925:
+        if accuracy > 0.925:
             return 'A+'
-        if self.accuracy > 0.9:
+        if accuracy > 0.9:
             return 'A'
-        if self.accuracy > 0.8:
+        if accuracy > 0.8:
             return 'B'
-        if self.accuracy > 0.7:
+        if accuracy > 0.7:
             return 'C'
         return 'D'
 
