@@ -1,15 +1,9 @@
-from datetime import datetime
-
-from flask import jsonify, request, render_template
+from flask import render_template, request
 
 from app import app, db
-from app.models import Chart, Player, Score
+from app.models import Score, Chart, Player
 
-try:
-    from secret import dumb_decryption
-except:
-    print('Score decrypter not found, will not be able to parse scores')
-    dumb_decryption = lambda x: x
+from . import dumb_decryption
 
 @app.route('/')
 @app.route('/index')
@@ -53,10 +47,6 @@ def score():
             raise e
         return 'OK'
 
-@app.route('/tutorial')
-def tutorial():
-    return render_template('tutorial.html')
-
 @app.route('/scores')
 def scores():
     return 'TODO'
@@ -85,10 +75,3 @@ def player(id):
     player = Player.query.get_or_404(id)
     scores = Score.query.filter_by(player=player).order_by(Score.achieved_at.desc()).all()
     return render_template('player.html', player=player, scores=scores)
-
-@app.route('/versions')
-def versions():
-    return jsonify({
-        'osu': 1,
-        'pusher': 2,
-    })
