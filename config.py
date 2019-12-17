@@ -16,7 +16,7 @@ class Config:
     LOGS_PATH = _get('LOGS_DIR', 'logs')
     LINKS = {
         'FORK': 'https://github.com/skielred/osu',
-        'DOTNET': 'https://dotnet.microsoft.com/download/dotnet-core/3.0',
+        'DOTNET': 'https://dotnet.microsoft.com/download/dotnet-core/3.1',
         'PUSHER': 'https://github.com/skielred/osmosis/releases/latest',
         'DISCORD': 'https://discord.gg/xWKFDBu',
         'REPO': 'https://github.com/skielred/osmosis',
