@@ -27,7 +27,6 @@ def upgrade():
         batch_op.add_column(sa.Column('max_combo', sa.Integer(), nullable=True))
         batch_op.add_column(sa.Column('ranked', sa.Boolean(), nullable=True))
         batch_op.add_column(sa.Column('set_id', sa.Integer(), nullable=True))
-        batch_op.create_foreign_key(None, 'set', ['set_id'], ['id'])
 
     with op.batch_alter_table('score', schema=None) as batch_op:
         batch_op.add_column(sa.Column('hash', sa.String(length=64), nullable=True))
