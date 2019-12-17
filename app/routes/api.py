@@ -30,11 +30,12 @@ def score():
                 chart = Chart(data['chart'])
             else:
                 chart.update_fields(data['chart'])
+            data['score']['hash'] = data['chart'].get('hash')
             score = Score(data['score'])
             score.achieved_at = datetime.utcnow()
             score.player_id = player.id
             score.chart_id = chart.id
-            score.version = 2
+            score.version = 3
             if not score.is_supported(chart):
                 db.session.rollback()
                 print('score ignored because not supported')

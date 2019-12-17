@@ -3,10 +3,9 @@
 {% block content %}
 <div id="player" class="content-block">
 	<div class="title">
-		<div
-			class="cover"
-			style="background-image:url({{ player.cover_url }})"
-		></div>
+		{% with cover_url = player.cover_url %}
+		{% include "_cover.html" %}
+		{% endwith %}
 		<img src="{{ player.avatar_url }}" class="avatar">
 		<h3 class="username">{{ player.username }}</h3>
 	</div>

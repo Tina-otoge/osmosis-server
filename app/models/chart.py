@@ -1,4 +1,9 @@
+from sqlalchemy.ext.hybrid import hybrid_property
+
 from app import db
+
+from . import Hash
+from .score import Score
 
 class Chart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -25,7 +30,16 @@ class Chart(db.Model):
 
     scores = db.relationship('Score', backref='chart', lazy='dynamic')
 
+    def __repr__(self):
+        return '<Chart {0.id}: {0.artist} - {0.name} [{0.difficulty}] {0.mode} ({0.creator_name})>'.format(self)
+
+    @hybrid_property
+    def frozen(self):
+        return self.hash != None
+
     def update_fields(self, data):
+        if self.hash:
+            return
         if data.get('set_id'):
             self.osu_set_id = data['set_id']
         if data.get('mode'):
@@ -98,6 +112,11 @@ class Chart(db.Model):
         }
         return {key: filter(value) for key, value in details}
 
+    def display_hash(self):
+        if self.hash is None:
+            return False
+        return Hash(self.hash).display()
+
     def get_osu_link(self):
         return 'https://osu.ppy.sh/b/{}'.format(self.id)
 
@@ -115,6 +134,15 @@ class Chart(db.Model):
         if not self.osu_set_id:
             return False
         return 'https://osu.ppy.sh/beatmapsets/{}/download'.format(self.osu_set_id)
+
+    def get_scores_query(self):
+        conditions = {}
+        if self.hash:
+            conditions['hash'] = self.hash
+        else:
+            conditions['chart_id'] = self.id
+        return Score.query.filter_by(**conditions)
+
 
     def __init__(self, data):
         self.id = data['chart_id']

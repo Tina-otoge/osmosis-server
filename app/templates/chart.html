@@ -54,11 +54,22 @@
 			<a href="{{ chart.get_osu_download() }}">direct download</a>
 		</p>
 		{% endif %}
+		{% if chart.ranked %}
+		<p>
+			Ranked!
+		</p>
+		{% endif %}
+		{% if chart.frozen %}
+		<p>
+			This chart info is frozen, only a moderator can update it.
+			You need to have the correct map version to rank scores.
+		</p>
+		{% endif %}
 	</div>
 </div>
 <div id="scores" class="content-block mini">
 	<h3 class="title">Top 50</h3>
-	{% with small=True %}
+	{% with no_chart=True %}
 	{% for score in scores %}
 	{% include "_score.html" %}
 	{% endfor %}

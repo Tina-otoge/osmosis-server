@@ -1,4 +1,4 @@
-from flask import render_template
+from flask import render_template, request
 
 from app import app
 from app.models import Score, Chart, Player
@@ -6,7 +6,10 @@ from app.models import Score, Chart, Player
 @app.route('/index')
 @app.route('/')
 def index():
-    latest_scores = Score.query.order_by(Score.achieved_at.desc()).limit(10)
+    latest_scores = (Score.query
+        .order_by(Score.achieved_at.desc())
+        .limit(10)
+    )
     return render_template('home.html', scores=latest_scores)
 
 @app.route('/scores')
@@ -25,7 +28,8 @@ def charts():
 @app.route('/charts/<id>')
 def chart(id):
     chart = Chart.query.get_or_404(id)
-    scores = (Score.query.filter_by(chart_id=chart.id)
+    scores_query = chart.get_scores_query()
+    scores = (scores_query
         .order_by(Score.sortable_points.desc())
         .limit(app.config['BOARD_SIZE'])
         .all()

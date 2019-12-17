@@ -10,14 +10,11 @@
 		</div>
 	</div>
 	{% endif %}
-	{% if not small %}
+	{% if not no_chart %}
 	<div class="chart">
-		{% if score.chart.get_osu_card_url() %}
-		<div
-			class="cover"
-			style="background-image: url({{ score.chart.get_osu_card_url() }})"
-		></div>
-		{% endif %}
+		{% with cover_url = score.chart.get_osu_card_url() %}
+		{% include "_cover.html" %}
+		{% endwith %}
 		<div class="song">
 			<a
 	   href="{{ url_for('chart', id=score.chart.id) }}"

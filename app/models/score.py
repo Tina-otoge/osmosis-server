@@ -4,7 +4,6 @@ import math
 from sqlalchemy.ext.hybrid import hybrid_property
 
 from app import db
-
 from . import DATETIME_BACK
 
 class Judge:
@@ -35,8 +34,13 @@ class Score(db.Model):
     player_id = db.Column(db.Integer, db.ForeignKey('player.id'))
     version = db.Column(db.Integer)
 
-    def get_max_notes(self):
+    @hybrid_property
+    def max_notes(self):
         return self.perfect + self.great + self.good + self.ok + self.meh + self.miss
+
+    @max_notes.expression
+    def max_notes(cls):
+        return cls.perfect + cls.great + cls.good + cls.ok + cls.meh + cls.miss
 
     def get_ratio(self):
         if self.mode == 'mania':
@@ -74,7 +78,7 @@ class Score(db.Model):
 
 
     def get_max_points(self):
-        return self.get_max_notes() * 2
+        return self.max_notes * 2
 
     def get_accuracy(self):
          return self.points / self.get_max_points()
