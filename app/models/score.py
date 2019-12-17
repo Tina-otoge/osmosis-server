@@ -9,7 +9,7 @@ from . import DATETIME_BACK
 class Judge:
     PERFECT = 350
     GREAT = 300
-    GOOD = 200
+    GOOD = 100
     OK = 50
     MEH = 50
 
