@@ -4,14 +4,8 @@ import math
 from sqlalchemy.ext.hybrid import hybrid_property
 
 from app import db
+from app.rulings import Judge, MODS_WHITELIST, calculate_osmos
 from . import DATETIME_BACK
-
-class Judge:
-    PERFECT = 350
-    GREAT = 300
-    GOOD = 100
-    OK = 50
-    MEH = 50
 
 class Score(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -77,11 +71,12 @@ class Score(db.Model):
         return result
 
 
-    def get_max_points(self):
+    @hybrid_property
+    def max_points(self):
         return self.max_notes * 2
 
     def get_accuracy(self):
-         return self.points / self.get_max_points()
+         return self.points / self.max_points
 
     def is_supported(self, chart=None):
         if not self.chart_id:
@@ -93,6 +88,18 @@ class Score(db.Model):
     def is_convert(self, chart=None):
         chart = chart or self.chart
         return self.mode != chart.mode
+
+    def is_rankable(self, score):
+        mods_used = [x['acronym'] for x in self.get_mods()]
+        for mod in mods_used:
+            if mod not in MODS_WHITELIST:
+                return False
+        return True
+
+    def get_osmos(self, osu=False, max=False):
+        difficulty = self.chart.ssr if not osu else self.chart.sr
+        accuracy = self.get_accuracy() if not max else 1
+        return calculate_osmos(accuracy, difficulty)
 
     def display_accuracy(self):
         accuracy = self.get_accuracy()

@@ -295,7 +295,7 @@ footer #links ul {
 	font-size: 1.3em;
 }
 
-#scores .judges, #scores .max-chart-points, #scores .creator {
+#scores .judges, #scores .osmos-max, #scores .creator {
 	font-size: small;
 }
 

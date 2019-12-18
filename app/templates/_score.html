@@ -50,12 +50,12 @@
 			<div class="accuracy">
 				{{ score.display_accuracy() }}
 			</div>
-			<div class="points-summary">
-				<span class="points">
-					{{ score.points | round | int }}pts
+			<div class="osmos">
+				<span class="osmos-got">
+					{{ score.get_osmos(osu=True) }}pts
 				</span>
-				<span class="max-chart-points">
-					/ {{ score.get_max_points() }}
+				<span class="osmos-max">
+					/ {{ score.get_osmos(osu=True, max=True) }}
 				</span>
 			</div>
 		</div>

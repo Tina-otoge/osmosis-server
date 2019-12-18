@@ -32,7 +32,18 @@ class Chart(db.Model):
     scores = db.relationship('Score', backref='chart', lazy='dynamic')
 
     def __repr__(self):
-        return '<Chart {0.id}: {0.artist} - {0.name} [{0.difficulty}] {0.mode} ({0.creator_name})>'.format(self)
+        return '<Chart {0.id}: {0.artist_romanized} - {0.name_romanized} [{0.difficulty_name}] {0.mode} ({0.creator_name})>'.format(self)
+
+    def get_player_best(self, id):
+        player_scores = (
+            self.scores
+            .filter_by(player_id=id)
+            .order_by(Score.sortable_points.desc())
+        ).all()
+        for score in player_scores:
+            if score.is_rankable():
+                return score
+        return False
 
     @hybrid_property
     def frozen(self):
