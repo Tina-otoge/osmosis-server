@@ -40,7 +40,6 @@ def downgrade():
         batch_op.drop_column('hash')
 
     with op.batch_alter_table('chart', schema=None) as batch_op:
-        batch_op.drop_constraint(None, type_='foreignkey')
         batch_op.drop_column('set_id')
         batch_op.drop_column('ranked')
         batch_op.drop_column('max_combo')

@@ -16,7 +16,7 @@
 		</h3>
 		<div class="difficulty">
 			{{ chart.difficulty_name }} ({{ chart.mode }})
-			{{ chart.display_details('sr') }}⭐
+			{{ chart.display_difficulty() }}⭐
 			<span class="creator">set by {{ chart.creator_name }}</span>
 		</div>
 	</div>
@@ -57,12 +57,19 @@
 		{% if chart.ranked %}
 		<p>
 			Ranked!
+			{% if chart.ssr %}
+			This chart has an <abbr>SSR</abbr> of {{ chart.display_difficulty() }}
+			{% endif %}
 		</p>
 		{% endif %}
 		{% if chart.frozen %}
 		<p>
 			This chart info is frozen, only a moderator can update it.
 			You need to have the correct map version to rank scores.
+		</p>
+		<p>
+			(We actually keep your score even if they don't match, in case that's us
+			that have an outdated version of the map, don't worry 😉)
 		</p>
 		{% endif %}
 	</div>

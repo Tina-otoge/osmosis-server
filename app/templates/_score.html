@@ -24,14 +24,17 @@
 			</a>
 		</div>
 		<div class="difficulty">
-			<span class="difficulty-name">
+			<a href="{{ url_for('chart', id=score.chart.id) }}" class="difficulty-name">
 				[{{ score.chart.difficulty_name }}]
-				{{ score.chart.display_details('sr') }}⭐
-			</span>
+				{{ score.chart.display_difficulty() }}⭐
+			</a>
 			<span class="creator">
 				(set by {{ score.chart.creator_name }})
 			</span>
 		</div>
+		{% if score.chart.ranked %}
+		<div class="flairs"><span>ranked</span></div>
+		{% endif %}
 		<div class="mode">
 			{{ score.mode }}
 		</div>

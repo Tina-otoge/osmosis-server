@@ -26,6 +26,7 @@ class Chart(db.Model):
     hash = db.Column(db.String(64))
     ranked = db.Column(db.Boolean, default=False)
     max_combo = db.Column(db.Integer)
+    ssr = db.Column(db.Integer)
     set_id = db.Column(db.Integer, db.ForeignKey('set.id'))
 
     scores = db.relationship('Score', backref='chart', lazy='dynamic')
@@ -111,6 +112,11 @@ class Chart(db.Model):
             'ar': self.ar,
         }
         return {key: filter(value) for key, value in details}
+
+    def display_difficulty(self):
+        if self.ssr:
+            return self.ssr / 2
+        return self.display_details('sr')
 
     def display_hash(self):
         if self.hash is None:
