@@ -15,7 +15,7 @@ class Config:
     SECRET_KEY = _get('SECRET_KEY', 'set a fucking key')
     LOGS_PATH = _get('LOGS_DIR', 'logs')
     LINKS = {
-        'FORK': 'https://github.com/skielred/osu',
+        'FORK': 'https://github.com/skielred/osumosis',
         'DOTNET': 'https://dotnet.microsoft.com/download/dotnet-core/3.1',
         'PUSHER': 'https://github.com/skielred/osmosis/releases/latest',
         'DISCORD': 'https://discord.gg/xWKFDBu',
