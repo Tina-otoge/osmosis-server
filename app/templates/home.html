@@ -35,9 +35,10 @@
 
 <div id="scores" class="content-block">
 	<h3 class="title">Latest scores:</h3>
-	{% for score in scores %}
+	{% for score in items %}
 	{% include "_score.html" %}
 	{% endfor %}
+	{% include "_pager.html" %}
 </div>
 
 {% endblock %}

@@ -1,0 +1,13 @@
+<div class="pager">
+  {% if prev_url %}
+  <a href="{{ prev_url }}">◄</a>
+  {% else %}
+  <a href="#" disabled>◄</a>
+  {% endif %}
+  <a href="{{ current_url }}">{{ page }}</a>
+  {% if next_url %}
+  <a href="{{ next_url }}">►</a>
+  {% else %}
+  <a href="#" disabled>►</a>
+  {% endif %}
+</div>

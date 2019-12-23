@@ -3,7 +3,7 @@
 {% block content %}
 <div id="players" class="content-block">
 	<h3 class="title">Players</h3>
-	{% for player in players %}
+	{% for player in items %}
 	<div class="content">
 		<a href="{{ url_for('player', id=player.id) }}">
 			<img src="{{ player.avatar_url }}" class="avatar">
@@ -22,5 +22,6 @@
 		{# </p> #}
 	</div>
 	{% endfor %}
+	{% include "_pager.html" %}
 </div>
 {% endblock content %}
