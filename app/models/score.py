@@ -26,6 +26,13 @@ class Score(db.Model):
 
     chart_id = db.Column(db.Integer, db.ForeignKey('chart.id'))
     player_id = db.Column(db.Integer, db.ForeignKey('player.id'))
+    '''
+    Score versions:
+    1: initial, mod format=[MOD:[, ...]], ie: DT:HR:
+    2: new mod format: [[key=value [, ...]]\n[, ...]] ie: acronym=DT rate=3\nacronym=HR
+    3: hash
+    4: mod translation
+    '''
     version = db.Column(db.Integer)
 
     @hybrid_property
@@ -163,7 +170,36 @@ class Score(db.Model):
             return 'C'
         return 'D'
 
-    def update_fields(self, data):
+    def translate_mods(self, raw_score, chart=None):
+        for mod in raw_score['mods']:
+            if (
+                chart and
+                mod['acronym'] == 'AR' and
+                mod['ApproachRate'] == chart.ar
+            ) or (
+                mod['acronym'] == 'DA' and
+                mod.get('ApproachRate') == chart.ar and
+                mod.get('CircleSize') == chart.cs and
+                mod.get('DrainRate') == chart.hp and
+                mod.get('OverallDifficulty') == chart.od
+            ):
+                raw_score['mods'].remove(mod)
+            elif (
+                mod['acronym'] == 'DA' and
+                mod.get('ApproachRate') and
+                mod['ApproachRate'] != chart.ar and
+                mod.get('CircleSize') == chart.cs and
+                mod.get('DrainRate') == chart.hp and
+                mod.get('OverallDifficulty') == chart.od
+            ):
+                raw_score['mods'].append({
+                    'acronym': 'AR',
+                    'ApproachRate': mod['ApproachRate'],
+                })
+                raw_score['mods'].remove(mod)
+        return raw_score['mods']
+
+    def update_fields(self, data, chart):
         if data.get('great'):
             self.great = data['great']
         if data.get('good'):
@@ -188,9 +224,10 @@ class Score(db.Model):
                     'acronym={}'.format(x) for x in data['mods'][:-1].split(':')
                 ])
             else:
+                mods = self.translate_mods(data, chart)
                 self.mods = '\n'.join([' '.join(['{}={}'.format(key, value)
                     for key, value in mod.items()])
-                          for mod in data['mods']])
+                          for mod in mods])
         if data.get('mode'):
             self.mode = data['mode']
         if data.get('achieved_at'):
@@ -202,6 +239,6 @@ class Score(db.Model):
         if data.get('hash'):
             self.hash = data['hash']
 
-    def __init__(self, data):
-        self.update_fields(data)
+    def __init__(self, data, chart=None):
+        self.update_fields(data, chart)
 
