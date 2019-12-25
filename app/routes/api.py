@@ -9,7 +9,7 @@ from . import dumb_decryption
 @app.route('/versions')
 def versions():
     return jsonify({
-        'osu': 5,
+        'osu': 6,
         'pusher': 4,
     })
 
