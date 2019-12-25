@@ -2,15 +2,18 @@ from flask import render_template, request
 
 from app import app
 from app.models import Score, Chart, Player
+from . import build_pager
 
 @app.route('/index')
 @app.route('/')
 def index():
     latest_scores = (Score.query
         .order_by(Score.achieved_at.desc())
-        .limit(30)
     )
-    return render_template('home.html', scores=latest_scores)
+    return render_template(
+        'home.html',
+        **build_pager('index', latest_scores, per_page=20)
+    )
 
 @app.route('/scores')
 def scores():
@@ -18,8 +21,11 @@ def scores():
 
 @app.route('/players')
 def players():
-    players = Player.query.all()
-    return render_template('players.html', players=players)
+    players = Player.query
+    return render_template(
+        'players.html',
+        **build_pager('players', players, per_page=50)
+    )
 
 @app.route('/charts')
 def charts():
