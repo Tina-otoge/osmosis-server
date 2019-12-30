@@ -15,14 +15,15 @@ class Score(db.Model):
     good = db.Column(db.Integer, default=0)
     meh = db.Column(db.Integer, default=0)
     miss = db.Column(db.Integer, default=0)
-    rank = db.Column(db.String(2))
-    accuracy = db.Column(db.Float)
     max_combo = db.Column(db.Integer)
     mods = db.Column(db.String(128))
     achieved_at = db.Column(db.DateTime, default=datetime.utcnow)
     client = db.Column(db.String(128))
     mode = db.Column(db.String(128), default='osu')
     hash = db.Column(db.String(64))
+
+    osmos = db.Column(db.Integer)
+    player_best = db.Column(db.Boolean, default=False)
 
     chart_id = db.Column(db.Integer, db.ForeignKey('chart.id'))
     player_id = db.Column(db.Integer, db.ForeignKey('player.id'))
@@ -32,8 +33,14 @@ class Score(db.Model):
     2: new mod format: [[key=value [, ...]]\n[, ...]] ie: acronym=DT rate=3\nacronym=HR
     3: hash
     4: mod translation
+    5: osmos and pb
     '''
     version = db.Column(db.Integer)
+
+    def __repr__(self):
+        return '<Score {0.id}: {1} on {2} by {3}>'.format(
+            self, self.display_accuracy(), self.chart.display_short(), str(self.player)
+        )
 
     @hybrid_property
     def max_notes(self):
@@ -75,6 +82,10 @@ class Score(db.Model):
             result.append('perfect')
         elif self.miss == 0:
             result.append('full combo')
+        elif self.miss < 4:
+            result.append('almost fc')
+        if self.good == self.max_notes:
+            result.append('only GOODs')
         return result
 
 
@@ -96,7 +107,7 @@ class Score(db.Model):
         chart = chart or self.chart
         return self.mode != chart.mode
 
-    def is_rankable(self, score):
+    def is_rankable(self):
         mods_used = [x['acronym'] for x in self.get_mods()]
         for mod in mods_used:
             if mod not in MODS_WHITELIST:
@@ -104,9 +115,15 @@ class Score(db.Model):
         return True
 
     def get_osmos(self, osu=False, max=False):
-        difficulty = self.chart.ssr if not osu else self.chart.sr
+        difficulty = self.chart.ssr / 2 if not osu else self.chart.sr
         accuracy = self.get_accuracy() if not max else 1
         return calculate_osmos(accuracy, difficulty)
+
+    def set_osmos(self):
+        if not self.chart or not self.chart.ranked or not self.chart.ssr or self.hash != self.chart.hash or not self.is_rankable():
+            self.osmos = None
+        else:
+            self.osmos = self.get_osmos()
 
     def display_accuracy(self):
         accuracy = self.get_accuracy()

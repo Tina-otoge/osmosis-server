@@ -1,6 +1,9 @@
 <div class="content">
 	{% if not no_profile %}
 	<div class="player">
+		{% if rank %}
+		<strong class="rank">#{{ rank }}</strong>
+		{% endif %}
 		<a href="{{ url_for('player', id=score.player.id) }}">
 			<img src="{{ score.player.avatar_url }}" class="avatar">
 			<span class="username">{{ score.player.username }}</span>

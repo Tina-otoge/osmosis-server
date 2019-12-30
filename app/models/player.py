@@ -15,9 +15,16 @@ class Player(db.Model):
     discord = db.Column(db.String(32))
     website = db.Column(db.String(512))
 
-    # osmos = db.Column(db.Integer)
+    osmos = db.Column(db.Integer, default=0)
+    playcount = db.Column(db.Integer, default=0)
 
     scores = db.relationship('Score', backref='player', lazy='dynamic')
+
+    def __repr__(self):
+        return '<Player {}>'.format(self.username)
+
+    def __str__(self):
+        return self.username
 
     def update_fields(self, data):
         if data.get('name'):

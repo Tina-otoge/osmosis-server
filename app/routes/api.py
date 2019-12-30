@@ -4,12 +4,13 @@ from flask import jsonify, request
 
 from app import app, db
 from app.models import Player, Chart, Score
+from app.ranking import update_pb, update_player_osmos
 from . import dumb_decryption
 
 @app.route('/versions')
 def versions():
     return jsonify({
-        'osu': 6,
+        'osu': 8,
         'pusher': 4,
     })
 
@@ -35,7 +36,7 @@ def score():
             score.achieved_at = datetime.utcnow()
             score.player_id = player.id
             score.chart_id = chart.id
-            score.version = 4
+            score.version = 5
             if not score.is_supported(chart):
                 db.session.rollback()
                 print('score ignored because not supported')
@@ -45,6 +46,12 @@ def score():
             print('pushed to db! ({} played by {})'.format(
                 chart.name, player.username
             ))
+            print('updating pb if needed')
+            if update_pb(player, chart, score=score, set_osmos=True):
+                update_player_osmos(player)
+            player.playcount += 1
+            db.session.commit()
+            print('set osmos')
         except Exception as e:
             db.session.rollback()
             print('malformed score payload', 'data:', data, sep='\n')

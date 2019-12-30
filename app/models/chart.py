@@ -32,18 +32,7 @@ class Chart(db.Model):
     scores = db.relationship('Score', backref='chart', lazy='dynamic')
 
     def __repr__(self):
-        return '<Chart {0.id}: {0.artist_romanized} - {0.name_romanized} [{0.difficulty_name}] {0.mode} ({0.creator_name})>'.format(self)
-
-    def get_player_best(self, id):
-        player_scores = (
-            self.scores
-            .filter_by(player_id=id)
-            .order_by(Score.sortable_points.desc())
-        ).all()
-        for score in player_scores:
-            if score.is_rankable():
-                return score
-        return False
+        return '<Chart {0.id}: {1} [{0.difficulty_name}] {0.mode} ({0.creator_name})>'.format(self, self.display_full_romanized())
 
     @hybrid_property
     def frozen(self):
@@ -82,6 +71,10 @@ class Chart(db.Model):
             self.sr = data['sr']
         if data.get('set_creator_name'):
             self.creator_name = data['set_creator_name']
+
+    def display_short(self):
+        title = self.name_romanized or self.name
+        return '{} [{}]'.format(title, self.difficulty_name)
 
     def display_name(self):
         if self.name == self.name_romanized or self.name_romanized is None:
@@ -145,21 +138,12 @@ class Chart(db.Model):
     def get_osu_preview(self):
         if not self.osu_set_id:
             return False
-        return 'https:////b.ppy.sh/preview/{}.mp3'.format(self.osu_set_id)
+        return 'https://b.ppy.sh/preview/{}.mp3'.format(self.osu_set_id)
 
     def get_osu_download(self):
         if not self.osu_set_id:
             return False
         return 'https://osu.ppy.sh/beatmapsets/{}/download'.format(self.osu_set_id)
-
-    def get_scores_query(self):
-        conditions = {}
-        if self.hash:
-            conditions['hash'] = self.hash
-        else:
-            conditions['chart_id'] = self.id
-        return Score.query.filter_by(**conditions)
-
 
     def __init__(self, data):
         self.id = data['chart_id']

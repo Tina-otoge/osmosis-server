@@ -75,9 +75,10 @@
 <div id="scores" class="content-block mini two">
 	<h3 class="title">Scores:</h3>
 	{% with no_profile=True %}
-	{% for score in scores %}
+	{% for score in items %}
 	{% include "_score.html" %}
 	{% endfor %}
 	{% endwith %}
+	{% include "_pager.html" %}
 </div>
 {% endblock content %}
