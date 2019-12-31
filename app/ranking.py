@@ -89,9 +89,9 @@ def get_player_scores(player, min_accuracy=0):
     return player.scores.filter(Score.accuracy > min_accuracy)
 
 def big_button():
+    update_all_pb()
     players = Player.query.all()
     for player in players:
         update_player_osmos(player)
         update_player_playcount(player)
-    update_all_pb()
     db.session.commit()
