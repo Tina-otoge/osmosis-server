@@ -46,11 +46,11 @@ def score():
                 chart.name, player.username
             ))
             print('updating pb if needed')
-            if update_pb_for_score(player, chart, score):
+            if update_pb_for_score(player, score):
+                print('updated pb returned true')
                 update_player_osmos(player)
             player.playcount += 1
             db.session.commit()
-            print('set osmos')
         except Exception as e:
             db.session.rollback()
             print('malformed score payload', 'data:', data, sep='\n')

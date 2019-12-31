@@ -4,16 +4,17 @@ from app import db
 from app.models import Chart, Player, Score
 from app.rulings import RANKS
 
-def get_scores_query(chart, player=None, only_best=True):
+def get_scores_query(chart=None, player=None, only_best=True):
     conditions = {}
     if player:
         conditions['player_id'] = player.id
     if only_best:
         conditions['player_best'] = True
-    if chart.hash:
-        conditions['hash'] = chart.hash
-    else:
-        conditions['chart_id'] = chart.id
+    if chart:
+        if chart.hash:
+            conditions['hash'] = chart.hash
+        else:
+            conditions['chart_id'] = chart.id
     return Score.query.filter_by(**conditions)
 
 def get_pb(player, chart):
@@ -24,13 +25,17 @@ def get_pb(player, chart):
         Score.points.desc()
     ).first()
 
-def update_pb_for_score(player, chart, score, set_osmos=True):
-    current_best = get_pb(player, chart)
-    if current_best is None or score.points > current_best.points:
-        current_best.player_best = False
+def update_pb_for_score(player, score, set_osmos=True):
+    current_best = get_pb(player, score.chart)
+    print('current best:', current_best)
+    if current_best is score or current_best is None or score.points > current_best.points:
+        print('new best!')
+        if current_best:
+            current_best.player_best = False
         score.player_best = True
         if set_osmos:
-            current_best.osmos = None
+            if current_best:
+                current_best.osmos = None
             score.set_osmos()
         return True
     return False
