@@ -1,7 +1,7 @@
 import click
 
 from app import db
-from app.ranking import rank_chart
+from app.ranking import rank_chart, big_button
 
 def register(app):
     @app.cli.command()
@@ -14,3 +14,7 @@ def register(app):
         chart = rank_chart(chart, ssr=ssr, hash=hash)
         db.session.commit()
         print('ranked', chart)
+
+    @app.cli.command()
+    def bigbutton():
+        big_button()
