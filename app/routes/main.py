@@ -36,9 +36,7 @@ def charts():
 @app.route('/charts/<id>')
 def chart(id):
     chart = Chart.query.get_or_404(id)
-    print(chart)
     scores_query = get_scores_query(chart, only_best=True)
-    print(scores_query)
     scores = (scores_query
         .order_by(Score.points.desc())
     )
