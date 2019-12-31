@@ -4,6 +4,22 @@ from app import db
 from app.models import Chart, Player, Score
 from app.rulings import RANKS
 
+def rank_chart(chart, ssr=None, hash=None):
+    if isinstance(chart, str):
+        chart = int(chart)
+    if isinstance(chart, int):
+        chart = Chart.query.get(chart)
+    if ssr is None:
+        ssr = round(chart.sr * 2)
+    if hash is None:
+        hash = chart.scores[-1].hash
+    chart.ssr = ssr
+    chart.hash = hash
+    chart.ranked = True
+    update_all_pb(charts=[chart])
+    update_all_player_osmos()
+    return chart
+
 def get_scores_query(chart=None, player=None, only_best=True):
     conditions = {}
     if player:
@@ -56,12 +72,12 @@ def update_pb(player, chart, set_osmos=True):
     if set_osmos:
         current_best.set_osmos()
 
-def update_all_pb(set_osmos=True):
+def update_all_pb(charts=None, set_osmos=True):
     '''
     This is a slow op that should only be used during migrations
     '''
     players = Player.query.all()
-    for chart in Chart.query.all():
+    for chart in (charts or Chart.query.all()):
         for player in players:
             update_pb(player, chart, set_osmos=set_osmos)
 

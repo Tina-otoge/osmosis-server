@@ -11,11 +11,23 @@ from config import Config
 
 app = Flask(__name__)
 app.config.from_object(Config)
-print(app.config.get('SQLALCHEMY_DATABASE_URI'))
 
 db.init_app(app)
 migrate.init_app(app, db)
 moment.init_app(app)
 
 
-from . import models, routes
+from . import models, routes, cli
+
+cli.register(app)
+
+from app.models import Chart, Player, Score
+
+@app.shell_context_processor
+def make_shell_context():
+    return {
+        'db': db,
+        'Chart': Chart,
+        'Player': Player,
+        'Score': Score
+    }
