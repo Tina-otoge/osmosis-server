@@ -4,7 +4,7 @@ from flask import jsonify, request
 
 from app import app, db
 from app.models import Player, Chart, Score
-from app.ranking import update_pb, update_player_osmos
+from app.ranking import update_pb_for_score, update_player_osmos
 from . import dumb_decryption
 
 @app.route('/versions')
@@ -34,10 +34,9 @@ def score():
             data['score']['hash'] = data['chart'].get('hash')
             score = Score(data['score'], chart)
             score.achieved_at = datetime.utcnow()
-            score.player_id = player.id
-            score.chart_id = chart.id
+            score.player = player
             score.version = 5
-            if not score.is_supported(chart):
+            if not score.is_supported():
                 db.session.rollback()
                 print('score ignored because not supported')
                 return 'Not OK'
@@ -47,7 +46,7 @@ def score():
                 chart.name, player.username
             ))
             print('updating pb if needed')
-            if update_pb(player, chart, score=score, set_osmos=True):
+            if update_pb_for_score(player, chart, score):
                 update_player_osmos(player)
             player.playcount += 1
             db.session.commit()

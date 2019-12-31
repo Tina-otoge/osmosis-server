@@ -4,7 +4,7 @@ import math
 from sqlalchemy.ext.hybrid import hybrid_property
 
 from app import db
-from app.rulings import Judge, MODS_WHITELIST, calculate_osmos
+from app.rulings import Judge, MAX_JUDGE, MODS_WHITELIST, calculate_osmos, get_rank
 from . import DATETIME_BACK
 
 class Score(db.Model):
@@ -50,11 +50,6 @@ class Score(db.Model):
     def max_notes(cls):
         return cls.perfect + cls.great + cls.good + cls.ok + cls.meh + cls.miss
 
-    def get_ratio(self):
-        if self.mode == 'mania':
-            return 0.5 * Judge.PERFECT
-        return 0.5 * Judge.GREAT
-
     @hybrid_property
     def points(self):
         return (
@@ -63,10 +58,10 @@ class Score(db.Model):
             self.good * Judge.GOOD +
             self.ok * Judge.OK +
             self.meh * Judge.MEH
-        ) / self.get_ratio()
+        )
 
     @points.expression
-    def sortable_points(cls):
+    def points(cls):
             return (
                 cls.perfect * Judge.PERFECT +
                 cls.great * Judge.GREAT +
@@ -78,7 +73,7 @@ class Score(db.Model):
     @hybrid_property
     def flairs(self):
         result = []
-        if self.get_accuracy() == 1:
+        if self.accuracy == 1:
             result.append('perfect')
         elif self.miss == 0:
             result.append('full combo')
@@ -91,21 +86,31 @@ class Score(db.Model):
 
     @hybrid_property
     def max_points(self):
-        return self.max_notes * 2
+        return self.max_notes * MAX_JUDGE.get(self.mode, Judge.GREAT)
 
-    def get_accuracy(self):
+    @max_points.expression
+    def max_points(cls):
+        return cls.max_notes * MAX_JUDGE.get(cls.mode, Judge.GREAT)
+
+    @hybrid_property
+    def accuracy(self):
          return self.points / self.max_points
 
-    def is_supported(self, chart=None):
-        if not self.chart_id:
+    @accuracy.expression
+    def accuracy(cls):
+        return cls.points / cls.max_points
+
+    def is_supported(self):
+        if not self.chart:
+            print('no chart')
             return False
-        if self.is_convert(chart):
+        if self.is_convert():
+            print('is convert')
             return False
         return True
 
-    def is_convert(self, chart=None):
-        chart = chart or self.chart
-        return self.mode != chart.mode
+    def is_convert(self):
+        return self.mode != self.chart.mode
 
     def is_rankable(self):
         mods_used = [x['acronym'] for x in self.get_mods()]
@@ -116,7 +121,7 @@ class Score(db.Model):
 
     def get_osmos(self, osu=False, max=False):
         difficulty = self.chart.ssr / 2 if not osu else self.chart.sr
-        accuracy = self.get_accuracy() if not max else 1
+        accuracy = self.accuracy if not max else 1
         return calculate_osmos(accuracy, difficulty)
 
     def set_osmos(self):
@@ -126,7 +131,7 @@ class Score(db.Model):
             self.osmos = self.get_osmos()
 
     def display_accuracy(self):
-        accuracy = self.get_accuracy()
+        accuracy = self.accuracy
         if accuracy == 1:
             return '100%'
         return '%.2f%%' % (accuracy * 100)
@@ -168,29 +173,12 @@ class Score(db.Model):
         return []
 
     def display_rank(self):
-        accuracy = self.get_accuracy()
-        if accuracy == 1:
-            return 'SS'
-        if accuracy > 0.985:
-            return 'S++'
-        if accuracy > 0.9725:
-            return 'S+'
-        if accuracy > 0.95:
-            return 'S'
-        if accuracy > 0.925:
-            return 'A+'
-        if accuracy > 0.9:
-            return 'A'
-        if accuracy > 0.8:
-            return 'B'
-        if accuracy > 0.7:
-            return 'C'
-        return 'D'
+        return get_rank(self.accuracy)
 
-    def translate_mods(self, raw_score, chart=None):
+    def translate_mods(self, raw_score):
+        chart = self.chart
         for mod in raw_score['mods']:
             if (
-                chart and
                 mod['acronym'] == 'AR' and
                 mod['ApproachRate'] == chart.ar
             ) or (
@@ -216,7 +204,7 @@ class Score(db.Model):
                 raw_score['mods'].remove(mod)
         return raw_score['mods']
 
-    def update_fields(self, data, chart):
+    def update_fields(self, data):
         if data.get('great'):
             self.great = data['great']
         if data.get('good'):
@@ -229,10 +217,6 @@ class Score(db.Model):
             self.perfect = data['perfect']
         if data.get('ok'):
             self.ok = data['ok']
-        if data.get('accuracy'):
-            self.accuracy = data['accuracy']
-        if data.get('rank'):
-            self.rank = data['rank']
         if data.get('max_combo'):
             self.max_combo = data['max_combo']
         if data.get('mods'):
@@ -241,7 +225,7 @@ class Score(db.Model):
                     'acronym={}'.format(x) for x in data['mods'][:-1].split(':')
                 ])
             else:
-                mods = self.translate_mods(data, chart)
+                mods = self.translate_mods(data)
                 self.mods = '\n'.join([' '.join(['{}={}'.format(key, value)
                     for key, value in mod.items()])
                           for mod in mods])
@@ -256,6 +240,7 @@ class Score(db.Model):
         if data.get('hash'):
             self.hash = data['hash']
 
-    def __init__(self, data, chart=None):
-        self.update_fields(data, chart)
+    def __init__(self, data={}, chart=None):
+        self.chart = chart
+        self.update_fields(data)
 

@@ -4,7 +4,9 @@
 <div id="players" class="content-block">
 	<h3 class="title">Players</h3>
 	{% for player in items %}
+	{% set rank = loop.index + start_at %}
 	<div class="content">
+		<strong class="rank">#{{ rank }}</strong>
 		<a href="{{ url_for('player', id=player.id) }}">
 			<img src="{{ player.avatar_url }}" class="avatar">
 		</a>
@@ -17,9 +19,9 @@
 		<p>
 			Plays: {{ player.scores.count() }}
 		</p>
-		{# <p> #}
-		{# 	S and +: {{ player.get_ranks('S', above=True) }} #}
-		{# </p> #}
+		<p>
+			Osmos: {{ player.osmos }}
+		</p>
 	</div>
 	{% endfor %}
 	{% include "_pager.html" %}
