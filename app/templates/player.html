@@ -72,13 +72,19 @@
 		</p>
 	</div>
 </div>
-<div id="scores" class="content-block mini two">
-	<h3 class="title">Scores:</h3>
-	{% with no_profile=True %}
+{% with no_profile=True %}
+<div id="top-scores" class="scores content-block mini two">
+	<h3 class="title">Top scores:</h3>
+	{% for score in top %}
+	{% include "_score.html" %}
+	{% endfor %}
+</div>
+<div id="latest-scores" class="scores content-block mini two">
+	<h3 class="title">Latest scores:</h3>
 	{% for score in items %}
 	{% include "_score.html" %}
 	{% endfor %}
-	{% endwith %}
 	{% include "_pager.html" %}
 </div>
+{% endwith %}
 {% endblock content %}

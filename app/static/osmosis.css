@@ -146,14 +146,14 @@ footer #links ul {
 	flex: 0 1 100%;
 }
 
-#scores.mini {
+.scores.mini {
 	display: flex;
 	flex-direction: row;
 	flex-wrap: wrap;
 	justify-content: center;
 }
 
-#scores .content, #players .content {
+.scores .content, #players .content {
 	color: white;
 	background-color: var(--secondary);
 	border-radius: var(--small-radius);
@@ -161,7 +161,7 @@ footer #links ul {
 	margin: 1em 0;
 }
 
-#scores .content {
+.scores .content {
 	align-items: stretch;
 }
 
@@ -173,11 +173,11 @@ footer #links ul {
 	padding: 0 0.5em;
 }
 
-#scores.mini .content {
+.scores.mini .content {
 	margin: 1em 0.5em;
 }
 
-#scores.mini.two .content {
+.scores.mini.two .content {
 	flex-basis: calc(50% - 1em);
 }
 
@@ -185,15 +185,15 @@ footer #links ul {
 	font-size: larger;
 }
 
-#scores .content a,
-#scores .content a:visited,
+.scores .content a,
+.scores .content a:visited,
 #players .content a,
 #players .content a:visited {
 	color: white;
 	text-shadow: 0 0 1px white;
 }
 
-#scores .content > div {
+.scores .content > div {
 	border-right: 4px dashed var(--primary);
 	display: flex;
 	align-items: center;
@@ -203,20 +203,20 @@ footer #links ul {
 	text-align: center;
 }
 
-#scores .content > div:nth-last-child(2) {
+.scores .content > div:nth-last-child(2) {
 	border-right: unset;
 }
 
-#scores .content > div:last-child {
+.scores .content > div:last-child {
 	border-right: unset;
 	border-left: 4px dashed var(--primary);
 }
 
-#scores .chart {
+.scores .chart {
 	flex-grow: 100;
 }
 
-#scores .chart, #player .title, #chart .title {
+.scores .chart, #player .title, #chart .title {
 	overflow: hidden;
 	position: relative;
 	padding: 0;
@@ -224,22 +224,22 @@ footer #links ul {
 	color: white;
 }
 
-#scores .chart > *, #player .title > *, #chart .title > * {
+.scores .chart > *, #player .title > *, #chart .title > * {
 	z-index: 2;
 	position: relative;
 	padding: 0.5em 0;
 }
 
-#scores .chart > .cover, #player .title > .cover, #chart .title > .cover {
+.scores .chart > .cover, #player .title > .cover, #chart .title > .cover {
 	z-index: 1;
 	position: absolute;
 }
 
-#scores .player {
+.scores .player {
 	width: 170px;
 }
 
-#scores .result {
+.scores .result {
 	width: 200px;
 }
 
@@ -271,38 +271,38 @@ footer #links ul {
 	font-size: xx-large;
 }
 
-#scores .result > * {
+.scores .result > * {
 	margin: 4px 0;
 }
 
-#scores .mods > *, #scores .flairs > * {
+.scores .mods > *, .scores .flairs > * {
 	border-radius: var(--small-radius);
 	padding: 0.2em 0.5em;
 	margin: 4px 1em;
 }
 
-#scores .mods > * {
+.scores .mods > * {
 	background-color: var(--primary);
 	font-size: small;
 }
 
-#scores .flairs > * {
+.scores .flairs > * {
 	background: linear-gradient(45deg, var(--primary), transparent);
 	color: var(--contrast);
 }
 
-#scores .scoring {
+.scores .scoring {
 	font-size: 1.3em;
 }
 
-#scores .judges, #scores .osmos-max, #scores .creator {
+.scores .judges, .scores .osmos-max, .scores .creator {
 	font-size: small;
 }
 
-#scores .judges {
+.scores .judges {
 	color: #ddd;
 }
 
-#scores .rank {
+.scores .rank {
 	font-size: xx-large;
 }

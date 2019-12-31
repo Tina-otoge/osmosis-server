@@ -52,9 +52,11 @@ def chart(id):
 @app.route('/players/<id>')
 def player(id):
     player = Player.query.get_or_404(id)
+    top = Score.query.filter(Score.player == player, Score.osmos > 0).order_by(Score.osmos.desc()).limit(20)
     scores = Score.query.filter_by(player=player).order_by(Score.achieved_at.desc())
     return render_template(
         'player.html',
         player=player,
+        top=top,
         **build_pager('player', scores, per_page=20, id=id)
     )
