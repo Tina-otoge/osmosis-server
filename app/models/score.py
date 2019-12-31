@@ -120,7 +120,10 @@ class Score(db.Model):
         return True
 
     def get_osmos(self, osu=False, max=False):
-        difficulty = self.chart.ssr / 2 if not osu else self.chart.sr
+        if self.chart.ssr is None and osu:
+            difficulty = self.chart.sr
+        else:
+            difficulty = self.chart.ssr / 2
         accuracy = self.accuracy if not max else 1
         return calculate_osmos(accuracy, difficulty)
 
