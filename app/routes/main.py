@@ -31,7 +31,12 @@ def players():
 
 @app.route('/charts')
 def charts():
-    return 'TODO'
+    rankeds = Chart.query.filter(Chart.ranked == True)
+    return render_template(
+        'charts.html',
+        title='Ranked charts',
+        **build_pager('charts', rankeds, per_page=50)
+    )
 
 @app.route('/charts/<id>')
 def chart(id):

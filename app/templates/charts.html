@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="rankeds" class="content-block">
+	<div class="title">Ranked charts</div>
+	{% include "_pager.html" %}
+	<table class="content">
+		<thead>
+			<tr>
+				<th>Title</th>
+				<th>Difficulty</th>
+				<th>SSR</th>
+				<th>Creator</th>
+				<th>Download</th>
+				<th>Chart page</th>
+			</tr>
+		</thead>
+		<tbody>
+		{% for chart in items %}
+			<tr>
+				<td title="{{ chart.display_full_romanized() }}">{{ chart.display_full_original() }}</td>
+				<td>{{ chart.difficulty_name }}</td>
+				<td>{{ chart.display_difficulty() }}</td>
+				<td>{{ chart.creator_name }}</td>
+				<td><a href="{{ chart.get_osu_download() }}">download</a></td>
+				<td><a href="{{ url_for('chart', id=chart.id) }}">page</a></td>
+			</tr>
+		{% endfor %}
+		</tbody>
+	</table>
+	{% include "_pager.html" %}
+</div>
+
+{% endblock %}

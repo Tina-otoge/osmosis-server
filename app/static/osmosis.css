@@ -99,6 +99,19 @@ footer #links ul {
 	text-align: center;
 }
 
+table {
+	border: 1px solid var(--primary);
+}
+
+tbody tr:nth-child(even) {
+	background-color: var(--secondary);
+	color: var(--contrast);
+}
+
+td {
+	padding: 0 0.5em;
+}
+
 .note {
 	border: 2px solid var(--secondary);
 	border-radius: var(--small-radius);
