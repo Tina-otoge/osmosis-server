@@ -66,6 +66,9 @@
 			<p>
 				Plays: {{ player.scores.count() }}
 			</p>
+			<p class="osmos-count">
+				Osmos: <strong>{{ player.osmos }}</strong>
+			</p>
 		</div>
 		<p>
 			<a href="{{ player.get_osu_link() }}">osu! profile</a>
