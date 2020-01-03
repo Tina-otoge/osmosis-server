@@ -76,10 +76,8 @@
 </div>
 {% with no_chart=True %}
 {% if score %}
-<p>
-	<a href="{{ url_for('chart', id=chart.id) }}">See the entire leaderboard</a>
-</p>
-<div id="score" class="scores content-block mini">
+<div id="highlighted-score" class="scores content-block mini">
+	<h3 class="title">Highlighted score</h3>
 	{% include "_score.html" %}
 </div>
 {% endif %}

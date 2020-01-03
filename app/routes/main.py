@@ -48,17 +48,11 @@ def share(id):
         ' | '.join(score.flairs)
     )
     meta = {
+        'title': title,
         'image': score.chart.get_osu_thumbnail_url(),
         'description': description,
     }
-    return render_template(
-        'chart.html',
-        title=title,
-        meta=meta,
-        chart=score.chart,
-        score=score,
-        no_top=True,
-    )
+    return chart(score.chart.id, highlight=score, meta=meta)
 
 
 @app.route('/players')
@@ -80,7 +74,7 @@ def charts():
     )
 
 @app.route('/charts/<id>')
-def chart(id):
+def chart(id, highlight=None, meta={}):
     chart = Chart.query.get_or_404(id)
     scores_query = get_scores_query(chart, only_best=True)
     scores = (scores_query
@@ -88,8 +82,10 @@ def chart(id):
     )
     return render_template(
         'chart.html',
-        title=chart.display_short(),
+        title=meta.get('title', chart.display_short()),
         chart=chart,
+        meta=meta,
+        score=highlight,
         **build_pager('chart', scores, per_page=50, id=id)
     )
 
