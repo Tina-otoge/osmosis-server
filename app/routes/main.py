@@ -31,7 +31,7 @@ def share(id):
     )
     description = '\n'.join(filter(lambda x: x, [
         'Played by {}\non {}\n'.format(score.player.username, score.display_time()),
-        'Mapset by: {}'.format(score.display_time()),
+        'Mapset by: {}'.format(score.chart.creator_name),
         'Artist: {}\n'.format(score.chart.display_artist()),
         'Accuracy: {} ({})'.format(score.display_accuracy(), score.display_rank()),
         'Judges: {}'.format(score.display_judges()),
