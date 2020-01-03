@@ -33,7 +33,10 @@ MAX_JUDGE = {
     'taiko': Judge.GREAT,
 }
 
-def calculate_osmos(accuracy, difficulty):
+def calculate_osmos(accuracy, difficulty, mods=[]):
+    for mod in mods:
+        if mod['acronym'] not in MODS_WHITELIST:
+            return 0
     smooth_limit = 0.95
     if not difficulty:
         return 0
