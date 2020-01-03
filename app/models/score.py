@@ -5,7 +5,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 
 from app import db
 from app.rulings import Judge, MAX_JUDGE, MODS_WHITELIST, calculate_osmos, get_rank
-from . import DATETIME_BACK
+from . import DATETIME_BACK, DATETIME_FRONT
 
 class Score(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -177,6 +177,9 @@ class Score(db.Model):
 
     def display_rank(self):
         return get_rank(self.accuracy)
+
+    def display_time(self):
+        return self.achieved_at.strftime(DATETIME_FRONT)
 
     def translate_mods(self, raw_score):
         chart = self.chart

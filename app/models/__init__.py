@@ -1,4 +1,5 @@
 DATETIME_BACK = '%Y-%m-%d %H:%M:%S'
+DATETIME_FRONT = '%B %-d %Y at %H:%M:%S'
 
 class Hash:
     def __ini__(hash):
