@@ -23,31 +23,21 @@ def scores():
 @app.route('/share/<id>')
 def share(id):
     score = Score.query.get_or_404(id)
-    title = '{} [{}] {}⭐'.format(
+    title = '{} [{}] ({}) {}⭐'.format(
         score.chart.display_name(),
         score.chart.difficulty_name,
+        score.chart.mode,
         score.chart.display_difficulty(),
     )
-    description = (
-        'Played by {}'
-        '\nMode: {}'
-        '\nMapset by: {}'
-        '\nArtist: {}'
-        '\nAccuracy: {} ({})'
-        '\nJudges: {}'
-        '\n{}'
-        '\n{}'
-    ).format(
-        score.player.username,
-        score.chart.mode,
-        score.chart.creator_name,
-        score.chart.display_artist(),
-        score.display_accuracy(),
-        score.display_rank(),
-        score.display_judges(),
-        ' | '.join(['+{}'.format(mod['acronym']) for mod in score.get_mods()]),
-        ' | '.join(score.flairs)
-    )
+    description = '\n'.join(filter(lambda x: x, [
+        'Played by {}\non {}\n'.format(score.player.username, score.display_time()),
+        'Mapset by: {}'.format(score.display_time()),
+        'Artist: {}\n'.format(score.chart.display_artist()),
+        'Accuracy: {} ({})'.format(score.display_accuracy(), score.display_rank()),
+        'Judges: {}'.format(score.display_judges()),
+        ' | '.join(['+{}'.format(mod['acronym']) for mod in score.get_mods()]) or None,
+        ' | '.join(score.flairs) or None,
+    ]))
     meta = {
         'title': title,
         'image': score.chart.get_osu_thumbnail_url(),
