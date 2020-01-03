@@ -6,7 +6,7 @@ from app.rulings import RANKS
 
 def rank_chart(chart, ssr=None, hash=None):
     if isinstance(chart, str):
-        chart = int(chart)
+        chart = int(chart.split('/')[-1])
     if isinstance(chart, int):
         chart = Chart.query.get(chart)
     if ssr is None:
