@@ -8,7 +8,7 @@
 			<img src="{{ score.player.avatar_url }}" class="avatar">
 			<span class="username">{{ score.player.username }}</span>
 		</a>
-		<div class="time">
+		<div class="time" title="{{ score.display_time() }}">
 			<a href="{{ url_for('share', id=score.id) }}">
 				{{ moment(score.achieved_at).fromNow() }}
 			</a>
@@ -44,7 +44,7 @@
 			{{ score.mode }}
 		</div>
 		{% if no_profile %}
-		<div class="time">
+		<div class="time" title="{{ score.display_time() }}">
 			<a href="{{ url_for('share', id=score.id) }}">
 				{{ moment(score.achieved_at).fromNow() }}
 			</a>
