@@ -74,16 +74,26 @@
 		{% endif %}
 	</div>
 </div>
+{% with no_chart=True %}
+{% if score %}
+<p>
+	<a href="{{ url_for('chart', id=chart.id) }}">See the entire leaderboard</a>
+</p>
+<div id="score" class="scores content-block mini">
+	{% include "_score.html" %}
+</div>
+{% endif %}
+{% if not no_top %}
 <div id="top-scores" class="scores content-block mini">
 	<h3 class="title">Top 50</h3>
-	{% with no_chart=True %}
 	{% for score in items %}
 	{% with rank=loop.index + start_at %}
 	{% include "_score.html" %}
 	{% endwith %}
 	{% endfor %}
-	{% endwith %}
 	{% include "_pager.html" %}
 </div>
+{% endif %}
+{% endwith %}
 
 {% endblock %}

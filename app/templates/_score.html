@@ -9,7 +9,9 @@
 			<span class="username">{{ score.player.username }}</span>
 		</a>
 		<div class="time">
-			{{ moment(score.achieved_at).fromNow() }}
+			<a href="{{ url_for('share', id=score.id) }}">
+				{{ moment(score.achieved_at).fromNow() }}
+			</a>
 		</div>
 	</div>
 	{% endif %}

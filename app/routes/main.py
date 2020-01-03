@@ -31,6 +31,8 @@ def share(id):
     description = (
         'Played by {}'
         '\nMode: {}'
+        '\nMapset by: {}'
+        '\nArtist: {}'
         '\nAccuracy: {}'
         '\nJudges: {}'
         '\n{}'
@@ -38,6 +40,8 @@ def share(id):
     ).format(
         score.player.username,
         score.chart.mode,
+        score.chart.creator_name,
+        score.chart.display_artist(),
         score.display_accuracy(),
         score.display_judges(),
         ' | '.join(['+{}'.format(mod['acronym']) for mod in score.get_mods()]),
@@ -48,10 +52,12 @@ def share(id):
         'description': description,
     }
     return render_template(
-        'score.html',
+        'chart.html',
         title=title,
         meta=meta,
+        chart=score.chart,
         score=score,
+        no_top=True,
     )
 
 
