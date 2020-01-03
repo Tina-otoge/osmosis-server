@@ -203,6 +203,10 @@ td {
 #players .content a,
 #players .content a:visited {
 	color: white;
+}
+
+.scores .content .username,
+#players .content .username {
 	text-shadow: 0 0 1px white;
 }
 
