@@ -33,7 +33,7 @@ def share(id):
         '\nMode: {}'
         '\nMapset by: {}'
         '\nArtist: {}'
-        '\nAccuracy: {}'
+        '\nAccuracy: {} ({})'
         '\nJudges: {}'
         '\n{}'
         '\n{}'
@@ -43,6 +43,7 @@ def share(id):
         score.chart.creator_name,
         score.chart.display_artist(),
         score.display_accuracy(),
+        score.display_rank(),
         score.display_judges(),
         ' | '.join(['+{}'.format(mod['acronym']) for mod in score.get_mods()]),
         ' | '.join(score.flairs)
