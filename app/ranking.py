@@ -34,10 +34,7 @@ def get_scores_query(chart=None, player=None, only_best=True):
     return Score.query.filter_by(**conditions)
 
 def get_pb(player, chart):
-    return Score.query.filter(
-        Score.chart == chart,
-        Score.player == player
-    ).order_by(
+    return get_scores_query(chart=chart, player=player, only_best=False).order_by(
         Score.points.desc()
     ).first()
 

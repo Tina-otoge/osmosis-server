@@ -120,12 +120,13 @@ class Score(db.Model):
         return True
 
     def get_osmos(self, osu=False, max=False):
+        mods = self.get_mods() if not max else []
         if self.chart.ssr is None and osu:
             difficulty = self.chart.sr
         else:
             difficulty = self.chart.ssr / 2
         accuracy = self.accuracy if not max else 1
-        return calculate_osmos(accuracy, difficulty)
+        return calculate_osmos(accuracy, difficulty, mods)
 
     def set_osmos(self):
         if not self.chart or not self.chart.ranked or not self.chart.ssr or self.hash != self.chart.hash or not self.is_rankable():
