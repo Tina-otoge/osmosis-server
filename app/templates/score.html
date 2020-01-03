@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div id="score" class="content-block">
+	<div class="title">{{ title }}</div>
+	<ul>
+		<li><a href="{{ url_for('player', id=score.player.id) }}">Player</a></li>
+		<li><a href="{{ url_for('chart', id=score.chart.id) }}">Chart</a></li>
+	</ul>
+</div>
+
+{% endblock %}

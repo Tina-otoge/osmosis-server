@@ -3,10 +3,20 @@
 <head>
 	<meta charset="utf-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<meta name="twitter:card" content="summary">
 	{% if title %}
 	<title>{{ title }} - osmosis</title>
+	<meta name="twitter:title" content="{{ title }}">
 	{% else %}
 	<title>osmosis, the accuracy-based osu! leaderboard</title>
+	{% endif %}
+	{% if meta %}
+	{% if meta.image %}
+	<meta name="twitter:image" content="{{ meta.image }}">
+	{% endif %}
+	{% if meta.description %}
+	<meta name="twitter:description" content="{{ meta.description }}">
+	{% endif %}
 	{% endif %}
 	<link rel="stylesheet" href="{{ url_for('static', filename='osmosis.css') }}" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Oxygen|Questrial&display=swap" rel="stylesheet">

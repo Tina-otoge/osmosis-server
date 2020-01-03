@@ -20,6 +20,41 @@ def index():
 def scores():
     return 'TODO'
 
+@app.route('/share/<id>')
+def share(id):
+    score = Score.query.get_or_404(id)
+    title = '{} [{}] {}⭐'.format(
+        score.chart.display_name(),
+        score.chart.difficulty_name,
+        score.chart.display_difficulty(),
+    )
+    description = (
+        'Played by {}'
+        '\nMode: {}'
+        '\nAccuracy: {}'
+        '\nJudges: {}'
+        '\n{}'
+        '\n{}'
+    ).format(
+        score.player.username,
+        score.chart.mode,
+        score.display_accuracy(),
+        score.display_judges(),
+        ' | '.join(['+{}'.format(mod['acronym']) for mod in score.get_mods()]),
+        ' | '.join(score.flairs)
+    )
+    meta = {
+        'image': score.chart.get_osu_thumbnail_url(),
+        'description': description,
+    }
+    return render_template(
+        'score.html',
+        title=title,
+        meta=meta,
+        score=score,
+    )
+
+
 @app.route('/players')
 def players():
     players = Player.query.order_by(Player.osmos.desc())
