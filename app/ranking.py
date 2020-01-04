@@ -39,9 +39,9 @@ def get_pb(player, chart):
     ).first()
 
 def update_pb_for_score(player, score, set_osmos=True):
-    current_best = get_pb(player, score.chart)
+    current_best = get_scores_query(chart=score.chart, player=player).first()
     print('current best:', current_best)
-    if current_best is score or current_best is None or score.points > current_best.points:
+    if current_best is None or score.points > current_best.points:
         print('new best!')
         if current_best:
             current_best.player_best = False
