@@ -53,5 +53,5 @@ def calculate_osmos(accuracy, difficulty, mods=[]):
 
 def get_rank(accuracy):
     for rank, min in RANKS.items():
-        if accuracy > min:
+        if accuracy >= min:
             return rank
