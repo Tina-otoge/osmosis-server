@@ -20,6 +20,14 @@ def rank_chart(chart, ssr=None, hash=None):
     update_all_player_osmos()
     return chart
 
+
+def rescale_charts(scale):
+    charts = Chart.query.filter_by(ranked=True)
+    for chart in charts:
+        chart.ssr *= scale
+    db.session.commit()
+
+
 def get_scores_query(chart=None, player=None, only_best=True):
     conditions = {}
     if player:
