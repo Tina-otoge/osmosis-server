@@ -7,6 +7,7 @@ from app.models import Player, Chart, Score
 from app.ranking import update_pb_for_score, update_player_osmos
 from . import dumb_decryption
 
+
 @app.route('/versions')
 def versions():
     return jsonify({
@@ -56,4 +57,3 @@ def score():
             print('malformed score payload', 'data:', data, sep='\n')
             raise e
         return 'OK'
-

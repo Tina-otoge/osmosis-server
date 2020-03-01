@@ -1,9 +1,10 @@
-from flask import render_template, request
+from flask import render_template
 
 from app import app
 from app.models import Score, Chart, Player
-from app.ranking import get_scores_query, get_player_scores
+from app.ranking import get_scores_query
 from . import build_pager
+
 
 @app.route('/index')
 @app.route('/')
@@ -16,9 +17,11 @@ def index():
         **build_pager('index', latest_scores, per_page=20)
     )
 
+
 @app.route('/scores')
 def scores():
     return 'TODO'
+
 
 @app.route('/share/<id>')
 def share(id):
@@ -55,6 +58,7 @@ def players():
         **build_pager('players', players, per_page=50)
     )
 
+
 @app.route('/charts')
 def charts():
     rankeds = Chart.query.filter(Chart.ranked == True).order_by(
@@ -67,6 +71,7 @@ def charts():
         title='Ranked charts',
         **build_pager('charts', rankeds, per_page=50)
     )
+
 
 @app.route('/charts/<id>')
 def chart(id, highlight=None, meta={}):
@@ -83,6 +88,7 @@ def chart(id, highlight=None, meta={}):
         score=highlight,
         **build_pager('chart', scores, per_page=50, id=id)
     )
+
 
 @app.route('/players/<id>')
 def player(id):

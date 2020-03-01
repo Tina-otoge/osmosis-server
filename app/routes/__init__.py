@@ -2,10 +2,13 @@ from flask import current_app, request, url_for
 
 try:
     from secret import dumb_decryption
-except:
+except ModuleNotFoundError:
     import json
     print('Score decrypter not found, will not be able to parse scores')
-    dumb_decryption = lambda x: json.loads(x)
+
+    def dumb_decryption(x):
+        return json.loads(x)
+
 
 def build_pager(route, data, per_page=None, **kwargs):
     page = request.args.get('page', 1, type=int)
@@ -14,14 +17,14 @@ def build_pager(route, data, per_page=None, **kwargs):
     start_at = (page - 1) * per_page
     return {
         'start_at': start_at,
-        'next_url': url_for(route, page=pagination.next_num, **kwargs) \
-            if pagination.has_next else None,
-        'prev_url': url_for(route, page=pagination.prev_num, **kwargs) \
-            if pagination.has_prev else None,
+        'next_url': url_for(route, page=pagination.next_num, **kwargs)
+        if pagination.has_next else None,
+        'prev_url': url_for(route, page=pagination.prev_num, **kwargs)
+        if pagination.has_prev else None,
         'current_url': url_for(route, page=page, **kwargs),
         'page': page,
         'items': pagination.items
     }
 
-from . import api, main, static
 
+from . import api, main, static

@@ -69,7 +69,7 @@ def update_pb(player, chart, set_osmos=True):
     for score in Score.query.filter(
         Score.chart == chart,
         Score.player == player,
-        Score.player_best == True
+        Score.player_best
     ).all():
         score.player_best = False
         if set_osmos:
@@ -95,8 +95,8 @@ def update_all_pb(charts=None, set_osmos=True):
 def update_player_osmos(player):
     scores = Score.query.join(Score.chart).filter(
         Score.player == player,
-        Score.player_best == True,
-        Chart.ranked == True,
+        Score.player_best,
+        Chart.ranked,
         Score.osmos > 0
     ).limit(current_app.config.get('TOP_OSMOS', 20)).all()
     result = 0

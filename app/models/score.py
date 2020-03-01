@@ -1,11 +1,11 @@
 from datetime import datetime
-import math
 
 from sqlalchemy.ext.hybrid import hybrid_property
 
 from app import db
 from app.rulings import Judge, MAX_JUDGE, MODS_WHITELIST, calculate_osmos, get_rank
 from . import DATETIME_BACK, DATETIME_FRONT
+
 
 class Score(db.Model):
     id = db.Column(db.Integer, primary_key=True)
