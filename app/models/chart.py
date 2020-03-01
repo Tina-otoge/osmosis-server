@@ -119,7 +119,7 @@ class Chart(db.Model):
 
     def display_difficulty(self):
         if self.ssr:
-            return self.ssr / 2
+            return self.ssr / 4
         return self.display_details('sr')
 
     def display_hash(self):
