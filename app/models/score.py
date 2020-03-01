@@ -83,7 +83,6 @@ class Score(db.Model):
             result.append('only GOODs')
         return result
 
-
     @hybrid_property
     def max_points(self):
         return self.max_notes * MAX_JUDGE.get(self.mode, Judge.GREAT)
@@ -94,7 +93,7 @@ class Score(db.Model):
 
     @hybrid_property
     def accuracy(self):
-         return self.points / self.max_points
+        return self.points / self.max_points
 
     @accuracy.expression
     def accuracy(cls):
@@ -142,10 +141,10 @@ class Score(db.Model):
 
     def display_judges(self):
         modes_judges = {
-            'osu'   : [self.great, self.good, self.meh, self.miss],
-            'taiko' : [self.great, self.good, self.miss],
+            'osu': [self.great, self.good, self.meh, self.miss],
+            'taiko': [self.great, self.good, self.miss],
             'fruits': [self.perfect, self.miss],
-            'mania' : [self.perfect, self.great, self.good, self.ok, self.meh, self.miss]
+            'mania': [self.perfect, self.great, self.good, self.ok, self.meh, self.miss]
         }
         return ' | '.join(map(str, modes_judges[self.mode]))
 

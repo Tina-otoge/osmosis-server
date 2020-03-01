@@ -2,6 +2,7 @@ from datetime import datetime
 
 from app import db
 
+
 class Player(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(32))
@@ -52,19 +53,22 @@ class Player(db.Model):
         self.id = data['id']
         self.update_fields(data)
 
-    def get_ranks(self, rank, above=False):
-        if above:
-            ranks = self.get_all_ranks(just_names=True)
-            target = ranks[ranks.index(rank):]
-        else:
-            target = [rank]
-        return self.scores.filter(Score.rank.in_(rank)).count()
+    # TODO
+    # def get_ranks(self, rank, above=False):
+    #     if above:
+    #         ranks = self.get_all_ranks(just_names=True)
+    #         target = ranks[ranks.index(rank):]
+    #     else:
+    #         target = [rank]
+    #     return self.scores.filter(Score.rank.in_(rank)).count()
 
     def get_all_ranks(self, just_names=False):
         ranks = ['D', 'C', 'B', 'A', 'A+', 'S', 'S+', 'S++', 'SS']
         if just_names:
             return ranks
-        return {x: self.get_ranks(x) for x in ranks}
+        # TODO
+        return None
+        # return {x: self.get_ranks(x) for x in ranks}
 
     def get_osu_link(self):
         return 'https://osu.ppy.sh/users/{}'.format(self.id)

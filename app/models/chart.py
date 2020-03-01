@@ -3,7 +3,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from app import db
 
 from . import Hash
-from .score import Score
+
 
 class Chart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -36,7 +36,7 @@ class Chart(db.Model):
 
     @hybrid_property
     def frozen(self):
-        return self.hash != None
+        return self.hash is not None
 
     def update_fields(self, data):
         if self.hash:
@@ -106,7 +106,8 @@ class Chart(db.Model):
         )
 
     def display_details(self, name):
-        filter = lambda x: round(x, 2) if x else 0
+        def filter(x):
+            return round(x, 2) if x else 0
         if name:
             return filter(getattr(self, name))
         details = {

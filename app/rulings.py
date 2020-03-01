@@ -1,3 +1,11 @@
+class Judge:
+    PERFECT = 350
+    GREAT = 300
+    GOOD = 100
+    OK = 50
+    MEH = 50
+
+
 MODS_WHITELIST = [
     'NF',
     'SD',
@@ -19,19 +27,13 @@ RANKS = {
     'D': 0
 }
 
-class Judge:
-    PERFECT = 350
-    GREAT = 300
-    GOOD = 100
-    OK = 50
-    MEH = 50
-
 MAX_JUDGE = {
     'osu': Judge.GREAT,
     'mania': Judge.PERFECT,
     'fruits': Judge.PERFECT,
     'taiko': Judge.GREAT,
 }
+
 
 def calculate_osmos(accuracy, difficulty, mods=[]):
     for mod in mods:
