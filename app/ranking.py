@@ -1,9 +1,10 @@
-from flask import current_app
+from flask import current_app, url_for
 
 from app import db
 from app.models import Chart, Player, Score
 from app.osu import osuAPI
 from app.rulings import RANKS
+from app.discord import hook
 
 
 def rank_chart(chart, ssr=None, hash=None):
@@ -28,6 +29,8 @@ def rank_chart(chart, ssr=None, hash=None):
     update_all_player_osmos()
     db.session.add(chart)
     db.session.commit()
+    if current_app.config.get('DISCORD_NOTIFICATIONS'):
+        hook('❗ New ranked map!\n' + url_for('chart', id=chart.id))
     return chart
 
 

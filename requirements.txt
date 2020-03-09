@@ -1,3 +1,4 @@
+discord_webhook
 flask
 flask-migrate
 flask-moment

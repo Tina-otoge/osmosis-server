@@ -43,7 +43,6 @@ def share(id):
     ]))
     meta = {
         'title': title,
-        'image': score.chart.get_osu_thumbnail_url(),
         'description': description,
     }
     return chart(score.chart.id, highlight=score, meta=meta)
@@ -80,9 +79,20 @@ def chart(id, highlight=None, meta={}):
     scores = (scores_query
         .order_by(Score.points.desc())
     )
+    if meta.get('description') is None:
+        meta['description'] = '\n'.join(filter(lambda x: x, [
+            'Mode: {}'.format(chart.mode),
+            'SSR: {}⭐'.format(chart.display_difficulty()),
+            'AR: {0.ar}  CS: {0.cs}  HP: {0.hp}  OD: {0.od}'.format(chart),
+            'Creator: {}'.format(chart.creator_name),
+        ]))
+    if meta.get('title') is None:
+        meta['title'] = chart.display_short()
+    if meta.get('image') is None:
+        meta['image'] = chart.get_osu_thumbnail_url()
     return render_template(
         'chart.html',
-        title=meta.get('title', chart.display_short()),
+        title=meta['title'],
         chart=chart,
         meta=meta,
         score=highlight,
