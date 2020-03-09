@@ -45,7 +45,7 @@ def share(id):
         'title': title,
         'description': description,
     }
-    return chart(score.chart.id, highlight=score, meta=meta)
+    return chart(score.chart.id, highlight=score, meta_bypass=meta)
 
 
 @app.route('/players')
@@ -73,21 +73,23 @@ def charts():
 
 
 @app.route('/charts/<id>')
-def chart(id, highlight=None, meta={}):
+def chart(id, highlight=None, meta_bypass=None):
     chart = Chart.query.get_or_404(id)
     scores_query = get_scores_query(chart, only_best=True)
     scores = (scores_query
         .order_by(Score.points.desc())
     )
+    meta = {}
+    if meta_bypass:
+        meta = meta_bypass
     if meta.get('description') is None:
         meta['description'] = '\n'.join(filter(lambda x: x, [
             'Mode: {}'.format(chart.mode),
-            'SSR: {}⭐'.format(chart.display_difficulty()),
             'AR: {0.ar}  CS: {0.cs}  HP: {0.hp}  OD: {0.od}'.format(chart),
             'Creator: {}'.format(chart.creator_name),
         ]))
     if meta.get('title') is None:
-        meta['title'] = chart.display_short()
+        meta['title'] = chart.display_short() + ' {}⭐'.format(chart.display_difficulty())
     if meta.get('image') is None:
         meta['image'] = chart.get_osu_thumbnail_url()
     return render_template(

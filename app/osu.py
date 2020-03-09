@@ -27,11 +27,13 @@ class osuAPI:
         result = osuAPI.api_call('get_beatmaps', {'b': id})
         if result is None:
             return None
-        if result.get('error'):
+        if isinstance(result, dict) and result.get('error'):
             print('An error occured:', result['error'])
             return None
-        result = result[0]
+        if isinstance(result, list):
+            result = result[0]
         return {
+            'hash': result['file_md5'],
             'chart_id': int(result['beatmap_id']),
             'set_id': int(result['beatmapset_id']),
             'mode': get_legacy_mode(int(result['mode'])),

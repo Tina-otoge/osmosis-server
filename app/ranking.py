@@ -18,8 +18,13 @@ def rank_chart(chart, ssr=None, hash=None):
         data = osuAPI.beatmap(id)
         if data is None:
             return None
-        chart = Chart()
-        chart.update_fields(data)
+        chart = Chart(data)
+        db.session.add(chart)
+        db.session.commit()
+    if hash is None and chart.scores.filter(Score.hash != None).count() is 0:
+        print('missing hash, getting chart info from osu! servers')
+        data = osuAPI.beatmap(id)
+        hash = data['hash']
     if ssr is None:
         ssr = round(chart.sr * 4)
     if hash is None:
@@ -29,10 +34,12 @@ def rank_chart(chart, ssr=None, hash=None):
     chart.ranked = True
     update_all_pb(charts=[chart])
     update_all_player_osmos()
-    db.session.add(chart)
     db.session.commit()
     if current_app.config.get('DISCORD_NOTIFICATIONS'):
-        hook('❗ New ranked map!\n' + url_for('chart', id=chart.id, _external=True))
+        hook('❗ New ranked map!\n{}/charts/{}'.format(
+            current_app.config.get('WEBSITE'),
+            chart.id
+        ))
     return chart
 
 

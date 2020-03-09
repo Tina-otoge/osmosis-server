@@ -27,3 +27,4 @@ class Config:
     BOARD_SIZE = 50
     MOMENT_DEFAULT_FORMAT = 'LLL'
     DISCORD_NOTIFICATIONS = _get('NODISCORD_NOTIFICATIONS') or True
+    WEBSITE = _get('WEBSITE', 'https://osmosis.tina.moe')
