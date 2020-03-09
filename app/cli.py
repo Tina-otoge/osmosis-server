@@ -1,7 +1,7 @@
 import click
 
 from app import db
-from app.ranking import rank_chart, big_button, rescale_charts, update_all_player_osmos
+from app.ranking import rank_chart, big_button, rescale_charts
 
 
 def register(app):
@@ -24,4 +24,3 @@ def register(app):
     @click.argument('scale', type=int)
     def rescale(scale):
         rescale_charts(scale)
-        update_all_player_osmos()

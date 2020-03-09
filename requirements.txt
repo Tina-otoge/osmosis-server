@@ -2,4 +2,5 @@ flask
 flask-migrate
 flask-moment
 flask-sqlalchemy
+requests
 pyjwt

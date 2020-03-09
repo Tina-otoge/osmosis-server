@@ -2,6 +2,7 @@ from flask import current_app
 
 from app import db
 from app.models import Chart, Player, Score
+from app.osu import osuAPI
 from app.rulings import RANKS
 
 
@@ -9,9 +10,15 @@ def rank_chart(chart, ssr=None, hash=None):
     if isinstance(chart, str):
         chart = int(chart.split('/')[-1])
     if isinstance(chart, int):
+        id = chart
         chart = Chart.query.get(chart)
+    if chart is None:
+        print('getting chart info from osu! servers')
+        data = osuAPI.beatmap(id)
+        chart = Chart()
+        chart.update_fields(data)
     if ssr is None:
-        ssr = round(chart.sr * 2)
+        ssr = round(chart.sr * 4)
     if hash is None:
         hash = chart.scores[-1].hash
     chart.ssr = ssr
@@ -19,6 +26,8 @@ def rank_chart(chart, ssr=None, hash=None):
     chart.ranked = True
     update_all_pb(charts=[chart])
     update_all_player_osmos()
+    db.session.add(chart)
+    db.session.commit()
     return chart
 
 

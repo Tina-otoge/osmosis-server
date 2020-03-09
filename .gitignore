@@ -1,4 +1,6 @@
 /secret.py
+/*.sh
 *.db
+*.json
 __pycache__/
 /.venv/
