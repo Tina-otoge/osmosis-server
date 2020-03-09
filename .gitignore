@@ -1,4 +1,5 @@
 /discord.py
+/.secrets
 /secret.py
 /*.sh
 *.db

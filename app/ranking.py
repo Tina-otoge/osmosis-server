@@ -16,6 +16,8 @@ def rank_chart(chart, ssr=None, hash=None):
     if chart is None:
         print('getting chart info from osu! servers')
         data = osuAPI.beatmap(id)
+        if data is None:
+            return None
         chart = Chart()
         chart.update_fields(data)
     if ssr is None:
@@ -30,7 +32,7 @@ def rank_chart(chart, ssr=None, hash=None):
     db.session.add(chart)
     db.session.commit()
     if current_app.config.get('DISCORD_NOTIFICATIONS'):
-        hook('❗ New ranked map!\n' + url_for('chart', id=chart.id))
+        hook('❗ New ranked map!\n' + url_for('chart', id=chart.id, _external=True))
     return chart
 
 

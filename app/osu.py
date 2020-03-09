@@ -27,6 +27,9 @@ class osuAPI:
         result = osuAPI.api_call('get_beatmaps', {'b': id})
         if result is None:
             return None
+        if result.get('error'):
+            print('An error occured:', result['error'])
+            return None
         result = result[0]
         return {
             'chart_id': int(result['beatmap_id']),

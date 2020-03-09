@@ -27,4 +27,3 @@ class Config:
     BOARD_SIZE = 50
     MOMENT_DEFAULT_FORMAT = 'LLL'
     DISCORD_NOTIFICATIONS = _get('NODISCORD_NOTIFICATIONS') or True
-    SERVER_NAME = _get('SERVER_NAME', 'osmosis.tina.moe')
