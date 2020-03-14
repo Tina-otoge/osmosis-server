@@ -1,12 +1,16 @@
 from discord_webhook import DiscordWebhook
 from discord import webhooks
+from flask import current_app
 
 
-def hook(content, links=None, files=[], username=None, avatar_url=None):
+def hook(content, name, files=[], username=None, avatar_url=None):
+    if current_app.debug:
+        name = 'debug'
     if isinstance(content, str):
         content = [content]
-    if links is None:
-        links = webhooks
+    links = webhooks.get(name)
+    if isinstance(links, str):
+        links = [links]
     for link in links:
         webhook = DiscordWebhook(link)
         webhook.username = username

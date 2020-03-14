@@ -1,4 +1,4 @@
-from flask import current_app, url_for
+from flask import current_app
 
 from app import db
 from app.models import Chart, Player, Score
@@ -18,15 +18,19 @@ def rank_chart(chart, ssr=None, hash=None):
         data = osuAPI.beatmap(id)
         if data is None:
             return None
+        hash = data['hash']
         chart = Chart(data)
         db.session.add(chart)
         db.session.commit()
-    if hash is None and chart.scores.filter(Score.hash != None).count() is 0:
+    elif hash is None and chart.scores.filter(Score.hash != None).count() is 0:
         print('missing hash, getting chart info from osu! servers')
         data = osuAPI.beatmap(id)
         hash = data['hash']
     if ssr is None:
-        ssr = round(chart.sr * 4)
+        if chart.sr < 5:
+            ssr = round(chart.sr * 2) * 2 / 4
+        else:
+            ssr = round(chart.sr * 4)
     if hash is None:
         hash = chart.scores[-1].hash
     chart.ssr = ssr
@@ -39,7 +43,7 @@ def rank_chart(chart, ssr=None, hash=None):
         hook('❗ New ranked map!\n{}/charts/{}'.format(
             current_app.config.get('WEBSITE'),
             chart.id
-        ))
+        ), 'charts')
     return chart
 
 
@@ -73,8 +77,17 @@ def get_pb(player, chart):
 def update_pb_for_score(player, score, set_osmos=True):
     current_best = get_scores_query(chart=score.chart, player=player).first()
     print('current best:', current_best)
+    if current_app.config.get('DISCORD_NOTIFICATIONS'):
+        absolute_best = get_scores_query(chart=score.chart).first()
+        if absolute_best is None or score.points > absolute_best.points:
+            print('new server best!')
+            hook('🥇 New server best!{}\n{}/share/{}'.format(
+                ' on a **verified chart!**' if score.chart.hash is not None else '',
+                current_app.config.get('WEBSITE'),
+                score.id
+            ), 'scores')
     if current_best is None or score.points > current_best.points:
-        print('new best!')
+        print('new personal best!')
         if current_best:
             current_best.player_best = False
         score.player_best = True

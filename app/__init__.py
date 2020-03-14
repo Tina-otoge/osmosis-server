@@ -1,3 +1,4 @@
+import os
 from flask import Flask
 from flask_migrate import Migrate
 from flask_moment import Moment
@@ -11,6 +12,9 @@ from config import Config
 
 app = Flask(__name__)
 app.config.from_object(Config)
+os.environ['CONFIG_FILE'] = app.config.get('CONFIG_FILE')
+app.config.from_envvar('CONFIG_FILE')
+print('DEBUG', app.debug)
 
 db.init_app(app)
 migrate.init_app(app, db)

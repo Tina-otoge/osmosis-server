@@ -28,3 +28,4 @@ class Config:
     MOMENT_DEFAULT_FORMAT = 'LLL'
     DISCORD_NOTIFICATIONS = _get('NODISCORD_NOTIFICATIONS') or True
     WEBSITE = _get('WEBSITE', 'https://osmosis.tina.moe')
+    CONFIG_FILE = _get('CONFIG_FILE', '../osmosis.cfg')
