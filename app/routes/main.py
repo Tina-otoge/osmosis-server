@@ -26,16 +26,17 @@ def scores():
 @app.route('/share/<id>')
 def share(id):
     score = Score.query.get_or_404(id)
-    title = '{} [{}] ({}) {}⭐'.format(
-        score.chart.display_name(),
-        score.chart.difficulty_name,
+    title = '{} {}⭐: {} [{}]'.format(
         score.chart.mode,
         score.chart.display_difficulty(),
+        score.chart.display_name(prefer_romanzied=True),
+        score.chart.difficulty_name,
     )
     description = '\n'.join(filter(lambda x: x, [
-        'Played by {}\non {}\n'.format(score.player.username, score.display_time()),
-        'Mapset by: {}'.format(score.chart.creator_name),
-        'Artist: {}\n'.format(score.chart.display_artist()),
+        'Original title: {}'.format(score.chart.name) if score.chart.name != None and score.chart.name != score.chart.name_romanized else None,
+        'Artist: {}'.format(score.chart.display_artist()),
+        'Mapset by: {}\n'.format(score.chart.creator_name),
+        'Played by {}\non {} UTC\n'.format(score.player.username, score.display_time()),
         'Accuracy: {} ({})'.format(score.display_accuracy(), score.display_rank()),
         'Judges: {}'.format(score.display_judges()),
         ' | '.join(['+{}'.format(mod['acronym']) for mod in score.get_mods()]) or None,

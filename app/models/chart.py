@@ -76,14 +76,18 @@ class Chart(db.Model):
         title = self.name_romanized or self.name
         return '{} [{}]'.format(title, self.difficulty_name)
 
-    def display_name(self):
+    def display_name(self, prefer_romanzied=False):
+        if prefer_romanzied:
+            return self.name_romanized or self.name
         if self.name == self.name_romanized or self.name_romanized is None:
             return self.name
         if self.name is None:
             return self.name_romanized
         return '{0.name} ({0.name_romanized})'.format(self)
 
-    def display_artist(self):
+    def display_artist(self, prefer_romanzied=False):
+        if prefer_romanzied:
+            return self.romanized_artist or self.artist
         if self.artist == self.artist_romanized or self.artist_romanized is None:
             return self.artist
         if self.artist is None:
