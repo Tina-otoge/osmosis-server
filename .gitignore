@@ -1,6 +1,7 @@
 /discord.py
 /.secrets
 /secret.py
+/osmosis.cfg
 /*.sh
 *.db
 *.json
