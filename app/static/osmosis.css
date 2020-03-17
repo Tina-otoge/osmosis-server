@@ -116,6 +116,7 @@ td {
 	border: 2px solid var(--secondary);
 	border-radius: var(--small-radius);
 	color: white;
+	margin: 0.4em 0;
 }
 
 .note.warning {
@@ -130,6 +131,15 @@ td {
 	padding: 2px 8px;
 }
 
+.button {
+	display: inline-block;
+	max-width: 200px;
+}
+
+.button img {
+	max-height: 100%;
+	max-width: 100%;
+}
 
 .avatar {
 	display: block;
@@ -211,7 +221,6 @@ td {
 }
 
 .scores .content > div {
-	border-right: 4px dashed var(--primary);
 	display: flex;
 	align-items: center;
 	justify-content: center;
@@ -226,7 +235,6 @@ td {
 
 .scores .content > div:last-child {
 	border-right: unset;
-	border-left: 4px dashed var(--primary);
 }
 
 .scores .chart {

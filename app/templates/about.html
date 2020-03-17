@@ -1,0 +1,136 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="about" class="content-block">
+	<h3 class="title">About Osmosis</h3>
+	<div id="rules" class="content">
+		<h4 class="title">Server rules</h4>
+		<ol>
+			<li>
+				Faking scores in any way is prohibited.<br>
+				The open source nature of the client and server make it easy to
+				cheat your scores. Don't.
+			</li>
+			<li>
+				Harassment in any form is prohibited.<br>
+				This includes: impersonating other people and "jokingly"
+				insulting a group or category of persons.
+			</li>
+			<li>
+				NSFW content is prohibited.
+			</li>
+		</ol>
+	</div>
+	<div class="content">
+		<h4>The server</h4>
+		<p>
+			Osmosis works differently than the official osu! server. Core
+			differences are listed here.
+			<a href="{{ config.LINKS.REPO }}">The server is open source</a>.
+		</p>
+		<ul>
+			<li>
+				Every score is saved, even for unranked/unsubmitted charts. Even
+				if using unrankable mods such as Relax.
+			</li>
+			<li>
+				Every chart has a leaderboard. You are free to compete for #1 on
+				unranked charts.
+			</li>
+			<li>
+				A points system called <em>osmos</em> is used to rank you
+				globally against other players. The player with the most osmos
+				is the #1 player.
+			</li>
+			<li>
+				Ranked charts's difficulty rating is set manually by humans
+				instead of using osu!'s SR, this new rating is called SSR.
+			</li>
+			<li>
+				SSR goes from 0.5 to 10. It increases by steps of 0.5.  Charts
+				rated 5 and more can use 0.25 steps.<br>
+				Examples: 1.5⭐, 3.5⭐, 5⭐, 6.25⭐, 7.75⭐, 8.5⭐, 9⭐.
+			</li>
+			<li>
+				Your best play on a ranked chart gives you osmos based on your
+				accuracy and the SSR of the chart.
+			</li>
+		</ul>
+	</div>
+	<div class="content">
+		<h4>The client</h4>
+		<p>
+			The client is called <strong>osu</strong>mosis. It is based on the
+			official upcoming osu! client, code-named
+			<a href="https://github.com/ppy/osu">osu! lazer</a>.
+			<a href="{{ config.LINKS.FORK }}">The client is open source</a>.
+		</p>
+		<p>
+			Instructions on how to setup the client and play on the server can
+			be found on the <a href="{{ url_for('tutorial') }}">How To</a> page.
+		</p>
+		<p>
+			Some features were added or removed from the official client:
+			<ul>
+				<li>
+					A mod called AR can be used to set the difficulty setting
+					Approach Rate to any value you want. This mod is rankable.
+					<br>
+					Using the DA (Difficulty Adjust) mod which was added later
+					on into lazer to change the Approach Rate submits your score
+					as if you used the AR mod.
+				</li>
+				<li>
+					Passive HP drain was removed. You do not lose HP for doing
+					absolutely nothing.
+				</li>
+				<li>
+					A "display FAST/SLOW" setting was added. It helps you timing
+					your hits by showing an extra text above the judgement.<br>
+					See <a href="https://twitter.com/Shookaite/status/1208099780435628032">
+					this tweet</a> for examples.
+				</li>
+			</ul>
+		</p>
+	</div>
+	<div class="content">
+		<h4>Ranked charts</h4>
+		<ul>
+			<li>
+				Charts ranked on the official osu! server are not necessarly
+				ranked on Osmosis.
+			</li>
+			<li>
+				Charts are ranked on Osmosis by a small team that reviews
+				charts and give them an SSR.
+			</li>
+			<li>
+				Charts are ranked per difficulty, this means ranking a chart
+				does not mean that all the charts in the same beatmap set are
+				necessarly ranked too.
+			</li>
+			<li>
+				If an artist did not express its agreement to have its songs
+				used on osu!, any chart using its songs is unrankable on
+				Osmosis.
+			</li>
+			<li>
+				If a song is licensed in a way that protects its usage, any
+				chart using this song is unrankable on Osmosis.<br>
+				This affects but is not limited to songs from the following
+				sources: anime, most video games, most albums.
+			</li>
+		</ul>
+	</div>
+	<div class="content">
+		<p>
+			If you need more information, if you want to involve yourself into
+			ranking or making new charts, or if you need help setting up the
+			client, please join our Discord server.
+		</p>
+		<p>
+			<a href="{{ config.LINKS.DISCORD }}" class="button"><img src="{{ url_for('static', filename="join_discord.png") }}"></a>
+		</p>
+	</div>
+</div>
+
+{% endblock %}

@@ -1,7 +1,43 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div id="news" class="content-block">
+<div id="welcome" class="content-block">
+	<h3 class="title">Welcome to Osmosis!</h3>
+	<div class="content">
+		<h4>What is Osmosis?</h4>
+		<p>
+			Osmosis is an alternative score server for the PC rhythm game
+			<a href="https://osu.ppy.sh">osu!</a>. Its main goal is to provide
+			an experience that rewards accuracy, as opposed to the official
+			game and server which rewards combo way more.
+		</p>
+		<p>
+			It is a project that I, <a href="{{ config.LINKS.DEV }}">Tina</a>,
+			develop and manage on my free time.<br>
+			The main idea is to see how it would be to play osu! if the only
+			thing that matters were accuracy. Combo scoring is something that
+			other rhythm games players often criticize osu! for. With this
+			project, I'm trying to see if removing the combo factor effectively
+			makes osu! a more pleasant experience for me.<br>
+			As things went on, I also added or removed other features to the
+			server and client to change osu! a bit in ways I like.
+		</p>
+		<p>
+			For more information, please visit the
+			<a href="{{ url_for('about') }}">About page</a>!<br>
+			You can find a list of all server and client features there, and
+			details on the server rules!
+		</p>
+		<p>
+			If you need more information, if you want to involve yourself into
+			ranking or making new charts, or if you need help setting up the
+			client, please join our Discord server.
+		</p>
+		<p>
+			<a href="{{ config.LINKS.DISCORD }}" class="button"><img src="{{ url_for('static', filename="join_discord.png") }}"></a>
+		</p>
+	</div>
+	<!--
 	<h3 class="title">Latest news:</h3>
 	<div class="content">
 		<h4>Trying out osmos system</h4>
@@ -31,6 +67,25 @@
 			I finally came up with a working v1.
 		</p>
 	</div>
+	-->
+</div>
+<div id="future" class="content-block">
+	<h3 class="title">Plans for the future</h3>
+	<ul>
+		<li>
+			Add target/pacemaker feature.
+		</li>
+		<li>
+			Group charts of the same song together on the website, even when
+			they are from different beatmaps sets.
+		</li>
+		<li>
+			Authentication without an osu! account.
+		</li>
+		<li>
+			Display server leaderboards in the client.
+		</li>
+	</ul>
 </div>
 
 <div id="latest-scores" class="scores content-block">

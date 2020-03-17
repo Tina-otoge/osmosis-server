@@ -1,78 +1,125 @@
 {% extends "base.html" %}
 
 {% block content %}
-
-<div id="manual" class="content-block">
-	<h3 class="title">Manual installing</h3>
+<div id="accounts" class="content-block">
+	<h3 class="title">Accounts</h3>
 	<div class="content">
+		<p>
+			You do not need to make a seperate account on Project osmosis. Make
+			sure you log into osu! in-game, when submitting scores, your profile
+			username and profile details will be uploaded to build your Osmosis
+			profile.
+		</p>
+		<p>
+			You may be concerned about what information is stored about you. A
+			few information from your osu! profile is copied on Osmosis to be
+			displayed on the website, such as the date you joined osu!. The
+			server runs the master branch that can be found on GitHub, the
+			player information is described
+			<a href="https://github.com/skielred/osmosis/blob/master/app/models/player.py">here in the Player model</a>.
+		</p>
+	</div>
+</div>
+
+<div id="script" class="content-block">
+	<h3 class="title">Script (RECOMMENDED WAY)</h3>
+	<div class="content">
+		<p>
+			This will download the source code of the game, build it on your
+			computer, then run it.
+		</p>
 		<ol>
-			<li>Download <a href="{{ config.LINKS.FORK }}">Tina's osu! fork</a></li>
 			<li>
-				<a href="{{ config.LINKS.PUSHER }}">Download the <em>osmosis</em> score pusher</a> and
-				<a href="https://superuser.com/a/737554">put it somewhere in your PATH</a>.
-				<p class="note warning">
-					It has to be named exactly <span class="code">osmosis_pusher</span> or <span class="code">osmosis_pusher.exe</span>!
-				</p>
-			</li>
-			<li>Download and install <a href="{{ config.LINKS.DOTNET }}">Microsoft's .NET Core 3.0 SDK</a></li>
-			<li>
-				Compile Tina's osu! or run it from source:
-				<ul>
-					<li>
-						Open a command prompt in the repository folder, on Windows you can do
-						<em>Shift+Right Click</em> and select "Open a Terminal here" or
-						"Open PowerShell here".
-					</li>
-					<li>
-						<span class="code">dotnet run --project osu.Desktop -c Release</span>
-						to run it directly without making production-ready compiled binaries
-					</li>
-				</ul>
+				Download and install <a href="{{ config.LINKS.DOTNET }}">Microsoft's .NET Core 3.1 SDK</a>.
 			</li>
 			<li>
-				You are ready to go! When you'll complete songs while playing <em>osu!</em>,
-				your scores will automatically be pushed to the server.
+				Download the latest version of the script
+				<a href="https://github.com/skielred/osmosis/releases/latest/download/osmosis_play.ps1">for Windows</a> or
+				<a href="https://github.com/skielred/osmosis/releases/latest/download/osmosis_play.sh">for Mac OS/Linux</a>.
+			</li>
+			<li>
+				Put it where you wish to install the game, for example
+				<span class="code">D:\Games\osumosis</span> or
+				<span class="code">C:\Users\*you*\Games\osumosis</span>.
+				<div class="note warning">
+					This is NOT the directory for your local files, such as your
+					map, skins, etc.
+				</div>
+			</li>
+			<li>
+				Then execute the script. On Windows, you might need to do
+				*Shift+Right Click* to get the option "Run with Powershell".
+				<div class="note warning">
+					On Windows, you might be asked if you trust the script,
+					well, do you?
+				</div>
+				<div class="note warning">
+					The first time you run it, or on every new update, it might
+					take some time! This is normal, you are downloading the
+					files needed to build the game on your computer.
+				</div>
+				<div class="note warning">
+					If the game does not open and the Powershell window closes
+					itself, you encountered an error! Please see the
+					troubleshooting guide below.
+				</div>
+			</li>
+		</p>
+		<p>
+			Troubleshooting problems with the game on Windows in a few steps:
+		</p>
+		<ol>
+			<li>
+				Make sure <span class="code">osmosis_pusher.exe</span> is not
+				blocked by either your antivirus or Windows. Check its
+				properties.
+			</li>
+			<li>
+				Open a Powershell window in the script folder. (*Shift+Right
+				Click* in the folder)
+			</li>
+			<li>
+				If this is the first time you run a Powershell script by hand,
+				you might need to run <span class="code">Set-ExecutionPolicy
+				-ExecutionPolicy Unrestricted -Scope CurrentUser</span> first.
+			</li>
+			<li>
+				Type <span class="code">.\osmosis_play.ps1</span>, and read the
+				output.
 			</li>
 		</ol>
 	</div>
 </div>
-<div id="script" class="content-block">
-	<h3 class="title">Script (Windows only)</h3>
+<div id="manual" class="content-block">
+	<h3 class="title">Manual installing (any OS)</h3>
 	<div class="content">
 		<ol>
 			<li>
-				Download and install <a href="{{ config.LINKS.DOTNET }}">Microsoft's .NET Core 3.0 SDK</a>
+				Download and install <a href="{{ config.LINKS.DOTNET }}">Microsoft's .NET Core 3.1 SDK</a>
 			</li>
 			<li>
-				<a href="https://github.com/skielred/osmosis/releases/latest/download/osmosis_play.ps1">Download the latest version of the script</a>,
+				<a href="{{ config.LINKS.FORK }}">Download or clone</a> the
+				source code.
 			</li>
 			<li>
-				Put it somewhere you like, <span class="code">D:\Games\osmosis</span>
-			might be a good place to start.
+				<a href="{{ config.LINKS.PUSHER }}">Download the score pusher</a>
+				and <a href="https://superuser.com/a/737554">put it somewhere in your PATH</a>.
+				<p class="note warning">
+					It has to be named exactly
+					<span class="code">osmosis_pusher</span> or
+					<span class="code">osmosis_pusher.exe</span>!
+				</p>
 			</li>
 			<li>
-				Then execute the script. You might need to do *Shift+Right Click* to get the option "Run with Powershell" on Windows.	
-				<div class="note warning">The first time you run it, or on every new update, it might take some time!</div>
-				<div class="note warning">If the game does not open and the Powershell window closes itself, you encountered an error!</div>
-			</li>
-		</p>
-		<p class="note warning">
-			Your antivirus might be blocking the game, please look out for that!
-		</p>
-		<p>
-			Troubleshooting problems with the script
-		</p>
-		<ol>
-			<li>
-				Go to the script folder and open a Powershell window. (*Shift+Right Click* in the folder)
+				Open a command prompt in the repository folder, on Windows you
+				can do *Shift+Right Click* and select "Open a Terminal here" or
+				"Open PowerShell here".
 			</li>
 			<li>
-				If this is the first time you run a Powershell script by hand, you might need to run
-			<span class="code">Set-ExecutionPolicy -ExecutionPolicy Unrestricted -Scope CurrentUser</span> first.
+				<span class="code">dotnet run --project osu.Desktop -c Release</span>
+				to run it directly without making production-ready compiled binaries
 			</li>
-			<li>
-				Type <span class="code">.\osmosis_play.ps1</span>, and read the output.
-			</li>
+		</ol>
 	</div>
 </div>
 <div id="prebuilt" class="content-block">
