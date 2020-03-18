@@ -5,7 +5,7 @@ Live version: https://osmosis.tina.moe
 
 # Modified client
 
-https://github.com/skielred/osu
+https://github.com/skielred/osumosis
 
 # Uploader
 
