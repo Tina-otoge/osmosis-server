@@ -85,7 +85,7 @@ class Score(db.Model):
 
     @hybrid_property
     def max_points(self):
-        return self.max_notes * MAX_JUDGE.get(self.mode, Judge.GREAT)
+        return MAX_JUDGE.get(self.mode, Judge.GREAT)
 
     @max_points.expression
     def max_points(cls):
