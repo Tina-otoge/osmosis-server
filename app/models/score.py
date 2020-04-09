@@ -58,17 +58,17 @@ class Score(db.Model):
             self.good * Judge.GOOD +
             self.ok * Judge.OK +
             self.meh * Judge.MEH
-        )
+        ) / self.max_notes
 
     @points.expression
     def points(cls):
-            return (
-                cls.perfect * Judge.PERFECT +
-                cls.great * Judge.GREAT +
-                cls.good * Judge.GOOD +
-                cls.ok * Judge.OK +
-                cls.meh * Judge.MEH
-            )
+        return (
+            cls.perfect * Judge.PERFECT +
+            cls.great * Judge.GREAT +
+            cls.good * Judge.GOOD +
+            cls.ok * Judge.OK +
+            cls.meh * Judge.MEH
+        ) / cls.max_notes
 
     @hybrid_property
     def flairs(self):
