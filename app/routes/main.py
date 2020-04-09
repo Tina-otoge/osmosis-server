@@ -62,8 +62,8 @@ def players():
 @app.route('/charts')
 def charts():
     rankeds = Chart.query.filter(Chart.ranked == True).order_by(
-        Chart.name_romanized.asc(),
         Chart.ssr.desc(),
+        Chart.name_romanized.asc(),
         Chart.difficulty_name.asc(),
     )
     return render_template(
