@@ -81,8 +81,14 @@ def update_pb_for_score(player, score, set_osmos=True):
         absolute_best = get_scores_query(chart=score.chart).first()
         if absolute_best is None or score.points > absolute_best.points:
             print('new server best!')
+            if (score.chart.ranked):
+                extra_text = ' on a **ranked chart**'
+            elif (score.chart.hash is not None):
+                extra_text = ' on a **verified chart**'
+            else:
+                extra_text = ''
             hook('🥇 New server best{}!\n{}/share/{}'.format(
-                ' on a **verified chart**' if score.chart.hash is not None else '',
+                extra_text,
                 current_app.config.get('WEBSITE'),
                 score.id
             ), 'scores')
