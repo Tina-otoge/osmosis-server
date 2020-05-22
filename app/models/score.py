@@ -167,12 +167,14 @@ class Score(db.Model):
             return []
         mods = self.mods.split('\n')
         if ''.join(mods):
-            return [{
-                pair.split('=')[0]: pair.split('=')[1]
-                    for pair in mod.split(' ')
-                }
-                for mod in mods
-            ]
+            result = []
+            for mod in mods:
+                mod_info = {}
+                for pair in mod.split(' '):
+                    parts = pair.split('=')
+                    mod_info[parts[0]] = parts[1] if len(parts) > 1 else None
+                result.append(mod_info)
+            return result
         return []
 
     def display_rank(self):
