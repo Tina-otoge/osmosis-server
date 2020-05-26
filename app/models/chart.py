@@ -143,7 +143,8 @@ class Chart(db.Model):
     def get_osu_thumbnail_url(self):
         if not self.osu_set_id:
             return False
-        return 'https://assets.ppy.sh/beatmaps/{}/covers/list.jpg'.format(self.osu_set_id)
+        # return 'https://assets.ppy.sh/beatmaps/{}/covers/list.jpg'.format(self.osu_set_id)
+        return 'https://b.ppy.sh/thumb/{}l.jpg'.format(self.osu_set_id)
 
     def get_osu_preview(self):
         if not self.osu_set_id:
