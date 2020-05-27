@@ -11,8 +11,8 @@ from . import dumb_decryption
 @app.route('/versions')
 def versions():
     return jsonify({
-        'osu': 16,
-        'pusher': 6,
+        'osu': 17,
+        'pusher': 8,
     })
 
 
