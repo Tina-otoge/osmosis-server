@@ -35,7 +35,10 @@ class Player(db.Model):
                 data['join_date'].split('+')[0], '%Y-%m-%dT%H:%M:%S'
             )
         if data.get('avatar'):
-            self.avatar_url = data['avatar']
+            if data['avatar'][0] == '/':
+                self.avatat_url = 'https://osu.ppy.sh' + data['avatar']
+            else:
+                self.avatar_url = data['avatar']
         if data.get('cover'):
             self.cover_url = data['cover']
         if data.get('country'):
