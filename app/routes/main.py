@@ -78,7 +78,7 @@ def chart(id, highlight=None, meta_bypass=None):
     chart = Chart.query.get_or_404(id)
     scores_query = get_scores_query(chart, only_best=True)
     scores = (scores_query
-        .order_by(Score.points.desc())
+        .order_by(Score.accuracy.desc())
     )
     meta = {}
     if meta_bypass:

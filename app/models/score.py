@@ -9,6 +9,7 @@ from . import DATETIME_BACK, DATETIME_FRONT
 
 class Score(db.Model):
     id = db.Column(db.Integer, primary_key=True)
+    accuracy = db.Column(db.Float, default=0.)
     perfect = db.Column(db.Integer, default=0)
     ok = db.Column(db.Integer, default=0)
     great = db.Column(db.Integer, default=0)
@@ -34,6 +35,7 @@ class Score(db.Model):
     3: hash
     4: mod translation
     5: osmos and pb
+    6: client-side accuracy
     '''
     version = db.Column(db.Integer)
 
@@ -70,6 +72,12 @@ class Score(db.Model):
             cls.meh * Judge.MEH
         ) / cls.max_notes
 
+    def get_absolute_accuracy(self):
+        return self.points / self.max_points
+
+    def get_slider_amount(self):
+        return self.get_absolute_accuracy() - self.accuracy
+
     @hybrid_property
     def flairs(self):
         result = []
@@ -90,14 +98,6 @@ class Score(db.Model):
     @max_points.expression
     def max_points(cls):
         return cls.max_notes * MAX_JUDGE.get(cls.mode, Judge.GREAT)
-
-    @hybrid_property
-    def accuracy(self):
-        return self.points / self.max_points
-
-    @accuracy.expression
-    def accuracy(cls):
-        return cls.points / cls.max_points
 
     def is_supported(self):
         if not self.chart:
@@ -213,6 +213,8 @@ class Score(db.Model):
         return raw_score['mods']
 
     def update_fields(self, data):
+        if data.get('accuracy'):
+            self.accuracy = data['accuracy']
         if data.get('great'):
             self.great = data['great']
         if data.get('good'):

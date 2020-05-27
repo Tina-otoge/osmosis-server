@@ -70,7 +70,7 @@ def get_scores_query(chart=None, player=None, only_best=True):
 
 def get_pb(player, chart):
     return get_scores_query(chart=chart, player=player, only_best=False).order_by(
-        Score.points.desc()
+        Score.accuracy.desc()
     ).first()
 
 
@@ -79,7 +79,7 @@ def update_pb_for_score(player, score, set_osmos=True):
     print('current best:', current_best)
     if current_app.config.get('DISCORD_NOTIFICATIONS'):
         absolute_best = get_scores_query(chart=score.chart).first()
-        if absolute_best is None or score.points > absolute_best.points:
+        if absolute_best is None or score.accuracy > absolute_best.accuracy:
             print('new server best!')
             if (score.chart.ranked):
                 extra_text = ' on a **ranked chart**'
@@ -92,7 +92,7 @@ def update_pb_for_score(player, score, set_osmos=True):
                 current_app.config.get('WEBSITE'),
                 score.id
             ), 'scores')
-    if current_best is None or score.points > current_best.points:
+    if current_best is None or score.accuracy > current_best.accuracy:
         print('new personal best!')
         if current_best:
             current_best.player_best = False
