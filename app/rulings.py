@@ -7,12 +7,15 @@ class Judge:
 
 
 MODS_WHITELIST = [
-    'NF',
-    'SD',
-    'DT',
-    'HD',
-    'FL',
     'AR',
+    'DT',
+    'FL',
+    'HD',
+    'HR',
+    'NF',
+    'NM',
+    'RD',
+    'SD',
 ]
 
 RANKS = {
