@@ -22,7 +22,7 @@ def rank_chart(chart, ssr=None, hash=None):
         chart = Chart(data)
         db.session.add(chart)
         db.session.commit()
-    elif hash is None and chart.scores.filter(Score.hash != None).count() is 0:
+    elif hash is None and chart.scores.filter(Score.hash != None).count() != 0:
         print('missing hash, getting chart info from osu! servers')
         data = osuAPI.beatmap(id)
         hash = data['hash']
