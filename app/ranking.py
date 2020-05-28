@@ -78,7 +78,7 @@ def update_pb_for_score(player, score, set_osmos=True):
     current_best = get_scores_query(chart=score.chart, player=player).first()
     print('current best:', current_best)
     if current_app.config.get('DISCORD_NOTIFICATIONS'):
-        absolute_best = get_scores_query(chart=score.chart).first()
+        absolute_best = get_scores_query(chart=score.chart).order_by(Score.accuracy.desc()).first()
         if absolute_best is None or score.accuracy > absolute_best.accuracy:
             print('new server best!')
             if (score.chart.ranked):
