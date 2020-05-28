@@ -123,7 +123,7 @@ class Score(db.Model):
         if self.chart.ssr is None and osu:
             difficulty = self.chart.sr
         else:
-            difficulty = self.chart.ssr / 2
+            difficulty = self.chart.ssr / 4
         accuracy = self.accuracy if not max else 1
         return calculate_osmos(accuracy, difficulty, mods)
 
