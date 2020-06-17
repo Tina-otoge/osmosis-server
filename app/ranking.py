@@ -68,19 +68,19 @@ def get_scores_query(chart=None, player=None, only_best=True):
     return Score.query.filter_by(**conditions)
 
 
-def get_pb(player, chart):
+def get_true_pb(player, chart):
     return get_scores_query(chart=chart, player=player, only_best=False).order_by(
-        Score.accuracy.desc()
+        Score.osmos.desc(), Score.accuracy.desc()
     ).first()
 
 
 def update_pb_for_score(player, score, set_osmos=True):
     current_best = get_scores_query(chart=score.chart, player=player).first()
-    print('current best:', current_best)
-    if current_app.config.get('DISCORD_NOTIFICATIONS'):
-        absolute_best = get_scores_query(chart=score.chart).order_by(Score.accuracy.desc()).first()
-        if absolute_best is None or score.accuracy > absolute_best.accuracy:
-            print('new server best!')
+    actual_best = get_true_pb(player, score.chart)
+    if actual_best != current_best:
+        current_best.player_best = False
+        actual_best.player_best = True
+        if current_app.config.get('DISCORD_NOTIFICATIONS'):
             if (score.chart.ranked):
                 extra_text = ' on a **ranked chart**'
             elif (score.chart.hash is not None):
@@ -92,15 +92,6 @@ def update_pb_for_score(player, score, set_osmos=True):
                 current_app.config.get('WEBSITE'),
                 score.id
             ), 'scores')
-    if current_best is None or score.accuracy > current_best.accuracy:
-        print('new personal best!')
-        if current_best:
-            current_best.player_best = False
-        score.player_best = True
-        if set_osmos:
-            if current_best:
-                current_best.osmos = None
-            score.set_osmos()
         return True
     return False
 
@@ -113,13 +104,11 @@ def update_pb(player, chart, set_osmos=True):
     ).all():
         score.player_best = False
         if set_osmos:
-            score.osmos = None
-    current_best = get_pb(player, chart)
+            score.set_osmos()
+    current_best = get_true_pb(player, chart)
     if current_best is None:
         return
     current_best.player_best = True
-    if set_osmos:
-        current_best.set_osmos()
 
 
 def update_all_pb(charts=None, set_osmos=True):
@@ -165,8 +154,13 @@ def get_player_scores(player, min_accuracy=0):
     return player.scores.filter(Score.accuracy > min_accuracy)
 
 
+def update_all_osmos():
+    for score in Score.query.all():
+        score.set_osmos()
+
 def big_button():
-    update_all_pb()
+    update_all_osmos()
+    update_all_pb(None, False)
     players = Player.query.all()
     for player in players:
         update_player_osmos(player)

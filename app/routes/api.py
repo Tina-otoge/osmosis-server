@@ -46,6 +46,8 @@ def score():
             print('pushed to db! ({} played by {})'.format(
                 chart.name, player.username
             ))
+            score.set_osmos()
+            print('osmos set')
             print('updating pb if needed')
             if update_pb_for_score(player, score):
                 print('updated pb returned true')
