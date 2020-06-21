@@ -47,6 +47,12 @@ def rank_chart(chart, ssr=None, hash=None):
     return chart
 
 
+def update_hash(chart):
+    data = osuAPI.beatmap(chart.id)
+    chart.hash = data['hash']
+    db.session.commit()
+
+
 def rescale_charts(scale):
     charts = Chart.query.filter_by(ranked=True)
     for chart in charts:
@@ -78,7 +84,8 @@ def update_pb_for_score(player, score, set_osmos=True):
     current_best = get_scores_query(chart=score.chart, player=player).first()
     actual_best = get_true_pb(player, score.chart)
     if actual_best != current_best:
-        current_best.player_best = False
+        if current_best:
+            current_best.player_best = False
         actual_best.player_best = True
         if current_app.config.get('DISCORD_NOTIFICATIONS'):
             if (score.chart.ranked):
