@@ -11,8 +11,8 @@ from . import dumb_decryption
 @app.route('/versions')
 def versions():
     return jsonify({
-        'osu': 17,
-        'pusher': 8,
+        'osu': app.config.get('REQUIRED_OSU_VERSION', 0),
+        'pusher': app.config.get('REQUIRED_PUSHER_VERSION', 0),
     })
 
 

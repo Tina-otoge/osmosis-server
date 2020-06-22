@@ -14,7 +14,6 @@ app = Flask(__name__)
 app.config.from_object(Config)
 os.environ['CONFIG_FILE'] = app.config.get('CONFIG_FILE')
 app.config.from_envvar('CONFIG_FILE')
-print('DEBUG', app.debug)
 
 db.init_app(app)
 migrate.init_app(app, db)

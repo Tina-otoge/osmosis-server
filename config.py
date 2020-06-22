@@ -29,3 +29,5 @@ class Config:
     DISCORD_NOTIFICATIONS = _get('NODISCORD_NOTIFICATIONS') or True
     WEBSITE = _get('WEBSITE', 'https://osmosis.tina.moe')
     CONFIG_FILE = _get('CONFIG_FILE', '../osmosis.cfg')
+    REQUIRED_OSU_VERSION = _get('OSU_VER')
+    REQUIRED_PUSHER_VERSION = _get('PUSHER_VER')
