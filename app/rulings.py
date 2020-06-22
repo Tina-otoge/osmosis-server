@@ -12,6 +12,7 @@ MODS_WHITELIST = [
     'FL',
     'HD',
     'HR',
+    'ND',
     'NF',
     'NM',
     'RD',
