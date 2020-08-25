@@ -154,7 +154,7 @@ class Score(db.Model):
             if key != 'acronym':
                 infos.append('{}: {}'.format(key, value))
         return '<span data-toggle="tooltip" data-html="true" title="{}">{}</span>'.format(
-            '<br>'.join(infos), mod['acronym']
+            '\n'.join(infos), mod['acronym']
         )
 
     def get_mods(self):
