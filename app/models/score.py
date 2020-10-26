@@ -141,7 +141,7 @@ class Score(db.Model):
 
     def display_judges(self):
         modes_judges = {
-            'osu': [self.great, self.good, self.meh, self.miss],
+            'osu': [self.great, self.ok, self.meh, self.miss],
             'taiko': [self.great, self.good, self.miss],
             'fruits': [self.perfect, self.miss],
             'mania': [self.perfect, self.great, self.good, self.ok, self.meh, self.miss]
