@@ -94,8 +94,12 @@ def update_pb_for_score(player, score, set_osmos=True):
                 extra_text = ' on a **verified chart**'
             else:
                 extra_text = ''
-            hook('🥇 New server best{}!\n{}/share/{}'.format(
+            hook('🥇 New server best{} by {} on {} ({})'
+                 '!\n{}/share/{}\n'.format(
                 extra_text,
+                score.player,
+                score.chart.display_name(True),
+                score.display_accuracy(),
                 current_app.config.get('WEBSITE'),
                 score.id
             ), 'scores')
