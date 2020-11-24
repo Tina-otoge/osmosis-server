@@ -135,11 +135,11 @@ class Score(db.Model):
         else:
             self.osmos = self.get_osmos()
 
-    def display_accuracy(self):
+    def display_accuracy(self, suffix='%'):
         accuracy = self.accuracy
         if accuracy == 1:
-            return '100%'
-        return '%.2f%%' % (accuracy * 100)
+            return '100' + suffix
+        return ('%.2f' % (accuracy * 100)) + suffix
 
     def display_judges(self):
         modes_judges = {
@@ -203,6 +203,9 @@ class Score(db.Model):
 
             'mods': json.dumps([mod['acronym'] for mod in self.get_mods()]),
             'max_combo': self.max_combo,
+            'score': self.display_accuracy(),
+            'grade': self.display_rank(),
+
             'pp': self.osmos or 'unranked',
             'judges': json.dumps({
                 'GREAT': self.great,
@@ -212,9 +215,10 @@ class Score(db.Model):
             }),
             'date': self.achieved_at,
 
+            'class': json.dumps({'pp_name': 'osmos'}),
             'settings': json.dumps({'preset': 'osu!', 'auto_fc': True, 'auto_combo': True}),
         }
-        return app.config.get('COFFEEBREAK_URL', 'https://coffee.tina.moe/') + '/api/card.jpg?' + urlencode(data)
+        return app.config.get('COFFEEBREAK_URL', 'https://coffee.tina.moe') + '/api/card.jpg?' + urlencode(data)
 
 
     def translate_mods(self, raw_score):
