@@ -87,7 +87,7 @@ class Chart(db.Model):
 
     def display_artist(self, prefer_romanzied=False):
         if prefer_romanzied:
-            return self.romanized_artist or self.artist
+            return self.artist_romanized or self.artist
         if self.artist == self.artist_romanized or self.artist_romanized is None:
             return self.artist
         if self.artist is None:

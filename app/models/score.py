@@ -1,8 +1,10 @@
 from datetime import datetime
+import json
+from urllib.parse import urlencode
 
 from sqlalchemy.ext.hybrid import hybrid_property
 
-from app import db
+from app import app, db
 from app.rulings import Judge, MAX_JUDGE, MODS_WHITELIST, calculate_osmos, get_rank
 from . import DATETIME_BACK, DATETIME_FRONT
 
@@ -182,6 +184,38 @@ class Score(db.Model):
 
     def display_time(self):
         return self.achieved_at.strftime(DATETIME_FRONT)
+
+    def get_cbcard_link(self):
+        data = {
+            'game': self.mode + '!',
+            'copyright': 'osmosis, accuracy based osu!',
+
+            'username': self.player.username,
+            'avatar': self.player.avatar_url,
+
+            'title': self.chart.display_name(prefer_romanzied=True),
+            'artist': self.chart.display_artist(prefer_romanzied=True),
+            'bpm': self.chart.bpm,
+            'jacket': self.chart.get_osu_thumbnail_url(),
+            'level': self.chart.display_difficulty(),
+            'difficulty': self.chart.difficulty_name,
+            'creator': self.chart.creator_name,
+
+            'mods': json.dumps([mod['acronym'] for mod in self.get_mods()]),
+            'max_combo': self.max_combo,
+            'pp': self.osmos or 'unranked',
+            'judges': json.dumps({
+                'GREAT': self.great,
+                'OK': self.ok,
+                'MEH': self.meh,
+                'MISS': self.miss,
+            }),
+            'date': self.achieved_at,
+
+            'settings': json.dumps({'preset': 'osu!', 'auto_fc': True, 'auto_combo': True}),
+        }
+        return app.config.get('COFFEEBREAK_URL', 'https://coffee.tina.moe/') + '/api/card.jpg?' + urlencode(data)
+
 
     def translate_mods(self, raw_score):
         chart = self.chart

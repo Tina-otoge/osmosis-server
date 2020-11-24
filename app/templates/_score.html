@@ -13,6 +13,9 @@
 				{{ moment(score.achieved_at).fromNow() }}
 			</a>
 		</div>
+		<p>
+			<a href="{{ score.get_cbcard_link() }}">Scorecard</a>
+		</p>
 	</div>
 	{% endif %}
 	{% if not no_chart %}
@@ -48,6 +51,9 @@
 			<a href="{{ url_for('share', id=score.id) }}">
 				{{ moment(score.achieved_at).fromNow() }}
 			</a>
+			<p>
+				<a href="{{ score.get_cbcard_link() }}">Scorecard</a>
+			</p>
 		</div>
 		{% endif %}
 	</div>
