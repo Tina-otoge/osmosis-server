@@ -152,14 +152,18 @@ class Score(db.Model):
 
     def display_mod(self, mod):
         infos = []
+        if mod['acronym'] == 'AR' and 'ApproachRate' in mod:
+            name = 'AR {}'.format(float(mod['ApproachRate']))
+        else:
+            name = mod['acronym']
         for key, value in mod.items():
             if key != 'acronym':
                 infos.append('{}: {}'.format(key, value))
         return '<span data-toggle="tooltip" data-html="true" title="{}">{}</span>'.format(
-            '\n'.join(infos), mod['acronym']
+            '\n'.join(infos), name
         )
 
-    def get_mods(self):
+    def get_mods(self, just_names=False):
         if self.version == 1:
             mods = self.mods.split(':')[:-1]
             if not ''.join(mods):
@@ -175,6 +179,12 @@ class Score(db.Model):
                 for pair in mod.split(' '):
                     parts = pair.split('=')
                     mod_info[parts[0]] = parts[1] if len(parts) > 1 else None
+                if just_names:
+                    name = mod_info['acronym']
+                    if name == 'AR' and 'ApproachRate' in mod_info:
+                        name += str(float(mod_info['ApproachRate']))
+                    result.append(name)
+                    continue
                 result.append(mod_info)
             return result
         return []
@@ -201,7 +211,7 @@ class Score(db.Model):
             'difficulty': self.chart.difficulty_name,
             'creator': self.chart.creator_name,
 
-            'mods': json.dumps([mod['acronym'] for mod in self.get_mods()]),
+            'mods': json.dumps(self.get_mods(just_names=True)),
             'max_combo': self.max_combo,
             'score': self.display_accuracy(),
             'grade': self.display_rank(),
@@ -224,6 +234,8 @@ class Score(db.Model):
     def translate_mods(self, raw_score):
         chart = self.chart
         for mod in raw_score['mods']:
+            if 'SettingsDescription' in mod:
+                del mod['SettingsDescription']
             if (
                 mod['acronym'] == 'AR' and
                 mod['ApproachRate'] == chart.ar

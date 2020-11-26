@@ -301,6 +301,7 @@ td {
 }
 
 .scores .mods > *, .scores .flairs > * {
+	white-space: nowrap;
 	border-radius: var(--small-radius);
 	padding: 0.2em 0.5em;
 	margin: 4px 1em;
