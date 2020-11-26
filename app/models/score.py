@@ -216,7 +216,7 @@ class Score(db.Model):
             'date': self.achieved_at,
 
             'class': json.dumps({'pp_name': 'osmos', 'level_suffix': '⭐'}),
-            'settings': json.dumps({'preset': 'osu!', 'auto_fc': True, 'auto_combo': True}),
+            'settings': json.dumps({'preset': 'osu!', 'auto_fc': True}),
         }
         return app.config.get('COFFEEBREAK_URL', 'https://coffee.tina.moe') + '/api/card.jpg?' + urlencode(data)
 
