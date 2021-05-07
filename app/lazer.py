@@ -41,7 +41,7 @@ def process_lazer_payload(data):
             'meh': data.statistics.Meh,
             'miss': data.statistics.Miss,
             'accuracy': data.accuracy,
-            'max_combo': data.accuracy,
+            'max_combo': data.max_combo,
             'mods': data.mods,
             'mode': user.Activity.Ruleset.ShortName,
             'client': 'osu! lazer',
