@@ -1,0 +1,5 @@
+#!/bin/bash
+
+for link in $*; do
+	./.venv/bin/flask rank "$link"
+done
